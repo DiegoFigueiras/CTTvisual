@@ -1,6 +1,6 @@
 ---
 title             : "The title"
-shorttitle        : "Title"
+shorttitle        : "CTT visuals"
 
 author: 
   - name          : "First Author"
