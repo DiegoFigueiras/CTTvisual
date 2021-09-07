@@ -10,3 +10,6 @@ curve(eq, from=-4, to=4, lwd = 3)          ## lwd changes figure weight
 a <- 3
 b <- .5
 curve(eq, col="red", add=TRUE, lwd=3)
+
+
+g <- abs(mean(pi)-.5)
