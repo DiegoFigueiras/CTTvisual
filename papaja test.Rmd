@@ -48,7 +48,7 @@ abstract: |
 keywords          : "keywords"
 wordcount         : "X"
 
-bibliography      : ["r-references.bib"]
+bibliography      : ["r-references.bib", "articles.bib"]
 
 floatsintext      : no
 figurelist        : no
@@ -65,6 +65,7 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include = FALSE}
 library("papaja")
+library(psych)
 r_refs("r-references.bib")
 ```
 
@@ -77,8 +78,9 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 
 # Methods
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+We used the formulas presented by @kulas2017approximate. 
 
+Study 2 simulates a bunch of test data and then we generate ICCs based on the IRT model and then we compare that to our CTT estimates. 
 ## Participants
 
 ## Material
@@ -88,35 +90,46 @@ We report how we determined our sample size, all data exclusions (if any), all m
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses.
 
-```{r data}
 
-item1<-c(0,0,1,1)
-item2<-c(0,1,1,1)
-item3<-c(1,1,0,1)
-item4<-c(0,1,0,0)
 
-data<-data.frame(item1, item2, item3, item4)
+```{r, fig.cap="Relationship between IRT a parameter and CTT corrected-item total correlations."}
+g<-abs(qnorm(.5))
+g<-0
+r2<-.3
+ahat<-function(r2){
+  r<-(((2.71828)^r2)-(2.71828)^-r2)/(2.71828-(2.71828)^r2)
+  ((0.51+(0.02*g)+(0.301*g^2))*r)
+  
+}
+
+curve(ahat, from=0, to=1, ylim=c(0, 10))
+g<-abs(qnorm(.75))
+r2<-.7
+curve(ahat, lty="longdash",add=TRUE )
+g<-abs(qnorm(.1))
+r2<-.1
+curve(ahat, lty="dotted", add=TRUE)
 
 ```
+```{r, }
+pseudob<-abs(qnorm(.5))
 
-```{r visual}
-
-library(psych)
-alpha(data)
-
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(a*(x-b))))))}
-      
-a <- 1
-b <- 0
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.3)
 c <- 0
 
-curve(eq, from=-4, to=4)
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
-a <- 3
+curve(eq, from=0, to=1, ylim=c(0, 1))
+pseudob<-abs(qnorm(.2))
+pseudoa<-ahat(.7)
 curve(eq, col="red", add=TRUE)
 
 ```
-
 
 # Results
 
