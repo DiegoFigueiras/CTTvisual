@@ -5,8 +5,8 @@
 \documentclass[
   english,
   man]{apa6}
-\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
+\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
@@ -44,7 +44,7 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
-\usepackage{graphicx}
+\usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -128,34 +128,8 @@
   \usepackage{polyglossia}
   \setmainlanguage[]{english}
 \else
-  \usepackage[main=english]{babel}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
+  \usepackage[shorthands=off,main=english]{babel}
 \fi
-\ifluatex
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-  % set entry spacing
-  \ifnum #2 > 0
-  \setlength{\parskip}{#2\baselineskip}
-  \fi
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \title{The title}
 \author{First Author\textsuperscript{1} \& Diego Figueiras\textsuperscript{1,2}}
@@ -200,10 +174,8 @@ Two or three sentences to provide a \textbf{broader perspective}, readily compre
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.
-
-\hypertarget{participants}{%
-\subsection{Participants}\label{participants}}
+We used the formulas presented by Kulas, Smith, and Xu (2017)
+\#\# Participants
 
 \hypertarget{material}{%
 \subsection{Material}\label{material}}
@@ -214,70 +186,51 @@ We report how we determined our sample size, all data exclusions (if any), all m
 \hypertarget{data-analysis}{%
 \subsection{Data analysis}\label{data-analysis}}
 
-We used R {[}Version 4.0.5; R Core Team (2020){]} and the R-package \emph{papaja} {[}Version 0.1.0.9997; Aust and Barth (2020){]} for all our analyses.
+We used R (Version 4.0.3; R Core Team, 2020) and the R-packages \emph{papaja} (Version 0.1.0.9997; Aust \& Barth, 2020), and \emph{psych} (Version 2.1.6; Revelle, 2021) for all our analyses.
 
 \begin{verbatim}
-## Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
+## Warning: package 'tidyverse' was built under R version 4.0.5
 \end{verbatim}
 
 \begin{verbatim}
-## Warning in alpha(data): Some items were negatively correlated with the total scale and probably 
-## should be reversed.  
-## To do this, run the function again with the 'check.keys=TRUE' option
+## Warning: package 'ggplot2' was built under R version 4.0.5
 \end{verbatim}
 
 \begin{verbatim}
-## Some items ( item3 item4 ) were negatively correlated with the total scale and 
-## probably should be reversed.  
-## To do this, run the function again with the 'check.keys=TRUE' option
+## Warning: package 'tibble' was built under R version 4.0.5
 \end{verbatim}
 
 \begin{verbatim}
-## Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done
+## Warning: package 'tidyr' was built under R version 4.0.5
 \end{verbatim}
 
 \begin{verbatim}
-## Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done
+## Warning: package 'readr' was built under R version 4.0.5
 \end{verbatim}
 
 \begin{verbatim}
-## Warning in sqrt(Vtc): NaNs produced
+## Warning: package 'purrr' was built under R version 4.0.5
 \end{verbatim}
 
 \begin{verbatim}
-## 
-## Reliability analysis   
-## Call: alpha(x = data)
-## 
-##   raw_alpha std.alpha G6(smc) average_r   S/N ase mean   sd median_r
-##      -0.24     -0.19  -0.044    -0.041 -0.16   1 0.56 0.24        0
-## 
-##  lower alpha upper     95% confidence boundaries
-## -2.3 -0.24 1.81 
-## 
-##  Reliability if an item is dropped:
-##       raw_alpha std.alpha G6(smc) average_r   S/N var.r med.r
-## item1      0.27      0.27    0.45      0.11  0.37  0.15  0.33
-## item2     -2.25     -1.82   -0.35     -0.27 -0.64  0.28 -0.58
-## item3      0.25      0.27    0.18      0.11  0.37  0.37  0.33
-## item4     -0.38     -0.43    0.21     -0.11 -0.30  0.37 -0.33
-## 
-##  Item statistics 
-##       n raw.r std.r r.cor r.drop mean   sd
-## item1 4  0.30  0.23   NaN  -0.30 0.50 0.58
-## item2 4  0.87  0.84   NaN   0.58 0.75 0.50
-## item3 4  0.17  0.23   NaN  -0.33 0.75 0.50
-## item4 4  0.52  0.58   NaN   0.00 0.25 0.50
-## 
-## Non missing response frequency for each item
-##          0    1 miss
-## item1 0.50 0.50    0
-## item2 0.25 0.75    0
-## item3 0.25 0.75    0
-## item4 0.75 0.25    0
+## Warning: package 'dplyr' was built under R version 4.0.5
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'stringr' was built under R version 4.0.5
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'forcats' was built under R version 4.0.5
 \end{verbatim}
 
 \includegraphics{papaja-test_files/figure-latex/visual-1.pdf}
+
+\begin{figure}
+\centering
+\includegraphics{papaja-test_files/figure-latex/unnamed-chunk-1-1.pdf}
+\caption{\label{fig:unnamed-chunk-1}Relationship between IRT a parameter and CTT corrected-item total correlations.}
+\end{figure}
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -295,14 +248,17 @@ We used R {[}Version 4.0.5; R Core Team (2020){]} and the R-package \emph{papaja
 \setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
-\begin{CSLReferences}{1}{0}
 \leavevmode\hypertarget{ref-R-papaja}{}%
-Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
+Aust, F., \& Barth, M. (2020). \emph{papaja: Create APA manuscripts with R Markdown}. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\hypertarget{ref-kulas2017approximate}{}%
+Kulas, J. T., Smith, J. A., \& Xu, H. (2017). Approximate functional relationship between irt and ctt item discrimination indices: A simulation, validation, and practical extension of lord's (1980) formula. \emph{Journal of Applied Measurement}, \emph{18}(4), 393--407.
 
 \leavevmode\hypertarget{ref-R-base}{}%
 R Core Team. (2020). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
 
-\end{CSLReferences}
+\leavevmode\hypertarget{ref-R-psych}{}%
+Revelle, W. (2021). \emph{Psych: Procedures for psychological, psychometric, and personality research}. Evanston, Illinois: Northwestern University. Retrieved from \url{https://CRAN.R-project.org/package=psych}
 
 \endgroup
 
