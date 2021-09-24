@@ -79,7 +79,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 Item characteristic curves are very often used by psychometricians to showcase and analyze the attributes of the item on a test or assessment. The x-axis shows a wide range of trait levels (ranging from high to low on the trait), while the y-axis displays probabilities of getting the item correct that range from 0 to 1. Each item has a curve. By looking at it, we can know the likelihood with which respondents of any trait level would answer any item correctly. If the curve is leaning towards the lower end of the trait level, this indicates that it is easy to answer the item correctly. On the contrary, if the curve is leaning towards the higher end of the trait level, this indicates that the item is difficult. If the curve is steep, this indicates high discrimination among respondents; if it is flat, it indicates no discrimination.  
 ```{r, include=FALSE, fig.cap="Item characteristic curve. X-axis indicates the trait level, and y-axis indicates the probability of getting the item correct."}
 
-data<-read.csv("~/R/simulated_data.csv", header=FALSE)
+data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
 library(mirt)
 library(latticeExtra)
@@ -150,7 +150,7 @@ curve(eq, col="red", add=TRUE)
 ```
 
 ```{r,}
-data<-read.csv("~/R/simulated_data.csv", header=FALSE)
+data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
 library(mirt)
 library(latticeExtra)
