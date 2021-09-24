@@ -3,5 +3,5 @@
 
 \centering
 \includegraphics{papaja-test_files/figure-latex/unnamed-chunk-1-1.pdf}
-\caption{\label{fig:unnamed-chunk-1}Relationship between IRT a parameter and CTT corrected-item total correlations.}
+\caption{\label{fig:unnamed-chunk-1}Item characteristic curve. X-axis indicates the trait level, and y-axis indicates the probability of getting the item correct.}
 \end{figure*}
