@@ -1,27 +1,25 @@
 ---
-title             : "The title"
-shorttitle        : "CTT visuals"
-
+title             : "Comparison of ICCs using IRT and CTT parameters"
+shorttitle        : "Comparison of ICCs using IRT and CTT parameters"
 author: 
-  - name          : "First Author"
+  - name          : "Diego Figueiras"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
     address       : "Postal address"
-    email         : "my@email.com"
+    email         : "figueirasd1@montclair.edu"
     role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
       - Conceptualization
       - Writing - Original Draft Preparation
       - Writing - Review & Editing
-  - name          : "Diego Figueiras"
-    affiliation   : "1,2"
+  - name          : "John T. Kulas"
+    affiliation   : "1"
     role:
       - Writing - Review & Editing
 
 affiliation:
   - id            : "1"
     institution   : "Montclair State University"
-  - id            : "2"
-    institution   : "Konstanz Business School"
+
 
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
@@ -66,6 +64,7 @@ output            : papaja::apa6_pdf
 ```{r setup, include = FALSE}
 library("papaja")
 library(psych)
+library(reticulate)
 r_refs("r-references.bib")
 ```
 
@@ -76,6 +75,24 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
 
+# Introduction
+Item characteristic curves are very often used by psychometricians to showcase and analyze the attributes of the item on a test or assessment. The x-axis shows a wide range of trait levels (ranging from high to low on the trait), while the y-axis displays probabilities of getting the item correct that range from 0 to 1. Each item has a curve. By looking at it, we can know the likelihood with which respondents of any trait level would answer any item correctly. If the curve is leaning towards the lower end of the trait level, this indicates that it is easy to answer the item correctly. On the contrary, if the curve is leaning towards the higher end of the trait level, this indicates that the item is difficult. If the curve is steep, this indicates high discrimination among respondents; if it is flat, it indicates no discrimination.  
+```{r, include=FALSE, fig.cap="Item characteristic curve. X-axis indicates the trait level, and y-axis indicates the probability of getting the item correct."}
+
+data<-read.csv("~/R/simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+model<-"personality=1-50"
+mod<-mirt(data, 1, itemtype="2PL")
+plot(mod, which.items=c(23), main="Item Characteristic Curve")
+
+
+
+
+```
+
+Psychometricians who examine ICCs usually do it using Item Response Theory and Rasch models to get the parameters necessary to plot the curves. In a 2PL model, these would be item difficulty and item discrimination. Item difficulty is the necessary trail level for a respondent to have a 50/50 chace to answer the item correctly. Item discrimination is the degree to which an item can differentiate among individuals with low and high levels of the trait.  From a Classical Test Theory (CTT) frame of thinking, the difficulty of an item is determined by looking at the p-values of the items, while discrimination is determined by checking the Cronbach alpha and the corrected item total correlations. Psychometricians who look at these CTT parameters don’t typically use them to plot ICCs.There is no reason for them not to, since ICCs based on CTT parameters could provide information as valuable as those based on IRT or Rasch without the need of being familiar with these models and with how to compute the necessary estimates. Fan states in summary that IRT and CTT “... framework produce very similar item and person statistics” (p.379).  Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICCs that use CTT statistics. This study intends to show evidence of the overlapping nature of CTT and IRT parameters when it comes to plotting ICCs. 
 
 # Methods
 We used the formulas presented by @kulas2017approximate. 
@@ -111,6 +128,7 @@ r2<-.1
 curve(ahat, lty="dotted", add=TRUE)
 
 ```
+
 ```{r, }
 pseudob<-abs(qnorm(.5))
 
@@ -121,15 +139,76 @@ ahat<-function(x){
 }
 pseudoa<-ahat(.3)
 c <- 0
-
+#change pseudob in this line for a scale that allows negative numbers
 eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
-curve(eq, from=0, to=1, ylim=c(0, 1))
+curve(eq, from=-5, to=5, ylim=c(0, 1))
 pseudob<-abs(qnorm(.2))
 pseudoa<-ahat(.7)
 curve(eq, col="red", add=TRUE)
 
 ```
+
+```{r,}
+data<-read.csv("~/R/simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+model<-"personality=1-30"
+data<-data[2:31]
+results <- mirt(data=data, model=model, SE= TRUE)
+plot(results, type='trace',face_items=FALSE)
+
+mod<-mirt(data, 1, itemtype="2PL")
+plot(mod, type="trace", which.items=c(29), facet_items=FALSE)
+
+pseudob<-abs(qnorm(mean(data$v10)))
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+alpha(data)
+pseudoa<-ahat(.63804712)
+c <- 0
+#pseudob<-pnorm(pseudob)
+#change pseudob in this line for a scale that allows negative numbers
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+par(mfrow = c(3, 3))
+p1<-plot(mod, which.items=c(29))+latticeExtra::layer(panel.curve(eq, col="red"))
+p2<-plot(mod, which.items=c(5))+latticeExtra::layer(panel.curve(eq, col="red"))
+p3<-plot(mod, which.items=c(22))+latticeExtra::layer(panel.curve(eq, col="red"))
+p4<-plot(mod, which.items=c(8))+latticeExtra::layer(panel.curve(eq, col="red"))
+p5<-plot(mod, which.items=c(2))+latticeExtra::layer(panel.curve(eq, col="red"))
+p6<-plot(mod, which.items=c(10))+latticeExtra::layer(panel.curve(eq, col="red"))
+require(gridExtra)
+grid.arrange(p1,p2, p3,p4, ncol=2, nrow=2)
+
+```
+
+```{r,}
+
+pseudob<-abs(qnorm(mean(data$i28)))
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+alpha(data)
+pseudoa<-ahat(.104)
+c <- 0
+#change pseudob in this line for a scale that allows negative numbers
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+curve(eq, from=-5, to=5, ylim=c(0, 1))
+
+
+
+x<-log(.6/(1-.6))
+?```
 
 # Results
 
