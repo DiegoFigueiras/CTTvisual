@@ -27,19 +27,7 @@ authornote: |
   Enter author note here.
 
 abstract: |
-  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
-  
-  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-  
-  One sentence clearly stating the **general problem** being addressed by  this particular study.
-  
-  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-  
-  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-  
-  One or two sentences to put the results into a more **general context**.
-  
-  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+
   
   <!-- https://tinyurl.com/ybremelq -->
   
@@ -48,7 +36,7 @@ wordcount         : "X"
 
 bibliography      : ["r-references.bib", "articles.bib"]
 
-floatsintext      : no
+floatsintext      : yes
 figurelist        : no
 tablelist         : no
 footnotelist      : no
@@ -71,55 +59,66 @@ r_refs("r-references.bib")
 ```{r analysis-preferences}
 # Seed for random number generation
 set.seed(42)
-knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE, message=FALSE)
 ```
 
 
 # Introduction
 Item characteristic curves are very often used by psychometricians to showcase and analyze the attributes of the item on a test or assessment. The x-axis shows a wide range of trait levels (ranging from high to low on the trait), while the y-axis displays probabilities of getting the item correct that range from 0 to 1. Each item has a curve. By looking at it, we can know the likelihood with which respondents of any trait level would answer any item correctly. If the curve is leaning towards the lower end of the trait level, this indicates that it is easy to answer the item correctly. On the contrary, if the curve is leaning towards the higher end of the trait level, this indicates that the item is difficult. If the curve is steep, this indicates high discrimination among respondents; if it is flat, it indicates no discrimination.  
-```{r, include=FALSE, fig.cap="Item characteristic curve. X-axis indicates the trait level, and y-axis indicates the probability of getting the item correct."}
+
+```{r, include=TRUE, fig.cap="Item characteristic curve. X-axis indicates the trait level, and y-axis indicates the probability of getting the item correct.", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
 
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
 library(mirt)
 library(latticeExtra)
-model<-"personality=1-50"
-mod<-mirt(data, 1, itemtype="2PL")
-plot(mod, which.items=c(23), main="Item Characteristic Curve")
+pseudob<-abs(qnorm(.5))
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.3)
+c <- 0
+#change pseudob in this line for a scale that allows negative numbers
+p <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+curve(p, from=-5, to=5, ylim=c(0, 1), main="Item Characteristic Curves", xlab="Level of Trait")
+pseudob<-abs(qnorm(.2))
+pseudoa<-ahat(.7)
+curve(p, lty="longdash", add=TRUE)
+arrows(-1.5,0.4,-3,0.4,col="black")
+text(-4,0.4, "Low \n Discrimination",col="black")
+arrows(0.45,0.2,2,0.2,col="black")
+text(3,0.2, "High \n Discrimination",col="black")
 
 
 
 
 ```
+\newpage
+Psychometricians who examine ICCs usually do it using Item Response Theory and Rasch models to get the parameters necessary to plot the curves. In a 2PL model, these would be item difficulty and item discrimination. Item difficulty is the necessary trait level for a respondent to have a 50/50 chance to answer the item correctly. Item discrimination is the degree to which an item can differentiate among individuals with low and high levels of the trait.  From a Classical Test Theory (CTT) frame of thinking, the difficulty of an item is determined by looking at the p-values of the items, while discrimination is determined by checking the Cronbach alpha and the corrected item total correlations. Psychometricians who look at these CTT parameters don’t typically use them to plot ICCs.There is no reason for them not to, since ICCs based on CTT parameters could provide information as valuable as those based on IRT or Rasch without the need of being familiar with these models and with how to compute the necessary estimates. Fan states in summary that IRT and CTT “... framework produce very similar item and person statistics” (p.379).
 
-Psychometricians who examine ICCs usually do it using Item Response Theory and Rasch models to get the parameters necessary to plot the curves. In a 2PL model, these would be item difficulty and item discrimination. Item difficulty is the necessary trail level for a respondent to have a 50/50 chace to answer the item correctly. Item discrimination is the degree to which an item can differentiate among individuals with low and high levels of the trait.  From a Classical Test Theory (CTT) frame of thinking, the difficulty of an item is determined by looking at the p-values of the items, while discrimination is determined by checking the Cronbach alpha and the corrected item total correlations. Psychometricians who look at these CTT parameters don’t typically use them to plot ICCs.There is no reason for them not to, since ICCs based on CTT parameters could provide information as valuable as those based on IRT or Rasch without the need of being familiar with these models and with how to compute the necessary estimates. Fan states in summary that IRT and CTT “... framework produce very similar item and person statistics” (p.379).  Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICCs that use CTT statistics. This study intends to show evidence of the overlapping nature of CTT and IRT parameters when it comes to plotting ICCs. 
+There is research that shows that there is little difference between the parameters of both frameworks. @lord2012applications described a function that approximates the relationship between IRT and CTT discrimination parameters. Although this wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures, the formula was later modified by @kulas2017approximate, with the purpose of minimizing the average residual.The formula is the following:
+[INSERT R EXPONENTIAL FORMULA]
 
-# Methods
-We used the formulas presented by @kulas2017approximate. 
+Where r is the biserial corrected item total correlation of the item. Simulations identified systematic slope and inflection differences across item with differing b values, so the formula was further changed to include the following modifiers:
 
-Study 2 simulates a bunch of test data and then we generate ICCs based on the IRT model and then we compare that to our CTT estimates. 
-## Participants
+[INSERT FINAL FORMULA]
+Where g is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly, and it's computed like this: g=|p-0.5|. Zg is the standard normal deviation associated with g. If we visualize the results of these re-specifications of Lord's formula using p-values (difficulty) of .5, .3 (or .7), and .1 (or .9), and corrected item total correlations (discrimination) of .3, .7 and .1, respectively, we get the following:
 
-## Material
-
-## Procedure
-
-## Data analysis
-We used `r cite_r("r-references.bib")` for all our analyses.
-
-
-
-```{r, fig.cap="Relationship between IRT a parameter and CTT corrected-item total correlations."}
+```{r acorrected, fig.cap="Functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
 g<-abs(qnorm(.5))
 g<-0
 r2<-.3
 ahat<-function(r2){
   r<-(((2.71828)^r2)-(2.71828)^-r2)/(2.71828-(2.71828)^r2)
   ((0.51+(0.02*g)+(0.301*g^2))*r)
-  
+ 
 }
 
-curve(ahat, from=0, to=1, ylim=c(0, 10))
+curve(ahat, from=0, to=1, ylim=c(0, 8), xname="Corrected Item-Total Correlation", ylab="IRT a-parameter")
 g<-abs(qnorm(.75))
 r2<-.7
 curve(ahat, lty="longdash",add=TRUE )
@@ -128,6 +127,34 @@ r2<-.1
 curve(ahat, lty="dotted", add=TRUE)
 
 ```
+
+As we can see, the higher the corrected item-total correlations, the higher the estimated IRT a-parameter (discrimination). Also, as the p-values (difficulty) deviates from 0, the relationship between the estimated IRT a-parameter and the corrected item-total correlations becomes stronger. 
+
+Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICCs that use CTT statistics. This study intends to show evidence of the overlapping nature of CTT and IRT parameters when it comes to plotting ICCs. 
+
+# Study 1 - Visual of discrimination relationship
+
+The purpose of study 1 is to look at the visualizations resulting from @kulas2017approximate formula on simulated data. We hypothesize that the relationship between the estimated IRT a-parameter and the corrected item-total correlations will be stronger as the later deviates from 0, which would mean that the item has more discrimination. 
+
+## Procedure and methods
+
+We simulated data using @han2007wingen3 software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of itemm were 50, with response categories of either correct or incorrect (1 and 0).
+
+
+
+Study 2 simulates a bunch of test data and then we generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
+<!-- ## Participants -->
+
+<!-- ## Material -->
+
+<!-- ## Procedure -->
+
+<!-- ## Data analysis -->
+<!-- We used `r cite_r("r-references.bib")` for all our analyses. -->
+
+
+
+
 
 ```{r, }
 pseudob<-abs(qnorm(.5))
