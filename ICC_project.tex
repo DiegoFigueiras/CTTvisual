@@ -156,7 +156,15 @@ Item characteristic curves are very often used by psychometricians to showcase a
 \newpage
 Psychometricians who examine ICCs usually do it using Item Response Theory and Rasch models to get the parameters necessary to plot the curves. In a 2PL model, these would be item difficulty and item discrimination. Item difficulty is the necessary trait level for a respondent to have a 50/50 chance to answer the item correctly. Item discrimination is the degree to which an item can differentiate among individuals with low and high levels of the trait. From a Classical Test Theory (CTT) frame of thinking, the difficulty of an item is determined by looking at the p-values of the items, while discrimination is determined by checking the Cronbach alpha and the corrected item total correlations. Psychometricians who look at these CTT parameters don't typically use them to plot ICCs.There is no reason for them not to, since ICCs based on CTT parameters could provide information as valuable as those based on IRT or Rasch without the need of being familiar with these models and with how to compute the necessary estimates. Fan states in summary that IRT and CTT \enquote{\ldots{} framework produce very similar item and person statistics} (p.379).
 
-There is research that shows that there is little difference between the parameters of both frameworks. Lord (2012) described a function that approximates the relationship between IRT and CTT discrimination parameters. Although this wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures, the formula was later modified by Kulas, Smith, and Xu (2017), with the purpose of minimizing the average residual.The formula is the following:
+There is research that shows that there is little difference between the parameters of both frameworks.@hambleton1993comparison concluded that \enquote{no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences}.
+
+Fan (1998) conducted a study to empirically test the differences between the two frameworks. According to him, \enquote{The findings here simply show that the two measurement frameworks produced very similar item and person statistics both in terms of the comparability of item and person statistics between the two frameworks and in terms of the degree of invariance of item statistics from the two competing measurement frameworks.} In his study, Fan (1998) looked at the correlations between ability estimates and item difficulty in CTT and all three IRT models. These correlations were very high, between high .80 and low .90. As of item discrimination, correlations were moderate to high, with only a few being very low.
+
+He also looked at the item invariance for all models. In theory, the major advantage of IRT models over CTT is that the latter has a circular dependency between the item and person statistics, while IRT has no such dependency, which means that the item parameters don't depend on the sample and the person parameters don't depend on the set of items. This property of invariance is very important, since item estimates can be used regardless of the sample you are giving the test or assessment to. An item will always have the same level of difficulty regardless of who is responding, for example.
+
+What Fan (1998) got on his study, however, shows empirical evidence against this supposed advantage of IRT against CTT. The CTT item difficulty and discrimination degrees of invariance were highly correlated with those of IRT, indicating that they were highly comparable.
+
+Lord (2012) described a function that approximates the relationship between IRT and CTT discrimination parameters. Although this wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures, the formula was later modified by Kulas, Smith, and Xu (2017), with the purpose of minimizing the average residual.The formula is the following:
 {[}INSERT R EXPONENTIAL FORMULA{]}
 
 Where r is the biserial corrected item total correlation of the item. Simulations identified systematic slope and inflection differences across item with differing b values, so the formula was further changed to include the following modifiers:
@@ -182,266 +190,35 @@ The purpose of study 1 is to look at the visualizations resulting from Kulas et 
 \hypertarget{procedure-and-methods}{%
 \subsection{Procedure and methods}\label{procedure-and-methods}}
 
-We simulated data using Han (2007) software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of itemm were 50, with response categories of either correct or incorrect (1 and 0).
-
-Study 2 simulates a bunch of test data and then we generate ICCs based on the IRT model and then we compare that to our CTT estimates.\\
-
-\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-2-1.pdf}
-
-\begin{verbatim}
-## Iteration: 1, Log-Lik: -98116.710, Max-Change: 4.09843Iteration: 2, Log-Lik: -93555.376, Max-Change: 2.36211Iteration: 3, Log-Lik: -92095.297, Max-Change: 0.86232Iteration: 4, Log-Lik: -91400.840, Max-Change: 0.57759Iteration: 5, Log-Lik: -90976.438, Max-Change: 0.53628Iteration: 6, Log-Lik: -90733.642, Max-Change: 0.43949Iteration: 7, Log-Lik: -90530.551, Max-Change: 0.28402Iteration: 8, Log-Lik: -90398.548, Max-Change: 0.35077Iteration: 9, Log-Lik: -90294.315, Max-Change: 0.36077Iteration: 10, Log-Lik: -90233.325, Max-Change: 0.24911Iteration: 11, Log-Lik: -90186.125, Max-Change: 0.24444Iteration: 12, Log-Lik: -90154.098, Max-Change: 0.18850Iteration: 13, Log-Lik: -90129.582, Max-Change: 0.17557Iteration: 14, Log-Lik: -90112.262, Max-Change: 0.14661Iteration: 15, Log-Lik: -90098.850, Max-Change: 0.14473Iteration: 16, Log-Lik: -90088.026, Max-Change: 0.10233Iteration: 17, Log-Lik: -90080.549, Max-Change: 0.12783Iteration: 18, Log-Lik: -90074.739, Max-Change: 0.09322Iteration: 19, Log-Lik: -90070.174, Max-Change: 0.10813Iteration: 20, Log-Lik: -90066.817, Max-Change: 0.08788Iteration: 21, Log-Lik: -90064.371, Max-Change: 0.08676Iteration: 22, Log-Lik: -90062.457, Max-Change: 0.10631Iteration: 23, Log-Lik: -90060.862, Max-Change: 0.07361Iteration: 24, Log-Lik: -90059.658, Max-Change: 0.11716Iteration: 25, Log-Lik: -90058.414, Max-Change: 0.05900Iteration: 26, Log-Lik: -90057.565, Max-Change: 0.63640Iteration: 27, Log-Lik: -90056.122, Max-Change: 0.14655Iteration: 28, Log-Lik: -90055.809, Max-Change: 0.91866Iteration: 29, Log-Lik: -90055.074, Max-Change: 0.14450Iteration: 30, Log-Lik: -90054.358, Max-Change: 0.15677Iteration: 31, Log-Lik: -90053.967, Max-Change: 0.35165Iteration: 32, Log-Lik: -90053.643, Max-Change: 0.00585Iteration: 33, Log-Lik: -90053.449, Max-Change: 0.00453Iteration: 34, Log-Lik: -90053.016, Max-Change: 0.00352Iteration: 35, Log-Lik: -90052.919, Max-Change: 0.00258Iteration: 36, Log-Lik: -90052.850, Max-Change: 0.00312Iteration: 37, Log-Lik: -90052.563, Max-Change: 0.00161Iteration: 38, Log-Lik: -90052.537, Max-Change: 0.00534Iteration: 39, Log-Lik: -90052.518, Max-Change: 0.00203Iteration: 40, Log-Lik: -90052.508, Max-Change: 0.00187Iteration: 41, Log-Lik: -90052.490, Max-Change: 0.00118Iteration: 42, Log-Lik: -90052.483, Max-Change: 0.00092Iteration: 43, Log-Lik: -90052.462, Max-Change: 0.00120Iteration: 44, Log-Lik: -90052.451, Max-Change: 0.00083Iteration: 45, Log-Lik: -90052.445, Max-Change: 0.00084Iteration: 46, Log-Lik: -90052.423, Max-Change: 0.00069Iteration: 47, Log-Lik: -90052.421, Max-Change: 0.00072Iteration: 48, Log-Lik: -90052.419, Max-Change: 0.00023Iteration: 49, Log-Lik: -90052.419, Max-Change: 0.00019Iteration: 50, Log-Lik: -90052.418, Max-Change: 0.00047Iteration: 51, Log-Lik: -90052.417, Max-Change: 0.00059Iteration: 52, Log-Lik: -90052.416, Max-Change: 0.00038Iteration: 53, Log-Lik: -90052.415, Max-Change: 0.00061Iteration: 54, Log-Lik: -90052.414, Max-Change: 0.00026Iteration: 55, Log-Lik: -90052.414, Max-Change: 0.00021Iteration: 56, Log-Lik: -90052.414, Max-Change: 0.00035Iteration: 57, Log-Lik: -90052.413, Max-Change: 0.00018Iteration: 58, Log-Lik: -90052.413, Max-Change: 0.00074Iteration: 59, Log-Lik: -90052.413, Max-Change: 0.00034Iteration: 60, Log-Lik: -90052.412, Max-Change: 0.00048Iteration: 61, Log-Lik: -90052.412, Max-Change: 0.00043Iteration: 62, Log-Lik: -90052.411, Max-Change: 0.00068Iteration: 63, Log-Lik: -90052.411, Max-Change: 0.00031Iteration: 64, Log-Lik: -90052.411, Max-Change: 0.00025Iteration: 65, Log-Lik: -90052.410, Max-Change: 0.00035Iteration: 66, Log-Lik: -90052.410, Max-Change: 0.00020Iteration: 67, Log-Lik: -90052.410, Max-Change: 0.00016Iteration: 68, Log-Lik: -90052.410, Max-Change: 0.00031Iteration: 69, Log-Lik: -90052.409, Max-Change: 0.00056Iteration: 70, Log-Lik: -90052.409, Max-Change: 0.00029Iteration: 71, Log-Lik: -90052.409, Max-Change: 0.00046Iteration: 72, Log-Lik: -90052.408, Max-Change: 0.00021Iteration: 73, Log-Lik: -90052.408, Max-Change: 0.00017Iteration: 74, Log-Lik: -90052.408, Max-Change: 0.00030Iteration: 75, Log-Lik: -90052.408, Max-Change: 0.00014Iteration: 76, Log-Lik: -90052.408, Max-Change: 0.00055Iteration: 77, Log-Lik: -90052.407, Max-Change: 0.00026Iteration: 78, Log-Lik: -90052.407, Max-Change: 0.00039Iteration: 79, Log-Lik: -90052.407, Max-Change: 0.00033Iteration: 80, Log-Lik: -90052.407, Max-Change: 0.00052Iteration: 81, Log-Lik: -90052.406, Max-Change: 0.00025Iteration: 82, Log-Lik: -90052.406, Max-Change: 0.00019Iteration: 83, Log-Lik: -90052.406, Max-Change: 0.00030Iteration: 84, Log-Lik: -90052.406, Max-Change: 0.00015Iteration: 85, Log-Lik: -90052.406, Max-Change: 0.00012Iteration: 86, Log-Lik: -90052.406, Max-Change: 0.00030Iteration: 87, Log-Lik: -90052.405, Max-Change: 0.00044Iteration: 88, Log-Lik: -90052.405, Max-Change: 0.00023Iteration: 89, Log-Lik: -90052.405, Max-Change: 0.00036Iteration: 90, Log-Lik: -90052.405, Max-Change: 0.00017Iteration: 91, Log-Lik: -90052.405, Max-Change: 0.00014Iteration: 92, Log-Lik: -90052.405, Max-Change: 0.00031Iteration: 93, Log-Lik: -90052.404, Max-Change: 0.00053Iteration: 94, Log-Lik: -90052.404, Max-Change: 0.00023Iteration: 95, Log-Lik: -90052.404, Max-Change: 0.00035Iteration: 96, Log-Lik: -90052.404, Max-Change: 0.00018Iteration: 97, Log-Lik: -90052.404, Max-Change: 0.00014Iteration: 98, Log-Lik: -90052.404, Max-Change: 0.00031Iteration: 99, Log-Lik: -90052.404, Max-Change: 0.00010Iteration: 100, Log-Lik: -90052.404, Max-Change: 0.00042Iteration: 101, Log-Lik: -90052.403, Max-Change: 0.00021Iteration: 102, Log-Lik: -90052.403, Max-Change: 0.00033Iteration: 103, Log-Lik: -90052.403, Max-Change: 0.00026Iteration: 104, Log-Lik: -90052.403, Max-Change: 0.00040Iteration: 105, Log-Lik: -90052.403, Max-Change: 0.00020Iteration: 106, Log-Lik: -90052.403, Max-Change: 0.00016Iteration: 107, Log-Lik: -90052.403, Max-Change: 0.00032Iteration: 108, Log-Lik: -90052.402, Max-Change: 0.00012Iteration: 109, Log-Lik: -90052.402, Max-Change: 0.00047Iteration: 110, Log-Lik: -90052.402, Max-Change: 0.00023Iteration: 111, Log-Lik: -90052.402, Max-Change: 0.00037Iteration: 112, Log-Lik: -90052.402, Max-Change: 0.00031Iteration: 113, Log-Lik: -90052.402, Max-Change: 0.00010
-## 
-## Calculating information matrix...
-\end{verbatim}
-
-\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-3-1.pdf}
-
-\begin{verbatim}
-## Iteration: 1, Log-Lik: -98116.710, Max-Change: 4.09843Iteration: 2, Log-Lik: -93555.376, Max-Change: 2.36211Iteration: 3, Log-Lik: -92095.297, Max-Change: 0.86232Iteration: 4, Log-Lik: -91400.840, Max-Change: 0.57759Iteration: 5, Log-Lik: -90976.438, Max-Change: 0.53628Iteration: 6, Log-Lik: -90733.642, Max-Change: 0.43949Iteration: 7, Log-Lik: -90530.551, Max-Change: 0.28402Iteration: 8, Log-Lik: -90398.548, Max-Change: 0.35077Iteration: 9, Log-Lik: -90294.315, Max-Change: 0.36077Iteration: 10, Log-Lik: -90233.325, Max-Change: 0.24911Iteration: 11, Log-Lik: -90186.125, Max-Change: 0.24444Iteration: 12, Log-Lik: -90154.098, Max-Change: 0.18850Iteration: 13, Log-Lik: -90129.582, Max-Change: 0.17557Iteration: 14, Log-Lik: -90112.262, Max-Change: 0.14661Iteration: 15, Log-Lik: -90098.850, Max-Change: 0.14473Iteration: 16, Log-Lik: -90088.026, Max-Change: 0.10233Iteration: 17, Log-Lik: -90080.549, Max-Change: 0.12783Iteration: 18, Log-Lik: -90074.739, Max-Change: 0.09322Iteration: 19, Log-Lik: -90070.174, Max-Change: 0.10813Iteration: 20, Log-Lik: -90066.817, Max-Change: 0.08788Iteration: 21, Log-Lik: -90064.371, Max-Change: 0.08676Iteration: 22, Log-Lik: -90062.457, Max-Change: 0.10631Iteration: 23, Log-Lik: -90060.862, Max-Change: 0.07361Iteration: 24, Log-Lik: -90059.658, Max-Change: 0.11716Iteration: 25, Log-Lik: -90058.414, Max-Change: 0.05900Iteration: 26, Log-Lik: -90057.565, Max-Change: 0.63640Iteration: 27, Log-Lik: -90056.122, Max-Change: 0.14655Iteration: 28, Log-Lik: -90055.809, Max-Change: 0.91866Iteration: 29, Log-Lik: -90055.074, Max-Change: 0.14450Iteration: 30, Log-Lik: -90054.358, Max-Change: 0.15677Iteration: 31, Log-Lik: -90053.967, Max-Change: 0.35165Iteration: 32, Log-Lik: -90053.643, Max-Change: 0.00585Iteration: 33, Log-Lik: -90053.449, Max-Change: 0.00453Iteration: 34, Log-Lik: -90053.016, Max-Change: 0.00352Iteration: 35, Log-Lik: -90052.919, Max-Change: 0.00258Iteration: 36, Log-Lik: -90052.850, Max-Change: 0.00312Iteration: 37, Log-Lik: -90052.563, Max-Change: 0.00161Iteration: 38, Log-Lik: -90052.537, Max-Change: 0.00534Iteration: 39, Log-Lik: -90052.518, Max-Change: 0.00203Iteration: 40, Log-Lik: -90052.508, Max-Change: 0.00187Iteration: 41, Log-Lik: -90052.490, Max-Change: 0.00118Iteration: 42, Log-Lik: -90052.483, Max-Change: 0.00092Iteration: 43, Log-Lik: -90052.462, Max-Change: 0.00120Iteration: 44, Log-Lik: -90052.451, Max-Change: 0.00083Iteration: 45, Log-Lik: -90052.445, Max-Change: 0.00084Iteration: 46, Log-Lik: -90052.423, Max-Change: 0.00069Iteration: 47, Log-Lik: -90052.421, Max-Change: 0.00072Iteration: 48, Log-Lik: -90052.419, Max-Change: 0.00023Iteration: 49, Log-Lik: -90052.419, Max-Change: 0.00019Iteration: 50, Log-Lik: -90052.418, Max-Change: 0.00047Iteration: 51, Log-Lik: -90052.417, Max-Change: 0.00059Iteration: 52, Log-Lik: -90052.416, Max-Change: 0.00038Iteration: 53, Log-Lik: -90052.415, Max-Change: 0.00061Iteration: 54, Log-Lik: -90052.414, Max-Change: 0.00026Iteration: 55, Log-Lik: -90052.414, Max-Change: 0.00021Iteration: 56, Log-Lik: -90052.414, Max-Change: 0.00035Iteration: 57, Log-Lik: -90052.413, Max-Change: 0.00018Iteration: 58, Log-Lik: -90052.413, Max-Change: 0.00074Iteration: 59, Log-Lik: -90052.413, Max-Change: 0.00034Iteration: 60, Log-Lik: -90052.412, Max-Change: 0.00048Iteration: 61, Log-Lik: -90052.412, Max-Change: 0.00043Iteration: 62, Log-Lik: -90052.411, Max-Change: 0.00068Iteration: 63, Log-Lik: -90052.411, Max-Change: 0.00031Iteration: 64, Log-Lik: -90052.411, Max-Change: 0.00025Iteration: 65, Log-Lik: -90052.410, Max-Change: 0.00035Iteration: 66, Log-Lik: -90052.410, Max-Change: 0.00020Iteration: 67, Log-Lik: -90052.410, Max-Change: 0.00016Iteration: 68, Log-Lik: -90052.410, Max-Change: 0.00031Iteration: 69, Log-Lik: -90052.409, Max-Change: 0.00056Iteration: 70, Log-Lik: -90052.409, Max-Change: 0.00029Iteration: 71, Log-Lik: -90052.409, Max-Change: 0.00046Iteration: 72, Log-Lik: -90052.408, Max-Change: 0.00021Iteration: 73, Log-Lik: -90052.408, Max-Change: 0.00017Iteration: 74, Log-Lik: -90052.408, Max-Change: 0.00030Iteration: 75, Log-Lik: -90052.408, Max-Change: 0.00014Iteration: 76, Log-Lik: -90052.408, Max-Change: 0.00055Iteration: 77, Log-Lik: -90052.407, Max-Change: 0.00026Iteration: 78, Log-Lik: -90052.407, Max-Change: 0.00039Iteration: 79, Log-Lik: -90052.407, Max-Change: 0.00033Iteration: 80, Log-Lik: -90052.407, Max-Change: 0.00052Iteration: 81, Log-Lik: -90052.406, Max-Change: 0.00025Iteration: 82, Log-Lik: -90052.406, Max-Change: 0.00019Iteration: 83, Log-Lik: -90052.406, Max-Change: 0.00030Iteration: 84, Log-Lik: -90052.406, Max-Change: 0.00015Iteration: 85, Log-Lik: -90052.406, Max-Change: 0.00012Iteration: 86, Log-Lik: -90052.406, Max-Change: 0.00030Iteration: 87, Log-Lik: -90052.405, Max-Change: 0.00044Iteration: 88, Log-Lik: -90052.405, Max-Change: 0.00023Iteration: 89, Log-Lik: -90052.405, Max-Change: 0.00036Iteration: 90, Log-Lik: -90052.405, Max-Change: 0.00017Iteration: 91, Log-Lik: -90052.405, Max-Change: 0.00014Iteration: 92, Log-Lik: -90052.405, Max-Change: 0.00031Iteration: 93, Log-Lik: -90052.404, Max-Change: 0.00053Iteration: 94, Log-Lik: -90052.404, Max-Change: 0.00023Iteration: 95, Log-Lik: -90052.404, Max-Change: 0.00035Iteration: 96, Log-Lik: -90052.404, Max-Change: 0.00018Iteration: 97, Log-Lik: -90052.404, Max-Change: 0.00014Iteration: 98, Log-Lik: -90052.404, Max-Change: 0.00031Iteration: 99, Log-Lik: -90052.404, Max-Change: 0.00010Iteration: 100, Log-Lik: -90052.404, Max-Change: 0.00042Iteration: 101, Log-Lik: -90052.403, Max-Change: 0.00021Iteration: 102, Log-Lik: -90052.403, Max-Change: 0.00033Iteration: 103, Log-Lik: -90052.403, Max-Change: 0.00026Iteration: 104, Log-Lik: -90052.403, Max-Change: 0.00040Iteration: 105, Log-Lik: -90052.403, Max-Change: 0.00020Iteration: 106, Log-Lik: -90052.403, Max-Change: 0.00016Iteration: 107, Log-Lik: -90052.403, Max-Change: 0.00032Iteration: 108, Log-Lik: -90052.402, Max-Change: 0.00012Iteration: 109, Log-Lik: -90052.402, Max-Change: 0.00047Iteration: 110, Log-Lik: -90052.402, Max-Change: 0.00023Iteration: 111, Log-Lik: -90052.402, Max-Change: 0.00037Iteration: 112, Log-Lik: -90052.402, Max-Change: 0.00031Iteration: 113, Log-Lik: -90052.402, Max-Change: 0.00010
-\end{verbatim}
-
-\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-3-2.pdf}
-
-\begin{verbatim}
-## Some items ( V15 ) were negatively correlated with the total scale and 
-## probably should be reversed.  
-## To do this, run the function again with the 'check.keys=TRUE' option
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Reliability analysis   
-## Call: alpha(x = data)
-## 
-##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
-##       0.88      0.86    0.87      0.17 6.2 0.0015 0.65 0.17     0.15
-## 
-##  lower alpha upper     95% confidence boundaries
-## 0.88 0.88 0.89 
-## 
-##  Reliability if an item is dropped:
-##     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
-## V2       0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V3       0.87      0.85    0.86      0.16 5.7   0.0016 0.017  0.15
-## V4       0.87      0.85    0.86      0.17 5.8   0.0016 0.018  0.15
-## V5       0.88      0.85    0.87      0.17 5.8   0.0015 0.018  0.15
-## V6       0.88      0.86    0.87      0.17 6.0   0.0015 0.019  0.15
-## V7       0.88      0.86    0.87      0.17 6.1   0.0014 0.020  0.16
-## V8       0.88      0.87    0.88      0.18 6.4   0.0015 0.018  0.17
-## V9       0.88      0.86    0.87      0.18 6.2   0.0015 0.020  0.16
-## V10      0.88      0.85    0.86      0.17 5.8   0.0015 0.018  0.15
-## V11      0.88      0.85    0.86      0.17 5.8   0.0015 0.018  0.15
-## V12      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V13      0.87      0.85    0.86      0.17 5.8   0.0016 0.018  0.15
-## V14      0.88      0.86    0.87      0.17 5.9   0.0015 0.019  0.15
-## V15      0.88      0.87    0.88      0.18 6.5   0.0015 0.018  0.17
-## V16      0.87      0.85    0.86      0.16 5.7   0.0016 0.017  0.15
-## V17      0.87      0.85    0.86      0.16 5.6   0.0016 0.017  0.15
-## V18      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V19      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V20      0.88      0.86    0.87      0.17 5.9   0.0015 0.019  0.15
-## V21      0.88      0.86    0.87      0.18 6.3   0.0015 0.019  0.16
-## V22      0.87      0.85    0.86      0.16 5.7   0.0016 0.018  0.15
-## V23      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.15
-## V24      0.88      0.86    0.87      0.18 6.3   0.0015 0.019  0.16
-## V25      0.88      0.86    0.87      0.17 6.1   0.0015 0.019  0.15
-## V26      0.88      0.85    0.87      0.17 5.8   0.0015 0.019  0.15
-## V27      0.88      0.86    0.87      0.17 6.1   0.0014 0.020  0.16
-## V28      0.88      0.86    0.87      0.17 6.0   0.0015 0.019  0.15
-## V29      0.88      0.85    0.86      0.17 5.8   0.0015 0.018  0.15
-## V30      0.88      0.87    0.88      0.18 6.5   0.0015 0.018  0.17
-## V31      0.88      0.86    0.87      0.17 6.1   0.0015 0.019  0.15
-## 
-##  Item statistics 
-##         n  raw.r std.r   r.cor  r.drop mean    sd
-## V2  10000  0.366  0.36  0.3121  0.3092 0.12 0.325
-## V3  10000  0.748  0.70  0.7108  0.6999 0.53 0.499
-## V4  10000  0.665  0.62  0.6141  0.6074 0.39 0.488
-## V5  10000  0.629  0.58  0.5730  0.5656 0.44 0.496
-## V6  10000  0.395  0.47  0.4512  0.3613 0.96 0.203
-## V7  10000  0.422  0.39  0.3453  0.3386 0.43 0.495
-## V8  10000  0.041  0.13  0.0656  0.0383 1.00 0.014
-## V9  10000  0.198  0.28  0.2306  0.1762 0.99 0.115
-## V10 10000  0.627  0.61  0.6077  0.5717 0.74 0.436
-## V11 10000  0.590  0.62  0.6151  0.5437 0.86 0.343
-## V12 10000  0.341  0.35  0.3060  0.2802 0.86 0.343
-## V13 10000  0.681  0.63  0.6307  0.6235 0.49 0.500
-## V14 10000  0.545  0.51  0.4800  0.4718 0.45 0.498
-## V15 10000 -0.003  0.07 -0.0044 -0.0049 1.00 0.010
-## V16 10000  0.716  0.67  0.6708  0.6633 0.48 0.500
-## V17 10000  0.763  0.71  0.7286  0.7179 0.56 0.497
-## V18 10000  0.291  0.36  0.3174  0.2612 0.97 0.164
-## V19 10000  0.303  0.36  0.3100  0.2668 0.96 0.201
-## V20 10000  0.419  0.49  0.4751  0.3838 0.95 0.216
-## V21 10000  0.160  0.25  0.1894  0.1450 0.99 0.077
-## V22 10000  0.691  0.67  0.6672  0.6386 0.68 0.468
-## V23 10000  0.434  0.41  0.3677  0.3608 0.27 0.443
-## V24 10000  0.154  0.24  0.1777  0.1384 0.99 0.083
-## V25 10000  0.431  0.42  0.3818  0.3810 0.10 0.306
-## V26 10000  0.529  0.56  0.5525  0.4825 0.89 0.318
-## V27 10000  0.375  0.35  0.3054  0.2985 0.26 0.438
-## V28 10000  0.457  0.44  0.4022  0.3987 0.16 0.362
-## V29 10000  0.622  0.62  0.6200  0.5709 0.80 0.403
-## V30 10000  0.024  0.10  0.0314  0.0223 1.00 0.010
-## V31 10000  0.430  0.41  0.3762  0.3733 0.14 0.345
-## 
-## Non missing response frequency for each item
-##        0    1 miss
-## V2  0.88 0.12    0
-## V3  0.47 0.53    0
-## V4  0.61 0.39    0
-## V5  0.56 0.44    0
-## V6  0.04 0.96    0
-## V7  0.57 0.43    0
-## V8  0.00 1.00    0
-## V9  0.01 0.99    0
-## V10 0.26 0.74    0
-## V11 0.14 0.86    0
-## V12 0.14 0.86    0
-## V13 0.51 0.49    0
-## V14 0.55 0.45    0
-## V15 0.00 1.00    0
-## V16 0.52 0.48    0
-## V17 0.44 0.56    0
-## V18 0.03 0.97    0
-## V19 0.04 0.96    0
-## V20 0.05 0.95    0
-## V21 0.01 0.99    0
-## V22 0.32 0.68    0
-## V23 0.73 0.27    0
-## V24 0.01 0.99    0
-## V25 0.90 0.10    0
-## V26 0.11 0.89    0
-## V27 0.74 0.26    0
-## V28 0.84 0.16    0
-## V29 0.20 0.80    0
-## V30 0.00 1.00    0
-## V31 0.86 0.14    0
-\end{verbatim}
-
-\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-3-3.pdf}
-
-\begin{verbatim}
-## Some items ( V15 ) were negatively correlated with the total scale and 
-## probably should be reversed.  
-## To do this, run the function again with the 'check.keys=TRUE' option
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Reliability analysis   
-## Call: alpha(x = data)
-## 
-##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
-##       0.88      0.86    0.87      0.17 6.2 0.0015 0.65 0.17     0.15
-## 
-##  lower alpha upper     95% confidence boundaries
-## 0.88 0.88 0.89 
-## 
-##  Reliability if an item is dropped:
-##     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
-## V2       0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V3       0.87      0.85    0.86      0.16 5.7   0.0016 0.017  0.15
-## V4       0.87      0.85    0.86      0.17 5.8   0.0016 0.018  0.15
-## V5       0.88      0.85    0.87      0.17 5.8   0.0015 0.018  0.15
-## V6       0.88      0.86    0.87      0.17 6.0   0.0015 0.019  0.15
-## V7       0.88      0.86    0.87      0.17 6.1   0.0014 0.020  0.16
-## V8       0.88      0.87    0.88      0.18 6.4   0.0015 0.018  0.17
-## V9       0.88      0.86    0.87      0.18 6.2   0.0015 0.020  0.16
-## V10      0.88      0.85    0.86      0.17 5.8   0.0015 0.018  0.15
-## V11      0.88      0.85    0.86      0.17 5.8   0.0015 0.018  0.15
-## V12      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V13      0.87      0.85    0.86      0.17 5.8   0.0016 0.018  0.15
-## V14      0.88      0.86    0.87      0.17 5.9   0.0015 0.019  0.15
-## V15      0.88      0.87    0.88      0.18 6.5   0.0015 0.018  0.17
-## V16      0.87      0.85    0.86      0.16 5.7   0.0016 0.017  0.15
-## V17      0.87      0.85    0.86      0.16 5.6   0.0016 0.017  0.15
-## V18      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V19      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.16
-## V20      0.88      0.86    0.87      0.17 5.9   0.0015 0.019  0.15
-## V21      0.88      0.86    0.87      0.18 6.3   0.0015 0.019  0.16
-## V22      0.87      0.85    0.86      0.16 5.7   0.0016 0.018  0.15
-## V23      0.88      0.86    0.87      0.17 6.1   0.0015 0.020  0.15
-## V24      0.88      0.86    0.87      0.18 6.3   0.0015 0.019  0.16
-## V25      0.88      0.86    0.87      0.17 6.1   0.0015 0.019  0.15
-## V26      0.88      0.85    0.87      0.17 5.8   0.0015 0.019  0.15
-## V27      0.88      0.86    0.87      0.17 6.1   0.0014 0.020  0.16
-## V28      0.88      0.86    0.87      0.17 6.0   0.0015 0.019  0.15
-## V29      0.88      0.85    0.86      0.17 5.8   0.0015 0.018  0.15
-## V30      0.88      0.87    0.88      0.18 6.5   0.0015 0.018  0.17
-## V31      0.88      0.86    0.87      0.17 6.1   0.0015 0.019  0.15
-## 
-##  Item statistics 
-##         n  raw.r std.r   r.cor  r.drop mean    sd
-## V2  10000  0.366  0.36  0.3121  0.3092 0.12 0.325
-## V3  10000  0.748  0.70  0.7108  0.6999 0.53 0.499
-## V4  10000  0.665  0.62  0.6141  0.6074 0.39 0.488
-## V5  10000  0.629  0.58  0.5730  0.5656 0.44 0.496
-## V6  10000  0.395  0.47  0.4512  0.3613 0.96 0.203
-## V7  10000  0.422  0.39  0.3453  0.3386 0.43 0.495
-## V8  10000  0.041  0.13  0.0656  0.0383 1.00 0.014
-## V9  10000  0.198  0.28  0.2306  0.1762 0.99 0.115
-## V10 10000  0.627  0.61  0.6077  0.5717 0.74 0.436
-## V11 10000  0.590  0.62  0.6151  0.5437 0.86 0.343
-## V12 10000  0.341  0.35  0.3060  0.2802 0.86 0.343
-## V13 10000  0.681  0.63  0.6307  0.6235 0.49 0.500
-## V14 10000  0.545  0.51  0.4800  0.4718 0.45 0.498
-## V15 10000 -0.003  0.07 -0.0044 -0.0049 1.00 0.010
-## V16 10000  0.716  0.67  0.6708  0.6633 0.48 0.500
-## V17 10000  0.763  0.71  0.7286  0.7179 0.56 0.497
-## V18 10000  0.291  0.36  0.3174  0.2612 0.97 0.164
-## V19 10000  0.303  0.36  0.3100  0.2668 0.96 0.201
-## V20 10000  0.419  0.49  0.4751  0.3838 0.95 0.216
-## V21 10000  0.160  0.25  0.1894  0.1450 0.99 0.077
-## V22 10000  0.691  0.67  0.6672  0.6386 0.68 0.468
-## V23 10000  0.434  0.41  0.3677  0.3608 0.27 0.443
-## V24 10000  0.154  0.24  0.1777  0.1384 0.99 0.083
-## V25 10000  0.431  0.42  0.3818  0.3810 0.10 0.306
-## V26 10000  0.529  0.56  0.5525  0.4825 0.89 0.318
-## V27 10000  0.375  0.35  0.3054  0.2985 0.26 0.438
-## V28 10000  0.457  0.44  0.4022  0.3987 0.16 0.362
-## V29 10000  0.622  0.62  0.6200  0.5709 0.80 0.403
-## V30 10000  0.024  0.10  0.0314  0.0223 1.00 0.010
-## V31 10000  0.430  0.41  0.3762  0.3733 0.14 0.345
-## 
-## Non missing response frequency for each item
-##        0    1 miss
-## V2  0.88 0.12    0
-## V3  0.47 0.53    0
-## V4  0.61 0.39    0
-## V5  0.56 0.44    0
-## V6  0.04 0.96    0
-## V7  0.57 0.43    0
-## V8  0.00 1.00    0
-## V9  0.01 0.99    0
-## V10 0.26 0.74    0
-## V11 0.14 0.86    0
-## V12 0.14 0.86    0
-## V13 0.51 0.49    0
-## V14 0.55 0.45    0
-## V15 0.00 1.00    0
-## V16 0.52 0.48    0
-## V17 0.44 0.56    0
-## V18 0.03 0.97    0
-## V19 0.04 0.96    0
-## V20 0.05 0.95    0
-## V21 0.01 0.99    0
-## V22 0.32 0.68    0
-## V23 0.73 0.27    0
-## V24 0.01 0.99    0
-## V25 0.90 0.10    0
-## V26 0.11 0.89    0
-## V27 0.74 0.26    0
-## V28 0.84 0.16    0
-## V29 0.20 0.80    0
-## V30 0.00 1.00    0
-## V31 0.86 0.14    0
-\end{verbatim}
-
-\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-4-1.pdf}
+We simulated data using Han (2007) software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 50, with response categories of either correct or incorrect (1 and 0).
 
 \hypertarget{results}{%
-\section{Results}\label{results}}
+\subsection{Results}\label{results}}
+
+\includegraphics{ICC_project_files/figure-latex/acorrected simulation-1.pdf}
+\newpage
+
+\hypertarget{study-2---item-characteristic-curves-comparisons.}{%
+\section{Study 2 - Item Characteristic Curves comparisons.}\label{study-2---item-characteristic-curves-comparisons.}}
+
+The purpose of study 2 is to simulates a lot of test data and then generate ICCs based on the IRT model and then we compare that to our CTT estimates.
+
+\hypertarget{procedure-and-materials}{%
+\subsection{Procedure and materials}\label{procedure-and-materials}}
+
+The same simulated data as in study 1 was used. The mirt package was used to compute the IRT statistics. The blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with Kulas et al. (2017) formulas).
+
+\hypertarget{results-1}{%
+\subsection{Results}\label{results-1}}
+
+\begin{verbatim}
+## Iteration: 1, Log-Lik: -169092.337, Max-Change: 4.55861Iteration: 2, Log-Lik: -151096.451, Max-Change: 0.99065Iteration: 3, Log-Lik: -149079.583, Max-Change: 0.42396Iteration: 4, Log-Lik: -148877.529, Max-Change: 0.34275Iteration: 5, Log-Lik: -148757.146, Max-Change: 0.36090Iteration: 6, Log-Lik: -148668.915, Max-Change: 0.35753Iteration: 7, Log-Lik: -148600.555, Max-Change: 0.30515Iteration: 8, Log-Lik: -148544.614, Max-Change: 0.28169Iteration: 9, Log-Lik: -148501.368, Max-Change: 0.25980Iteration: 10, Log-Lik: -148466.427, Max-Change: 0.24977Iteration: 11, Log-Lik: -148438.128, Max-Change: 0.22021Iteration: 12, Log-Lik: -148415.003, Max-Change: 0.22122Iteration: 13, Log-Lik: -148395.430, Max-Change: 0.20793Iteration: 14, Log-Lik: -148377.376, Max-Change: 0.16434Iteration: 15, Log-Lik: -148361.941, Max-Change: 0.16177Iteration: 16, Log-Lik: -148349.389, Max-Change: 0.14365Iteration: 17, Log-Lik: -148339.459, Max-Change: 0.13250Iteration: 18, Log-Lik: -148331.201, Max-Change: 0.13094Iteration: 19, Log-Lik: -148323.957, Max-Change: 0.10506Iteration: 20, Log-Lik: -148318.531, Max-Change: 0.11555Iteration: 21, Log-Lik: -148314.031, Max-Change: 0.09874Iteration: 22, Log-Lik: -148311.281, Max-Change: 0.25746Iteration: 23, Log-Lik: -148307.578, Max-Change: 0.09524Iteration: 24, Log-Lik: -148305.218, Max-Change: 0.07028Iteration: 25, Log-Lik: -148303.428, Max-Change: 0.14616Iteration: 26, Log-Lik: -148301.649, Max-Change: 0.06839Iteration: 27, Log-Lik: -148300.380, Max-Change: 0.06246Iteration: 28, Log-Lik: -148298.725, Max-Change: 0.11269Iteration: 29, Log-Lik: -148297.980, Max-Change: 0.69940Iteration: 30, Log-Lik: -148296.556, Max-Change: 0.07596Iteration: 31, Log-Lik: -148296.381, Max-Change: 0.63533Iteration: 32, Log-Lik: -148295.634, Max-Change: 0.18109Iteration: 33, Log-Lik: -148295.004, Max-Change: 0.17334Iteration: 34, Log-Lik: -148294.484, Max-Change: 0.00861Iteration: 35, Log-Lik: -148294.264, Max-Change: 0.00575Iteration: 36, Log-Lik: -148294.104, Max-Change: 0.00438Iteration: 37, Log-Lik: -148293.742, Max-Change: 0.00287Iteration: 38, Log-Lik: -148293.664, Max-Change: 0.00231Iteration: 39, Log-Lik: -148293.620, Max-Change: 0.00266Iteration: 40, Log-Lik: -148293.583, Max-Change: 0.00181Iteration: 41, Log-Lik: -148293.552, Max-Change: 0.00202Iteration: 42, Log-Lik: -148293.530, Max-Change: 0.00094Iteration: 43, Log-Lik: -148293.519, Max-Change: 0.00094Iteration: 44, Log-Lik: -148293.504, Max-Change: 0.00090Iteration: 45, Log-Lik: -148293.492, Max-Change: 0.00080Iteration: 46, Log-Lik: -148293.443, Max-Change: 0.00031Iteration: 47, Log-Lik: -148293.442, Max-Change: 0.00064Iteration: 48, Log-Lik: -148293.438, Max-Change: 0.00019Iteration: 49, Log-Lik: -148293.438, Max-Change: 0.00075Iteration: 50, Log-Lik: -148293.436, Max-Change: 0.00047Iteration: 51, Log-Lik: -148293.435, Max-Change: 0.00060Iteration: 52, Log-Lik: -148293.432, Max-Change: 0.00044Iteration: 53, Log-Lik: -148293.431, Max-Change: 0.00048Iteration: 54, Log-Lik: -148293.430, Max-Change: 0.00031Iteration: 55, Log-Lik: -148293.429, Max-Change: 0.00025Iteration: 56, Log-Lik: -148293.429, Max-Change: 0.00045Iteration: 57, Log-Lik: -148293.427, Max-Change: 0.00015Iteration: 58, Log-Lik: -148293.427, Max-Change: 0.00060Iteration: 59, Log-Lik: -148293.426, Max-Change: 0.00037Iteration: 60, Log-Lik: -148293.425, Max-Change: 0.00046Iteration: 61, Log-Lik: -148293.424, Max-Change: 0.00037Iteration: 62, Log-Lik: -148293.424, Max-Change: 0.00043Iteration: 63, Log-Lik: -148293.423, Max-Change: 0.00026Iteration: 64, Log-Lik: -148293.423, Max-Change: 0.00020Iteration: 65, Log-Lik: -148293.422, Max-Change: 0.00043Iteration: 66, Log-Lik: -148293.422, Max-Change: 0.00012Iteration: 67, Log-Lik: -148293.421, Max-Change: 0.00010
+\end{verbatim}
+
+\includegraphics{ICC_project_files/figure-latex/iccs simulation-1.pdf}
+
+\hypertarget{results-2}{%
+\section{Results}\label{results-2}}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -456,6 +233,9 @@ Study 2 simulates a bunch of test data and then we generate ICCs based on the IR
 \setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
+\leavevmode\hypertarget{ref-fan1998item}{}%
+Fan, X. (1998). Item response theory and classical test theory: An empirical comparison of their item/person statistics. \emph{Educational and Psychological Measurement}, \emph{58}(3), 357--381.
+
 \leavevmode\hypertarget{ref-han2007wingen3}{}%
 Han, K. (2007). WinGen3: Windows software that generates irt parameters and item responses {[}computer program{]}. \emph{Amherst, MA: Center for Educational Assessment, University of Massachusetts Amherst}.
 

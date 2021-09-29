@@ -88,9 +88,9 @@ curve(p, from=-5, to=5, ylim=c(0, 1), main="Item Characteristic Curves", xlab="L
 pseudob<-abs(qnorm(.2))
 pseudoa<-ahat(.7)
 curve(p, lty="longdash", add=TRUE)
-arrows(-1.5,0.4,-3,0.4,col="black")
+arrows(-3,0.4,-1.5,0.4,col="black")
 text(-4,0.4, "Low \n Discrimination",col="black")
-arrows(0.45,0.2,2,0.2,col="black")
+arrows(2,0.2,0.45,0.2,col="black")
 text(3,0.2, "High \n Discrimination",col="black")
 
 
@@ -100,7 +100,16 @@ text(3,0.2, "High \n Discrimination",col="black")
 \newpage
 Psychometricians who examine ICCs usually do it using Item Response Theory and Rasch models to get the parameters necessary to plot the curves. In a 2PL model, these would be item difficulty and item discrimination. Item difficulty is the necessary trait level for a respondent to have a 50/50 chance to answer the item correctly. Item discrimination is the degree to which an item can differentiate among individuals with low and high levels of the trait.  From a Classical Test Theory (CTT) frame of thinking, the difficulty of an item is determined by looking at the p-values of the items, while discrimination is determined by checking the Cronbach alpha and the corrected item total correlations. Psychometricians who look at these CTT parameters don’t typically use them to plot ICCs.There is no reason for them not to, since ICCs based on CTT parameters could provide information as valuable as those based on IRT or Rasch without the need of being familiar with these models and with how to compute the necessary estimates. Fan states in summary that IRT and CTT “... framework produce very similar item and person statistics” (p.379).
 
-There is research that shows that there is little difference between the parameters of both frameworks.@hambleton1993comparison concluded that "no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences". @lord2012applications described a function that approximates the relationship between IRT and CTT discrimination parameters. Although this wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures, the formula was later modified by @kulas2017approximate, with the purpose of minimizing the average residual.The formula is the following:
+There is research that shows that there is little difference between the parameters of both frameworks.@hambleton1993comparison concluded that "no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences". 
+
+@fan1998item conducted a study to empirically test the differences between the two frameworks. According to him, "The findings here simply show that the two measurement frameworks produced very similar item and person statistics both in terms of the comparability of item and person statistics between the two frameworks and in terms of the degree of invariance of item statistics from the two competing measurement frameworks." In his study, @fan1998item looked at the correlations between ability estimates and item difficulty in CTT and all three IRT models. These correlations were very high, between high .80 and low .90. As of item discrimination, correlations were moderate to high, with only a few being very low.
+
+He also looked at the item invariance for all models. In theory, the major advantage of IRT models over CTT is that the latter has a circular dependency between the item and person statistics, while IRT has no such dependency, which means that the item parameters don't depend on the sample and the person parameters don't depend on the set of items. This property of invariance is very important, since item estimates can be used regardless of the sample you are giving the test or assessment to. An item will always have the same level of difficulty regardless of who is responding, for example. 
+
+What @fan1998item got on his study, however, shows empirical evidence against this supposed advantage of IRT against CTT. The CTT item difficulty and discrimination degrees of invariance were highly correlated with those of IRT, indicating that they were highly comparable. 
+
+
+@lord2012applications described a function that approximates the relationship between IRT and CTT discrimination parameters. Although this wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures, the formula was later modified by @kulas2017approximate, with the purpose of minimizing the average residual.The formula is the following:
 [INSERT R EXPONENTIAL FORMULA]
 
 Where r is the biserial corrected item total correlation of the item. Simulations identified systematic slope and inflection differences across item with differing b values, so the formula was further changed to include the following modifiers:
@@ -138,11 +147,40 @@ The purpose of study 1 is to look at the visualizations resulting from @kulas201
 
 ## Procedure and methods
 
-We simulated data using @han2007wingen3 software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of itemm were 50, with response categories of either correct or incorrect (1 and 0).
+We simulated data using @han2007wingen3 software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 50, with response categories of either correct or incorrect (1 and 0).
+
+## Results
+```{r acorrected simulation, fig.cap="Functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .3, dashed = .9, dotted = .12)."}
+data<-read.csv("simulated_data.csv", header=FALSE)
+g<-abs(qnorm(mean(data$V50)))
+r2<-.552939712
+ahat<-function(r2){
+  r<-(((2.71828)^r2)-(2.71828)^-r2)/(2.71828-(2.71828)^r2)
+  ((0.51+(0.02*g)+(0.301*g^2))*r)
+ 
+}
+
+curve(ahat, from=0, to=1, ylim=c(0, 8), xname="Corrected Item-Total Correlation", ylab="IRT a-parameter")
+g<-abs(qnorm(mean(data$V47)))
+r2<-.173791903
+curve(ahat, lty="longdash",add=TRUE )
+g<-abs(qnorm(mean(data$V2)))
+r2<-.315436055
+curve(ahat, lty="dotted", add=TRUE)
+
+```
+\newpage
 
 
+# Study 2 - Item Characteristic Curves comparisons. 
 
-Study 2 simulates a bunch of test data and then we generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
+The purpose of study 2 is to simulates a lot of test data and then generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
+
+## Procedure and materials
+The same simulated data as in study 1 was used. The mirt package was used to compute the IRT statistics. The blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with @kulas2017approximate formulas). 
+
+## Results
+
 <!-- ## Participants -->
 
 <!-- ## Material -->
@@ -152,90 +190,64 @@ Study 2 simulates a bunch of test data and then we generate ICCs based on the IR
 <!-- ## Data analysis -->
 <!-- We used `r cite_r("r-references.bib")` for all our analyses. -->
 
-
-
-
-
-```{r, }
-pseudob<-abs(qnorm(.5))
-
-ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
-  
-}
-pseudoa<-ahat(.3)
-c <- 0
-#change pseudob in this line for a scale that allows negative numbers
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-curve(eq, from=-5, to=5, ylim=c(0, 1))
-pseudob<-abs(qnorm(.2))
-pseudoa<-ahat(.7)
-curve(eq, col="red", add=TRUE)
-
-```
-
-```{r,}
+```{r iccs simulation}
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
 library(mirt)
 library(latticeExtra)
-model<-"personality=1-30"
-data<-data[2:31]
-results <- mirt(data=data, model=model, SE= TRUE)
-plot(results, type='trace',face_items=FALSE)
 
 mod<-mirt(data, 1, itemtype="2PL")
-plot(mod, type="trace", which.items=c(29), facet_items=FALSE)
 
-pseudob<-abs(qnorm(mean(data$v10)))
+pseudob<-abs(qnorm(mean(data$V50)))
 
 ahat<-function(x){
   r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
   ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
   
 }
-alpha(data)
-pseudoa<-ahat(.63804712)
+
+pseudoa<-ahat(.552939712)
 c <- 0
-#pseudob<-pnorm(pseudob)
-#change pseudob in this line for a scale that allows negative numbers
+
 eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
-par(mfrow = c(3, 3))
-p1<-plot(mod, which.items=c(29))+latticeExtra::layer(panel.curve(eq, col="red"))
-p2<-plot(mod, which.items=c(5))+latticeExtra::layer(panel.curve(eq, col="red"))
-p3<-plot(mod, which.items=c(22))+latticeExtra::layer(panel.curve(eq, col="red"))
-p4<-plot(mod, which.items=c(8))+latticeExtra::layer(panel.curve(eq, col="red"))
-p5<-plot(mod, which.items=c(2))+latticeExtra::layer(panel.curve(eq, col="red"))
-p6<-plot(mod, which.items=c(10))+latticeExtra::layer(panel.curve(eq, col="red"))
+p1<-plot(mod, which.items=c(50), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
+
+pseudob<-abs(qnorm(mean(data$V47)))
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.173791903)
+
+p2<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
+pseudob<-abs(qnorm(mean(data$V21)))
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.143276546)
+
+p3<-plot(mod, which.items=c(21), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
+
+pseudob<-abs(qnorm(mean(data$V7)))
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.343460055)
+
+p4<-plot(mod, which.items=c(7), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
+
 require(gridExtra)
 grid.arrange(p1,p2, p3,p4, ncol=2, nrow=2)
 
 ```
 
-```{r,}
 
-pseudob<-abs(qnorm(mean(data$i28)))
-
-ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
-  
-}
-alpha(data)
-pseudoa<-ahat(.104)
-c <- 0
-#change pseudob in this line for a scale that allows negative numbers
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-curve(eq, from=-5, to=5, ylim=c(0, 1))
-
-
-
-x<-log(.6/(1-.6))
-```
 
 # Results
 
