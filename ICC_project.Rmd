@@ -405,9 +405,30 @@ require(gridExtra)
 grid.arrange(p1,p2,p3,p4, nrow=2, ncol=2)
 
 ##############################################################################
+
+
+
+```
+
+```{r, AUC}
 #Area between curves
+#Preparing data
 library(geiger)
-geiger:::.area.between.curves(x, f1, f2)
+citcs<-data.frame(alphas$item.stats$r.drop)
+pseudoA<-data.frame(ahat(citcs))
+pseudoB<-b
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
+colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
+
+#calculating AUC
+theta <- matrix(seq(-6,6, by=.1))
+eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[25]*(x-df$PseudoB[25]))))))}
+cttB<-eq4(seq(-6,6, by=.1))
+eq4_irt<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[25]*(x-df$b[25]))))))}
+irtB<-eq4_irt(seq(-6,6, by=.1))
+geiger:::.area.between.curves(theta, cttB, irtB)
 # x is the vector of x-axis values
 # f1 the y-axis values for the first line
 # f2 the y-axis values for the second line
