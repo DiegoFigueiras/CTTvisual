@@ -201,8 +201,9 @@ mod<-mirt(data, 1, itemtype="2PL")
 pseudob<-abs(qnorm(mean(data$V50)))
 
 ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
   
 }
 
@@ -215,40 +216,206 @@ p1<-plot(mod, which.items=c(50), main="Item Characteristic Curves")+latticeExtra
 
 pseudob<-abs(qnorm(mean(data$V47)))
 ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
   
 }
 pseudoa<-ahat(.173791903)
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
 p2<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
 pseudob<-abs(qnorm(mean(data$V21)))
 ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
   
 }
 pseudoa<-ahat(.143276546)
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
 p3<-plot(mod, which.items=c(21), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
 
 pseudob<-abs(qnorm(mean(data$V7)))
 ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
   
 }
 pseudoa<-ahat(.343460055)
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
 p4<-plot(mod, which.items=c(7), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
 
 require(gridExtra)
 grid.arrange(p1,p2, p3,p4, ncol=2, nrow=2)
+curve(eq, col="red", from=-100, to=100)
 
 ```
 
+```{r iccs simulation}
+data<-read.csv("simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+
+mod<-mirt(data, 1, itemtype="2PL")
+
+pseudob<-.5
 
 
+  
+
+
+pseudoa<-.7
+c <- 0
+
+eq1 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+p1<-plot(mod, which.items=c(50), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq1, col="red"))
+p1
+pseudob<-.2
+pseudoa<-.9
+
+eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+p2<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq2, col="red"))
+p2
+pseudob<-.6
+pseudoa<-.3
+eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+p3<-plot(mod, which.items=c(21), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq3, col="red"))
+p3
+
+pseudob<-.1
+
+pseudoa<-.4
+eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+p4<-plot(mod, which.items=c(7), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq4, col="red"))
+p4
+
+require(gridExtra)
+grid.arrange(p1,p2, p3,p4, ncol=2, nrow=2)
+
+curve(eq3, col="red", from=-100, to=100)
+plot(mod, which.items=c(47))
+
+```
+```{r}
+
+data<-read.csv("simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+library(irtplay)
+
+mod<-mirt(data, 1, itemtype="2PL")
+plot(mod, type="trace")
+
+alphas<-alpha(data)
+citcs<-data.frame(alphas$item.stats$r.drop)
+pseudoA<-data.frame(ahat(citcs))
+pseudoB<-data.frame(qnorm(colMeans(data)))
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
+colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
+
+plot(df$PseudoA, df$a)
+plot(df$b, df$PseudoB)
+
+lm.reg<-lm(b ~., data=df)
+ 
+
+b<-0.01479-(-1.33142*pseudoB) 
+dat<-data.frame(b, alphas$item.stats$r.drop)
+colnames(dat)<-c("b", "corrected item totals")
+###############################################################
+pseudob<-dat$b[47]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+
+pseudoa<-ahat(dat$`corrected item totals`[47])
+c <- 0
+
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+p1<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
+p1
+################################################################
+
+pseudob2<-dat$b[1]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
+  
+}
+
+pseudoa2<-ahat(dat$`corrected item totals`[1])
+c <- 0
+
+eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
+
+p2<-plot(mod, which.items=c(1), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq2, col="red"))
+p2
+
+#####################################################################
+
+pseudob3<-dat$b[54]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob3)+(0.301*pseudob3^2))*r)+((0.57-(0.009*pseudob3)+(0.19*pseudob3^2))*r)
+  
+}
+
+pseudoa3<-ahat(dat$`corrected item totals`[54])
+c <- 0
+
+eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
+
+p3<-plot(mod, which.items=c(54), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq3, col="red"))
+p3
+###############################################################################
+pseudob4<- dat$b[25]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob4)+(0.301*pseudob4^2))*r)+((0.57-(0.009*pseudob4)+(0.19*pseudob4^2))*r)
+  
+}
+
+pseudoa4<-ahat(dat$`corrected item totals`[25])
+c <- 0
+
+eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
+
+p4<-plot(mod, which.items=c(25), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq4, col="red"))
+p4
+###############################################################################
+require(gridExtra)
+grid.arrange(p1,p2,p3,p4, nrow=2, ncol=2)
+
+##############################################################################
+#Area between curves
+library(geiger)
+geiger:::.area.between.curves(x, f1, f2)
+# x is the vector of x-axis values
+# f1 the y-axis values for the first line
+# f2 the y-axis values for the second line
+
+
+
+
+```
 # Results
 
 # Discussion
