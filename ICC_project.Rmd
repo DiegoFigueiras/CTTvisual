@@ -147,9 +147,10 @@ The purpose of study 1 is to look at the visualizations resulting from @kulas201
 
 ## Procedure and methods
 
-We simulated data using @han2007wingen3 software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 50, with response categories of either correct or incorrect (1 and 0).
+We simulated data using @han2007wingen3 software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0).The mean for the a parameter was 2, and the standard deviation 0.8. The mean for parameter b was 0 and the standard deviation 0.5. 
 
 ## Results
+
 ```{r acorrected simulation, fig.cap="Functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .3, dashed = .9, dotted = .12)."}
 data<-read.csv("simulated_data.csv", header=FALSE)
 g<-abs(qnorm(mean(data$V50)))
@@ -180,7 +181,7 @@ The purpose of study 2 is to simulates a lot of test data and then generate ICCs
 The same simulated data as in study 1 was used. The mirt package was used to compute the IRT statistics. The blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with @kulas2017approximate formulas). 
 
 ## Results
-
+We calculated the area between the curves plotted using CTT parameters and the curves with IRT parameters. The average difference for all 100 curves was 0.35. 
 <!-- ## Participants -->
 
 <!-- ## Material -->
@@ -190,131 +191,26 @@ The same simulated data as in study 1 was used. The mirt package was used to com
 <!-- ## Data analysis -->
 <!-- We used `r cite_r("r-references.bib")` for all our analyses. -->
 
-```{r iccs simulation}
-data<-read.csv("simulated_data.csv", header=FALSE)
-#data$v30<-abs(data$v30-1)
-library(mirt)
-library(latticeExtra)
-
-mod<-mirt(data, 1, itemtype="2PL")
-
-pseudob<-abs(qnorm(mean(data$V50)))
-
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
-  
-}
-
-pseudoa<-ahat(.552939712)
-c <- 0
-
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p1<-plot(mod, which.items=c(50), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
-
-pseudob<-abs(qnorm(mean(data$V47)))
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
-  
-}
-pseudoa<-ahat(.173791903)
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p2<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
-pseudob<-abs(qnorm(mean(data$V21)))
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
-  
-}
-pseudoa<-ahat(.143276546)
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p3<-plot(mod, which.items=c(21), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
-
-pseudob<-abs(qnorm(mean(data$V7)))
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
-  
-}
-pseudoa<-ahat(.343460055)
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p4<-plot(mod, which.items=c(7), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
-
-require(gridExtra)
-grid.arrange(p1,p2, p3,p4, ncol=2, nrow=2)
-curve(eq, col="red", from=-100, to=100)
-
-```
-
-```{r iccs simulation}
-data<-read.csv("simulated_data.csv", header=FALSE)
-#data$v30<-abs(data$v30-1)
-library(mirt)
-library(latticeExtra)
-
-mod<-mirt(data, 1, itemtype="2PL")
-
-pseudob<-.5
 
 
-  
 
-
-pseudoa<-.7
-c <- 0
-
-eq1 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p1<-plot(mod, which.items=c(50), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq1, col="red"))
-p1
-pseudob<-.2
-pseudoa<-.9
-
-eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-p2<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq2, col="red"))
-p2
-pseudob<-.6
-pseudoa<-.3
-eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p3<-plot(mod, which.items=c(21), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq3, col="red"))
-p3
-
-pseudob<-.1
-
-pseudoa<-.4
-eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p4<-plot(mod, which.items=c(7), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq4, col="red"))
-p4
-
-require(gridExtra)
-grid.arrange(p1,p2, p3,p4, ncol=2, nrow=2)
-
-curve(eq3, col="red", from=-100, to=100)
-plot(mod, which.items=c(47))
-
-```
-```{r}
+```{r, plotting, results="hide" }
 
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
 library(mirt)
 library(latticeExtra)
 library(irtplay)
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
 
 mod<-mirt(data, 1, itemtype="2PL")
-plot(mod, type="trace")
-
+# plot(mod, type="trace")
+# 
 alphas<-alpha(data)
 citcs<-data.frame(alphas$item.stats$r.drop)
 pseudoA<-data.frame(ahat(citcs))
@@ -324,8 +220,8 @@ irt <- IRT_parms$items
 df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
 colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-plot(df$PseudoA, df$a)
-plot(df$b, df$PseudoB)
+# plot(df$PseudoA, df$a)
+# plot(df$b, df$PseudoB)
 
 lm.reg<-lm(b ~., data=df)
  
@@ -347,8 +243,7 @@ c <- 0
 
 eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
-p1<-plot(mod, which.items=c(47), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq, col="red"))
-p1
+p1<-plot(mod, which.items=c(47), main=FALSE, sub="Medium area between curves (0.36 )")+latticeExtra::layer(panel.curve(eq, col="red"))
 ################################################################
 
 pseudob2<-dat$b[1]
@@ -364,8 +259,8 @@ c <- 0
 
 eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
 
-p2<-plot(mod, which.items=c(1), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq2, col="red"))
-p2
+p2<-plot(mod, which.items=c(1),main=FALSE, sub="Low area between curves (0.03)")+latticeExtra::layer(panel.curve(eq2, col="red"))
+
 
 #####################################################################
 
@@ -382,8 +277,8 @@ c <- 0
 
 eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
 
-p3<-plot(mod, which.items=c(54), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq3, col="red"))
-p3
+p3<-plot(mod, which.items=c(54), main=FALSE, sub="Low area between curves (0.09)")+latticeExtra::layer(panel.curve(eq3, col="red"))
+
 ###############################################################################
 pseudob4<- dat$b[25]
 ahat<-function(x){
@@ -398,11 +293,11 @@ c <- 0
 
 eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
 
-p4<-plot(mod, which.items=c(25), main="Item Characteristic Curves")+latticeExtra::layer(panel.curve(eq4, col="red"))
-p4
+p4<-plot(mod, which.items=c(25), main=FALSE, sub="Big area between curves (0.81)")+latticeExtra::layer(panel.curve(eq4, col="red"))
+
 ###############################################################################
 require(gridExtra)
-grid.arrange(p1,p2,p3,p4, nrow=2, ncol=2)
+grid.arrange(p1,p2,p3,p4, top="Item Characteristic Curves",nrow=2, ncol=2)
 
 ##############################################################################
 
@@ -410,7 +305,7 @@ grid.arrange(p1,p2,p3,p4, nrow=2, ncol=2)
 
 ```
 
-```{r, AUC}
+```{r, AUC, results="hide",fig.cap="ICCs using CTT parameters"}
 #Area between curves
 #Preparing data
 library(geiger)
@@ -424,19 +319,55 @@ colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
 #calculating AUC
 theta <- matrix(seq(-6,6, by=.1))
-eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[25]*(x-df$PseudoB[25]))))))}
-cttB<-eq4(seq(-6,6, by=.1))
-eq4_irt<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[25]*(x-df$b[25]))))))}
-irtB<-eq4_irt(seq(-6,6, by=.1))
-geiger:::.area.between.curves(theta, cttB, irtB)
+# eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[25]*(x-df$PseudoB[25]))))))}
+# cttB<-eq4(seq(-6,6, by=.1))
+# eq4_irt<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[25]*(x-df$b[25]))))))}
+# irtB<-eq4_irt(seq(-6,6, by=.1))
+# geiger:::.area.between.curves(theta, cttB, irtB)
 # x is the vector of x-axis values
 # f1 the y-axis values for the first line
 # f2 the y-axis values for the second line
 
-
-
+#Looping
+auc<-rep(NA, nrow(df))
+p_ctt<-0
+p_irt<-0
+colors<-rep(c("Red", "blue","yellow","orange","purple","brown","green","pink","black", "white"), 10)
+eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[1]*(x-df$PseudoB[1]))))))}
+p_ctt<-curve(eq_CTT, xlim=c(-4,4))
+for (i in 1:nrow(df)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[i]*(x-df$PseudoB[i]))))))}
+  p_ctt[i]<-curve(eq_CTT, col=colors[i], xlim=c(-4,4), add=TRUE)
+  
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  auc[i]<-abs(geiger:::.area.between.curves(theta, cttB, irtB))
+}
+p_ctt
+arrows(3.2,0.85,2.2,0.85,col="purple")
+text(3.5,0.85, "Item 4",col="purple")
+arrows(2,0.4,1.5,0.4,col="black")
+text(2.5,0.4, "Item 24",col="black")
 
 ```
+
+```{r irt curves, results="hide",fig.cap="ICCs using IRT parameters"}
+eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[1]*(x-df$b[1]))))))}
+p_irt<-curve(eq_IRT, xlim=c(-4,4))
+
+for (i in 1:nrow(df)){
+    eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+    p_irt[i]<-curve(eq_IRT, col=colors[i], xlim=c(-4,4), add=TRUE)
+}
+
+p_irt
+arrows(3,0.8,2,0.8,col="purple")
+text(3.5,0.8, "Item 4",col="purple")
+arrows(2,0.4,1.5,0.4,col="black")
+text(2.5,0.4, "Item 24",col="black")
+```
+
 # Results
 
 # Discussion
