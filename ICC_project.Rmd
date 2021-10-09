@@ -1,20 +1,15 @@
 ---
-title             : "Comparison of ICCs using IRT and CTT parameters"
-shorttitle        : "Comparison of ICCs using IRT and CTT parameters"
+title             : "Item Characteristic Curves derived from CTT Item Statistics"
+shorttitle        : "CTT ICCs"
 author: 
   - name          : "Diego Figueiras"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
+    address       : "Dickson Hall 226"
     email         : "figueirasd1@montclair.edu"
-    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
-      - Conceptualization
-      - Writing - Original Draft Preparation
-      - Writing - Review & Editing
   - name          : "John T. Kulas"
     affiliation   : "1"
     role:
-      - Writing - Review & Editing
 
 affiliation:
   - id            : "1"
@@ -97,7 +92,7 @@ text(3,0.2, "High \n Discrimination",col="black")
 
 
 ```
-\newpage
+
 Psychometricians who examine ICCs usually do it using Item Response Theory and Rasch models to get the parameters necessary to plot the curves. In a 2PL model, these would be item difficulty and item discrimination. Item difficulty is the necessary trait level for a respondent to have a 50/50 chance to answer the item correctly. Item discrimination is the degree to which an item can differentiate among individuals with low and high levels of the trait.  From a Classical Test Theory (CTT) frame of thinking, the difficulty of an item is determined by looking at the p-values of the items, while discrimination is determined by checking the Cronbach alpha and the corrected item total correlations. Psychometricians who look at these CTT parameters don’t typically use them to plot ICCs.There is no reason for them not to, since ICCs based on CTT parameters could provide information as valuable as those based on IRT or Rasch without the need of being familiar with these models and with how to compute the necessary estimates. Fan states in summary that IRT and CTT “... framework produce very similar item and person statistics” (p.379).
 
 There is research that shows that there is little difference between the parameters of both frameworks.@hambleton1993comparison concluded that "no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences". 
@@ -109,15 +104,19 @@ He also looked at the item invariance for all models. In theory, the major advan
 What @fan1998item got on his study, however, shows empirical evidence against this supposed advantage of IRT against CTT. The CTT item difficulty and discrimination degrees of invariance were highly correlated with those of IRT, indicating that they were highly comparable. 
 
 
-@lord2012applications described a function that approximates the relationship between IRT and CTT discrimination parameters. Although this wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures, the formula was later modified by @kulas2017approximate, with the purpose of minimizing the average residual.The formula is the following:
-[INSERT R EXPONENTIAL FORMULA]
+@lord2012applications described a function that approximates the relationship between IRT parameters and the CTT discrimination index of an item-test biserial correlation:
 
-Where r is the biserial corrected item total correlation of the item. Simulations identified systematic slope and inflection differences across item with differing b values, so the formula was further changed to include the following modifiers:
+$$a_i\cong \frac{r_i}{\sqrt{1-r_i^2}}$$
 
-[INSERT FINAL FORMULA]
-Where g is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly, and it's computed like this: g=|p-0.5|. Zg is the standard normal deviation associated with g. If we visualize the results of these re-specifications of Lord's formula using p-values (difficulty) of .5, .3 (or .7), and .1 (or .9), and corrected item total correlations (discrimination) of .3, .7 and .1, respectively, we get the following:
+This formula wasn't intended for practical purposes but rather to assist in the conceptual comprehension of the discrimination parameter in IRT for people who were more familiar with CTT procedures. In an effort to move from the conceptual to a practical application, @kulas2017approximate proposed a modification that minimized the average residual (either $a_i$ or $r_i$, where $r_i$ is the *corrected* item-total *point-biserial* correlation). 
 
-```{r acorrected, fig.cap="Functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
+Simulations identified systematic slope and inflection differences across item with differing item difficulty values, so the formula was further changed to include the following modifiers This revised formula is used in the current presentation:
+
+$$\hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r-e^{-r}}{e-e^r}]$$
+
+Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "p-value" of .5). $Z_g$ is the standard normal deviation associated with $g$. The transformation of the standard p-value was recommended in order to scale this index along an interval-level metric more directly anaologous to the IRT *b* parameter. Figure XX visualizes the re-specifications of Lord's formula at p-values (difficulty) of .5, .3 (or .7), and .1 (or .9).
+
+```{r acorrected, fig.cap="Empricially derived functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
 g<-abs(qnorm(.5))
 g<-0
 r2<-.3
