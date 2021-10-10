@@ -1,5 +1,5 @@
 ---
-title             : "Item Characteristic Curves Generated from CTT Item Statistics"
+title             : "Item Characteristic Curves generated from common CTT Item Statistics"
 shorttitle        : "CTT ICCs"
 author: 
   - name          : "Diego Figueiras"
@@ -39,6 +39,7 @@ linenumbers       : no
 mask              : no
 draft             : no
 
+csl               : "apa7.csl"
 documentclass     : "apa6"
 classoption       : "man"
 output            : papaja::apa6_pdf
@@ -116,7 +117,7 @@ $$\hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r
 
 Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "p-value" of .5). $Z_g$ is the standard normal deviation associated with $g$. The transformation of the standard p-value was recommended in order to scale this index along an interval-level metric more directly anaologous to the IRT *b* parameter. Figure XX visualizes the re-specifications of Lord's formula at p-values (difficulty) of .5, .3 (or .7), and .1 (or .9).
 
-```{r acorrected, fig.cap="Empricially derived functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
+```{r acorrected, fig.cap="Empricially-derived functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
 g<-abs(qnorm(.5))
 g<-0
 r2<-.3
@@ -150,26 +151,6 @@ We simulated data using @han2007wingen3 software. Our sample was 10,000 observat
 
 ## Results
 
-```{r acorrected simulation, fig.cap="Functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .3, dashed = .9, dotted = .12)."}
-data<-read.csv("simulated_data.csv", header=FALSE)
-g<-abs(qnorm(mean(data$V50)))
-r2<-.552939712
-ahat<-function(r2){
-  r<-(((2.71828)^r2)-(2.71828)^-r2)/(2.71828-(2.71828)^r2)
-  ((0.51+(0.02*g)+(0.301*g^2))*r)
- 
-}
-
-curve(ahat, from=0, to=1, ylim=c(0, 8), xname="Corrected Item-Total Correlation", ylab="IRT a-parameter")
-g<-abs(qnorm(mean(data$V47)))
-r2<-.173791903
-curve(ahat, lty="longdash",add=TRUE )
-g<-abs(qnorm(mean(data$V2)))
-r2<-.315436055
-curve(ahat, lty="dotted", add=TRUE)
-
-```
-
 # Study 2 - Item Characteristic Curves comparisons. 
 
 The purpose of study 2 is to simulates a lot of test data and then generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
@@ -182,7 +163,7 @@ The same simulated data as in study 1 was used. The mirt package was used to com
 
 We used `r cite_r("r-references.bib")` for all our analyses. The area between ICC's was calculated between CTT-derived and IRT-derived ICCs. The average difference for all 100 curves was 0.35. 
 
-```{r, plotting, results="hide" }
+```{r plotting, results="hide" }
 
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
@@ -293,7 +274,7 @@ grid.arrange(p1,p2,p3,p4, top="Item Characteristic Curves",nrow=2, ncol=2)
 
 ```
 
-```{r, AUC, results="hide",fig.cap="ICCs using CTT parameters"}
+```{r AUC, results="hide",fig.cap="ICCs derived from only CTT parameters (with two noteworthy ICCs annotated)."}
 #Area between curves
 #Preparing data
 library(geiger)
@@ -340,7 +321,7 @@ text(2.5,0.4, "Item 24",col="black")
 
 ```
 
-```{r irt curves, results="hide",fig.cap="ICCs using IRT parameters"}
+```{r irtcurves, results="hide",fig.cap="Typical ICCs derived from IRT parameters (same noteworthy items annotated)."}
 eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[1]*(x-df$b[1]))))))}
 p_irt<-curve(eq_IRT, xlim=c(-4,4))
 

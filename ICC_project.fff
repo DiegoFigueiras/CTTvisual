@@ -10,26 +10,19 @@
 
 \centering
 \includegraphics{ICC_project_files/figure-latex/acorrected-1.pdf}
-\caption{\label{fig:acorrected}Empricially derived functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
-\end{figure*}
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{ICC_project_files/figure-latex/acorrected simulation-1.pdf}
-\caption{(\#fig:acorrected simulation)Functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .3, dashed = .9, dotted = .12).}
+\caption{\label{fig:acorrected}Empricially-derived functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{ICC_project_files/figure-latex/AUC-1.pdf}
-\caption{\label{fig:AUC}ICCs using CTT parameters}
+\caption{\label{fig:AUC}ICCs derived from only CTT parameters (with two noteworthy ICCs annotated).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
-\includegraphics{ICC_project_files/figure-latex/irt curves-1.pdf}
-\caption{(\#fig:irt curves)ICCs using IRT parameters}
+\includegraphics{ICC_project_files/figure-latex/irtcurves-1.pdf}
+\caption{\label{fig:irtcurves}Typical ICCs derived from IRT parameters (same noteworthy items annotated).}
 \end{figure*}
