@@ -1,5 +1,5 @@
 ---
-title             : "Item Characteristic Curves derived from CTT Item Statistics"
+title             : "Item Characteristic Curves Generated from CTT Item Statistics"
 shorttitle        : "CTT ICCs"
 author: 
   - name          : "Diego Figueiras"
@@ -31,11 +31,11 @@ wordcount         : "X"
 
 bibliography      : ["r-references.bib", "articles.bib"]
 
-floatsintext      : yes
+floatsintext      : no
 figurelist        : no
 tablelist         : no
 footnotelist      : no
-linenumbers       : yes
+linenumbers       : no
 mask              : no
 draft             : no
 
@@ -59,9 +59,9 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE,
 
 
 # Introduction
-Item characteristic curves are very often used by psychometricians to showcase and analyze the attributes of the item on a test or assessment. The x-axis shows a wide range of trait levels (ranging from high to low on the trait), while the y-axis displays probabilities of getting the item correct that range from 0 to 1. Each item has a curve. By looking at it, we can know the likelihood with which respondents of any trait level would answer any item correctly. If the curve is leaning towards the lower end of the trait level, this indicates that it is easy to answer the item correctly. On the contrary, if the curve is leaning towards the higher end of the trait level, this indicates that the item is difficult. If the curve is steep, this indicates high discrimination among respondents; if it is flat, it indicates no discrimination.  
+Item characteristic curves are referenced by psychometricians as visual indicators of important attributes of assessment items - most commonly *difficulty* and/or *discrimination*. Within these visual presentations the x-axis ranges along "trait" levels (by convention annotated with the greek $\theta$), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a "correct" response. From this orientation, each item within a test can be represented with a visualized "curve". By looking at it, we can know the likelihood with which respondents of any trait level would answer any item correctly. If the curve is leaning towards the lower end of the trait level, this indicates that it is easy to answer the item correctly. On the contrary, if the curve is leaning towards the higher end of the trait level, this indicates that the item is difficult. If the curve is steep, this indicates high discrimination among respondents; if it is flat, it indicates no discrimination.  
 
-```{r, include=TRUE, fig.cap="Item characteristic curve. X-axis indicates the trait level, and y-axis indicates the probability of getting the item correct.", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
+```{r, include=TRUE, fig.cap="Item characteristic curves primarily reflecting differences in discrimination.", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
 
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
@@ -169,29 +169,18 @@ r2<-.315436055
 curve(ahat, lty="dotted", add=TRUE)
 
 ```
-\newpage
-
 
 # Study 2 - Item Characteristic Curves comparisons. 
 
 The purpose of study 2 is to simulates a lot of test data and then generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
 
-## Procedure and materials
-The same simulated data as in study 1 was used. The mirt package was used to compute the IRT statistics. The blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with @kulas2017approximate formulas). 
+## Procedure and materials  
+
+The same simulated data as in study 1 was used. The mirt package was used to compute the IRT statistics. The blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with @kulas2017approximate formulas).
 
 ## Results
-We calculated the area between the curves plotted using CTT parameters and the curves with IRT parameters. The average difference for all 100 curves was 0.35. 
-<!-- ## Participants -->
 
-<!-- ## Material -->
-
-<!-- ## Procedure -->
-
-<!-- ## Data analysis -->
-<!-- We used `r cite_r("r-references.bib")` for all our analyses. -->
-
-
-
+We used `r cite_r("r-references.bib")` for all our analyses. The area between ICC's was calculated between CTT-derived and IRT-derived ICCs. The average difference for all 100 curves was 0.35. 
 
 ```{r, plotting, results="hide" }
 
