@@ -16,13 +16,10 @@ affiliation:
     institution   : "Montclair State University"
 
 
-authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
-
-  Enter author note here.
+authornote: 
 
 abstract: |
-
+  Item characteristic curves (ICCs) are visual indicators of important attributes of assessment items -*difficulty* and *discrimination*. Assessment specialists who examine Item Characteristic Curves usually do so from within the psychometric framework of either Item Response Theory or Rasch modeling.From a Classical Test Theory (CTT) orientation, item  difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p-value*). Item discrimination can be conveyed via a few CTT indices, but the most commonly calculated and consulted index is the corrected item total correlation.Assessment specialists who consult these CTT parameters don’t typically attempt to represent them visually, as is common in IRT and Rasch applications. However, there is perhaps little opposition for them not to do so, as ICCs based on CTT parameters could provide snapshot psychometric information as valuable as those gained from IRT- or Rasch-derived ICCs.Here we simulated data and plotted ICCs using IRT and CTT parameters. Our hypothesis was that the Area Between Curves of these different ICCs would be small. Area between curves for 100 items was 0.35 on average. This result indicates that curves plotted with either IRT or CTT parameters show little difference. The nature of both models is overlapping when it comes to plotting visual representations such as ICCs. Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICCs that use CTT statistics.
   
   <!-- https://tinyurl.com/ybremelq -->
   
@@ -42,7 +39,7 @@ draft             : no
 csl               : "apa7.csl"
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_word
 ---
 
 ```{r setup, include = FALSE}
@@ -93,7 +90,7 @@ Assessment specialists who examine ICCs usually do so from within the psychometr
 
 Assessment specialists who consult these CTT parameters don’t typically (to our knowledge!) attempt to represent them visually, as is common in IRT and Rasch applications. However, there is perhaps little opposition for them not to do so, as ICCs based on CTT parameters could provide snapshot psychometric information as valuable as those gained from IRT- or Rasch-derived ICCs. The largest obstacle to psychometricians regarding CTT-derived visuals is likely the concept of invariance, which refers to IRT parameter independence across item and person estimates. However, this property is often overstated, as invariance is only attained with perfect model-data fit (which never occurs), and is also only true after being subjected to linear transformation (commonly across samples). Additionally, several comparative investigations have noted commonality between IRT and CTT difficulty and discrimination estimates as well as relative stability of CTT estimates when samples are large and/or judisciously constructed [@fan1998item]. Fan in fact summarizes that the IRT and CTT frameworks “...produce very similar item and person statistics” (p.379). @hambleton1993comparison concluded that "no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences". 
 
-@fan1998item looked at the correlations between ability estimates and item difficulty in CTT and all three IRT models. These correlations were very high, generally between .80 and .90. As for item discrimination, correlations were moderate to high, with only a few being very low.[^footie] 
+@fan1998item looked at the correlations between ability estimates and item difficulty in CTT and all three IRT models. These correlations were very high, generally between .80 and .90, showing a lot of overlap between the two methodologies. As for item discrimination, correlations were moderate to high, with only a few being very low.[^footie] 
 
 [^footie]:...and in fact, as is presented below, the relationship between the IRT and CTT discrimination indices is non-linear - the correlation is an inappropriate index to capture the magnitude of this relationship.
 
@@ -102,6 +99,9 @@ Assessment specialists who consult these CTT parameters don’t typically (to ou
 What @fan1998item found in his study, however, did not support the purported invariant advantage of IRT parameters over CTT indices. Both CTT item difficulty and discrimination degrees of invariance were highly correlated with those of IRT, indicating that they were highly comparable. 
 
 >>NEED MORE - GRAB FROM OLD PAPER OR FIND NEW COMPARATIVE STUDIES
+
+There has also been occasions in which the invariance parameter has been conceptualized as a graded continuum instead of a categorical population property [@hambleton1991fundamentals;@rupp2004note]. Estimates of IRT parameters across different calibration runs can be looked at for evidence of a possible lack of invariance. This doesn't happen with CTT item parameters, since they will always be sample-dependent. This dependency, however, is greatly influenced by the sampling strategy. Large scale data, truly random sampling, and large range items could give comparable CTT item and person statistics across testing populations and occasions [@kulas2017approximate]. Additionally,there are several empirical investigations that note high levels of "invariance" of CTT estimates, in some cases surpassing IRT item estimates in their capacity to have cross-sample stability.  [@macdonald2002monte; @fan1998item].    
+An adjustment to @lord2012applications's formula giving the functional relationship between the "non-invariant" CTT and "invariant" IRT statistics becomes useful in comparing the two methodologies. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by @kulas2017approximate, noting that having a large sample that is truly random and whose items have a large range of responses can help reduce threats to CTT "invarince". 
 
 ## Relationship between IRT and CTT indices
 
@@ -128,7 +128,7 @@ ahat<-function(r2){
 }
 
 curve(ahat, from=0, to=1, ylim=c(0, 8), xname="Corrected Item-Total Correlation", ylab="IRT a-parameter")
-g<-abs(qnorm(.75))
+g<-abs(qnorm(.7))
 r2<-.7
 curve(ahat, lty="longdash",add=TRUE )
 g<-abs(qnorm(.1))
@@ -143,27 +143,16 @@ Practitioners and researchers that don't use IRT or Rasch models and instead opt
 
 # Study 1 - Estimating CTT-Derived ICCs
 
-The purpose of study 1 is to look at the visualizations resulting from @kulas2017approximate formula on simulated data. We hypothesize that the relationship between the estimated IRT a-parameter and the corrected item-total correlations will be stronger as the later deviates from 0, which would mean that the item has more discrimination. 
+The purpose of study 1 is to look at the visualizations resulting from @kulas2017approximate formula on simulated data. We hypothesize that the relationship between the estimated IRT a-parameter and the corrected item-total correlations will be stronger as the later deviates from 0, which would mean that the item has more discrimination.We additionally changed the scale of the difficulty estimates of CTT so it is on the same scale as the IRT estimates.This was done by building a regression model using the CTT a estimate to predict the IRT a-parameter. 
 
 ## Procedure and methods
 
 We simulated data using @han2007wingen3 software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0).The mean for the a parameter was 2, and the standard deviation 0.8. The mean for parameter b was 0 and the standard deviation 0.5. 
 
 ## Results
+As shown by figure 3, 
 
-# Study 2 - Evaluating the Comparability of IRT and CTT ICCs 
-
-The purpose of study 2 is to simulates a lot of test data and then generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
-
-## Procedure and materials  
-
-The same simulated data as in study 1 was used. The mirt package was used to compute the IRT statistics. The blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with @kulas2017approximate formulas).
-
-## Results
-
-We used `r cite_r("r-references.bib")` for all our analyses. The area between ICC's was calculated between CTT-derived and IRT-derived ICCs. The average difference for all 100 curves was 0.35. 
-
-```{r plotting, results="hide" }
+```{r plotting, results="hide", fig.cap="Four ICCs showcasing the difference between CTT and IRT-derivated curves at different levels." }
 
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
@@ -212,7 +201,7 @@ c <- 0
 
 eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
-p1<-plot(mod, which.items=c(47), main=FALSE, sub="Moderate DIF (area between curves = 0.36 )")+latticeExtra::layer(panel.curve(eq, col="red"))
+p1<-plot(mod, which.items=c(47), main=FALSE, sub="Moderate DIF \n(area between curves = 0.36 )", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq, col="red"))
 ################################################################
 
 pseudob2<-dat$b[1]
@@ -228,7 +217,7 @@ c <- 0
 
 eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
 
-p2<-plot(mod, which.items=c(1),main=FALSE, sub="Small DIF (area between curves = 0.03)")+latticeExtra::layer(panel.curve(eq2, col="red"))
+p2<-plot(mod, which.items=c(1),main=FALSE, sub="Small DIF \n(area between curves = 0.03)", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq2, col="red"))
 
 
 #####################################################################
@@ -246,7 +235,7 @@ c <- 0
 
 eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
 
-p3<-plot(mod, which.items=c(54), main=FALSE, sub="Small DIF (area between curves  = 0.09)")+latticeExtra::layer(panel.curve(eq3, col="red"))
+p3<-plot(mod, which.items=c(54), main=FALSE, sub="Small DIF \n(area between curves  = 0.09)", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq3, col="red"))
 
 ###############################################################################
 pseudob4<- dat$b[25]
@@ -262,7 +251,7 @@ c <- 0
 
 eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
 
-p4<-plot(mod, which.items=c(25), main=FALSE, sub="Large DIF (area between curves = 0.81)")+latticeExtra::layer(panel.curve(eq4, col="red"))
+p4<-plot(mod, which.items=c(25), main=FALSE, sub="Large DIF \n(area between curves = 0.81)", cex.sub=0.5)+latticeExtra::layer(panel.curve(eq4, col="red"))
 
 ###############################################################################
 require(gridExtra)
@@ -274,7 +263,26 @@ grid.arrange(p2,p1,p3,p4, top="Item Characteristic Curves",nrow=2, ncol=2)
 
 ```
 
-```{r AUC, results="hide",fig.cap="ICCs derived from only CTT parameters (with two noteworthy ICCs annotated)."}
+
+# Study 2 - Evaluating the Comparability of IRT and CTT ICCs 
+
+The purpose of study 2 is to simulates a lot of test data and then generate ICCs based on the IRT model and then we compare that to our CTT estimates.  
+
+## Procedure and materials  
+
+The same simulated data as in study 1 was used. The mirt package from @R-mirt was used to compute the IRT statistics. As we can see on Figure 3, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, modifying them with @kulas2017approximate formulas). 
+
+
+## Results
+
+<!-- We used `r cite_r("r-references.bib")` for all our analyses.  -->
+
+The area between ICC's was calculated between CTT-derived and IRT-derived ICCs. The average difference for all 100 curves was 0.35. As we can see in figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35. 
+For figure 5 we plotted all the 100 ICCs that use CTT parameters, and for figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure. 
+
+
+
+```{r histrogram and density, results="hide",fig.cap="Histogram of all areas between curves plotted using IRT parameters vs curves plotted using CTT parameters."}
 #Area between curves
 #Preparing data
 library(geiger)
@@ -299,6 +307,30 @@ theta <- matrix(seq(-6,6, by=.1))
 
 #Looping
 auc<-rep(NA, nrow(df))
+
+for (i in 1:nrow(df)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[i]*(x-df$PseudoB[i]))))))}
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  auc[i]<-abs(geiger:::.area.between.curves(theta, cttB, irtB))
+}
+
+h<-hist(auc, col="red", xlab="Areas Between Curves",
+   main="Histogram of Areas Between ICCs")
+xfit<-seq(min(auc),max(auc),length=40)
+yfit<-dnorm(xfit,mean=mean(auc),sd=sd(auc))
+yfit <- yfit*diff(h$mids[1:2])*length(auc)
+lines(xfit, yfit, col="blue", lwd=2)
+
+
+
+
+
+```
+
+
+```{r cttcurves, results="hide",fig.cap="ICCs derived from only CTT parameters (with two noteworthy ICCs annotated)."}
 p_ctt<-0
 p_irt<-0
 colors<-rep(c("Red", "blue","yellow","orange","purple","brown","green","pink","black", "white"), 10)
@@ -321,6 +353,7 @@ text(2.5,0.4, "Item 24",col="black")
 
 ```
 
+
 ```{r irtcurves, results="hide",fig.cap="Typical ICCs derived from IRT parameters (same noteworthy items annotated)."}
 eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[1]*(x-df$b[1]))))))}
 p_irt<-curve(eq_IRT, xlim=c(-4,4))
@@ -335,7 +368,9 @@ arrows(3,0.8,2,0.8,col="purple")
 text(3.5,0.8, "Item 4",col="purple")
 arrows(2,0.4,1.5,0.4,col="black")
 text(2.5,0.4, "Item 24",col="black")
+
 ```
+
 
 # Results
 
