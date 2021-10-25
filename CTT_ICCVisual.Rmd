@@ -19,7 +19,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE,
 data<-read.csv("simulated_data.csv", header=FALSE)#LOADING SIMULATED DATA
 library(mirt)#PACKAGE FOR IRT STUFF
 library(latticeExtra)#PACKAGE FOR MERGING PLOTS
-
+pseudob<-0 #JUST CREATING A PLACEHOLDER FOR pseudob SO THE FUNCTION BELOW CAN RUN
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
