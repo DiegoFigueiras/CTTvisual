@@ -386,9 +386,14 @@ library(descr)
 # hist(sim6means$colMeans.sim6.)
 
 
+
+###################### SIMULATION 1: ALL 0.5 ##############################
 x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim1<-data.frame(ifelse(x<0.5, 0, 1))
 sim1means<-colMeans(sim1)
+
+
+###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
 
 x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim2<-matrix(ncol=100, nrow=10000)
@@ -399,14 +404,24 @@ for(i in 1:100){
 sim2means<-colMeans(sim2)
 
 
-x<-data.frame(matrix(runif(10000, 0, 1), ncol=50, nrow=10000))
-sim4.1<-ifelse(x<0.2, 1, 0)
-sim4.2<-ifelse(x>0.8, 0, 1)
+###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
+
+x<-data.frame(matrix(rbeta(10000, 5, 2), ncol=50, nrow=10000))
+sim4.1<-matrix(ncol=50, nrow=10000)
+for(i in 1:ncol(x)){
+  
+  sim4.1[,i]<-ifelse(x[,i]<(0.02*i), 0,1)
+}
+sim4.2<-matrix(ncol=50, nrow=10000)
+for(i in 1:ncol(x)){
+  
+  sim4.2[,i]<-ifelse(x[,i]>(0.02*i), 0,1)
+}
 sim4<-cbind(sim4.1, sim4.2)
 sim4means<-colMeans(sim4)
 
 
-
+###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
 
 x<-data.frame(matrix((rbeta(10000,5,2)), ncol=100, nrow=10000))
@@ -416,6 +431,9 @@ for(i in 1:ncol(x)){
   sim5[,i]<-ifelse(x[,i]<(0.01*i), 0,1)
 }
 sim5means<-colMeans(sim5)
+
+
+###################### SIMULATION 6: SKEWED POSITIVE ##############################
 
 x<-data.frame(matrix((rbeta(10000,5,2)), ncol=100, nrow=10000))
 sim6<-matrix(ncol=100, nrow=10000)
