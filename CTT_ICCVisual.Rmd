@@ -1,10 +1,9 @@
 
 
 ```{r setup, include = FALSE}
-library("papaja")
+
 library(psych)
 library(reticulate)
-r_refs("r-references.bib")
 ```
 
 ```{r analysis-preferences}
