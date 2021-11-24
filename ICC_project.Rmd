@@ -146,7 +146,7 @@ Practitioners and researchers that don't use IRT or Rasch models and instead opt
 ## Method
 iN ORDER TO ESTIMATE THE RELATIONSHIP, WE SIMULATED ITEMS. We used 50 items but then we generated 4 different distributions of p-values. One is that they're all uniform and roughly .5 values. Second is that they're all different but uniform (.1, .2, .3.... .99). Third is that they're normally distributed around a value of .5. Fourth is that they're a inverted normal distribution centered about .5. Fifth is that it is negatively skewed. Sixth is that it is positively skewed. 
 
-```{r simluation}
+```{r simulation}
 library(descr)
 # sim1<- matrix(rnorm(500000, mean=.5, sd=1), nrow=10000, ncol=50)
 # 
