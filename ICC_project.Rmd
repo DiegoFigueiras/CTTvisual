@@ -148,250 +148,14 @@ iN ORDER TO ESTIMATE THE RELATIONSHIP, WE SIMULATED ITEMS. We used 50 items but 
 
 ```{r simulation}
 library(descr)
-# sim1<- matrix(rnorm(500000, mean=.5, sd=1), nrow=10000, ncol=50)
-# 
-# sim2<- data.frame(
-#   v1=(rnorm(10000, 0.01, sd=1)),
-#   v2=(rnorm(10000, 0.03, sd=1)),
-#   v3=(rnorm(10000, 0.05, sd=1)),
-#   v4=(rnorm(10000, 0.07, sd=1)),
-#   v5=(rnorm(10000, 0.09, sd=1)),
-#   v6=(rnorm(10000, 0.11, sd=1)),
-#   v7=(rnorm(10000, 0.13, sd=1)),
-#   v8=(rnorm(10000, 0.15, sd=1)),
-#   v9=(rnorm(10000, 0.17, sd=1)),
-#   v10=(rnorm(10000, 0.19, sd=1)),
-#   v11=(rnorm(10000, 0.21, sd=1)),
-#   v12=(rnorm(10000, 0.23, sd=1)),
-#   v13=(rnorm(10000, 0.25, sd=1)),
-#   v14=(rnorm(10000, 0.27, sd=1)),
-#   v15=(rnorm(10000, 0.29, sd=1)),
-#   v16=(rnorm(10000, 0.31, sd=1)),
-#   v17=(rnorm(10000, 0.33, sd=1)),
-#   v18=(rnorm(10000, 0.35, sd=1)),
-#   v19=(rnorm(10000, 0.37, sd=1)),
-#   v20=(rnorm(10000, 0.39, sd=1)),
-#   v21=(rnorm(10000, 0.41, sd=1)),
-#   v22=(rnorm(10000, 0.43, sd=1)),
-#   v23=(rnorm(10000, 0.45, sd=1)),
-#   v24=(rnorm(10000, 0.47, sd=1)),
-#   v25=(rnorm(10000, 0.49, sd=1)),
-#   v26=(rnorm(10000, 0.51, sd=1)),
-#   v27=(rnorm(10000, 0.53, sd=1)),
-#   v28=(rnorm(10000, 0.55, sd=1)),
-#   v29=(rnorm(10000, 0.57, sd=1)),
-#   v30=(rnorm(10000, 0.59, sd=1)),
-#   v31=(rnorm(10000, 0.61, sd=1)),
-#   v32=(rnorm(10000, 0.63, sd=1)),
-#   v33=(rnorm(10000, 0.65, sd=1)),
-#   v34=(rnorm(10000, 0.67, sd=1)),
-#   v35=(rnorm(10000, 0.69, sd=1)),
-#   v36=(rnorm(10000, 0.71, sd=1)),
-#   v37=(rnorm(10000, 0.73, sd=1)),
-#   v38=(rnorm(10000, 0.75, sd=1)),
-#   v39=(rnorm(10000, 0.77, sd=1)),
-#   v40=(rnorm(10000, 0.79, sd=1)),
-#   v41=(rnorm(10000, 0.81, sd=1)),
-#   v42=(rnorm(10000, 0.83, sd=1)),
-#   v43=(rnorm(10000, 0.85, sd=1)),
-#   v44=(rnorm(10000, 0.87, sd=1)),
-#   v45=(rnorm(10000, 0.89, sd=1)),
-#   v46=(rnorm(10000, 0.91, sd=1)),
-#   v47=(rnorm(10000, 0.93, sd=1)),
-#   v48=(rnorm(10000, 0.95, sd=1)),
-#   v49=(rnorm(10000, 0.97, sd=1)),
-#   v50=(rnorm(10000, 0.99, sd=1))
-#   
-#   
-# )
-# 
-# sim3<-
-# 
-# sim4<-data.frame(
-#   v1=(rnorm(10000, 0.1, sd=1)),
-#   v2=(rnorm(10000, 0.1, sd=1)),
-#   v3=(rnorm(10000, 0.1, sd=1)),
-#   v4=(rnorm(10000, 0.1, sd=1)),
-#   v5=(rnorm(10000, 0.1, sd=1)),
-#   v6=(rnorm(10000, 0.1, sd=1)),
-#   v7=(rnorm(10000, 0.1, sd=1)),
-#   v8=(rnorm(10000, 0.1, sd=1)),
-#   v9=(rnorm(10000, 0.1, sd=1)),
-#   v10=(rnorm(10000, 0.2, sd=1)),
-#   v11=(rnorm(10000, 0.2, sd=1)),
-#   v12=(rnorm(10000, 0.2, sd=1)),
-#   v13=(rnorm(10000, 0.2, sd=1)),
-#   v14=(rnorm(10000, 0.2, sd=1)),
-#   v15=(rnorm(10000, 0.2, sd=1)),
-#   v16=(rnorm(10000, 0.2, sd=1)),
-#   v17=(rnorm(10000, 0.2, sd=1)),
-#   v18=(rnorm(10000, 0.2, sd=1)),
-#   v19=(rnorm(10000, 0.2, sd=1)),
-#   v20=(rnorm(10000, 0.2, sd=1)),
-#   v21=(rnorm(10000, 0.2, sd=1)),
-#   v22=(rnorm(10000, 0.2, sd=1)),
-#   v23=(rnorm(10000, 0.2, sd=1)),
-#   v24=(rnorm(10000, 0.2, sd=1)),
-#   v25=(rnorm(10000, 0.2, sd=1)),
-#   v26=(rnorm(10000, 0.8, sd=1)),
-#   v27=(rnorm(10000, 0.8, sd=1)),
-#   v28=(rnorm(10000, 0.8, sd=1)),
-#   v29=(rnorm(10000, 0.8, sd=1)),
-#   v30=(rnorm(10000, 0.8, sd=1)),
-#   v31=(rnorm(10000, 0.8, sd=1)),
-#   v32=(rnorm(10000, 0.8, sd=1)),
-#   v33=(rnorm(10000, 0.8, sd=1)),
-#   v34=(rnorm(10000, 0.8, sd=1)),
-#   v35=(rnorm(10000, 0.9, sd=1)),
-#   v36=(rnorm(10000, 0.9, sd=1)),
-#   v37=(rnorm(10000, 0.9, sd=1)),
-#   v38=(rnorm(10000, 0.9, sd=1)),
-#   v39=(rnorm(10000, 0.9, sd=1)),
-#   v40=(rnorm(10000, 0.9, sd=1)),
-#   v41=(rnorm(10000, 0.9, sd=1)),
-#   v42=(rnorm(10000, 0.9, sd=1)),
-#   v43=(rnorm(10000, 0.9, sd=1)),
-#   v44=(rnorm(10000, 0.9, sd=1)),
-#   v45=(rnorm(10000, 0.9, sd=1)),
-#   v46=(rnorm(10000, 0.9, sd=1)),
-#   v47=(rnorm(10000, 0.9, sd=1)),
-#   v48=(rnorm(10000, 0.9, sd=1)),
-#   v49=(rnorm(10000, 0.97, sd=1)),
-#   v50=(rnorm(10000, 0.99, sd=1))
-#   
-#   
-# )
-# 
-# 
-# sim5<- data.frame(
-#   v1=(rnorm(10000, 0.01, sd=1)),
-#   v2=(rnorm(10000, 0.03, sd=1)),
-#   v3=(rnorm(10000, 0.05, sd=1)),
-#   v4=(rnorm(10000, 0.07, sd=1)),
-#   v5=(rnorm(10000, 0.09, sd=1)),
-#   v6=(rnorm(10000, 0.11, sd=1)),
-#   v7=(rnorm(10000, 0.13, sd=1)),
-#   v8=(rnorm(10000, 0.15, sd=1)),
-#   v9=(rnorm(10000, 0.17, sd=1)),
-#   v10=(rnorm(10000, 0.19, sd=1)),
-#   v11=(rnorm(10000, 0.21, sd=1)),
-#   v12=(rnorm(10000, 0.23, sd=1)),
-#   v13=(rnorm(10000, 0.25, sd=1)),
-#   v14=(rnorm(10000, 0.27, sd=1)),
-#   v15=(rnorm(10000, 0.29, sd=1)),
-#   v16=(rnorm(10000, 0.31, sd=1)),
-#   v17=(rnorm(10000, 0.33, sd=1)),
-#   v18=(rnorm(10000, 0.35, sd=1)),
-#   v19=(rnorm(10000, 0.37, sd=1)),
-#   v20=(rnorm(10000, 0.39, sd=1)),
-#   v21=(rnorm(10000, 0.41, sd=1)),
-#   v22=(rnorm(10000, 0.43, sd=1)),
-#   v23=(rnorm(10000, 0.45, sd=1)),
-#   v24=(rnorm(10000, 0.47, sd=1)),
-#   v25=(rnorm(10000, 0.49, sd=1)),
-#   v26=(rnorm(10000, 0.51, sd=1)),
-#   v27=(rnorm(10000, 0.53, sd=1)),
-#   v28=(rnorm(10000, 0.55, sd=1)),
-#   v29=(rnorm(10000, 0.6, sd=1)),
-#   v30=(rnorm(10000, 0.6, sd=1)),
-#   v31=(rnorm(10000, 0.7, sd=1)),
-#   v32=(rnorm(10000, 0.7, sd=1)),
-#   v33=(rnorm(10000, 0.8, sd=1)),
-#   v34=(rnorm(10000, 0.8, sd=1)),
-#   v35=(rnorm(10000, 0.91, sd=1)),
-#   v36=(rnorm(10000, 0.91, sd=1)),
-#   v37=(rnorm(10000, 0.91, sd=1)),
-#   v38=(rnorm(10000, 0.91, sd=1)),
-#   v39=(rnorm(10000, 0.91, sd=1)),
-#   v40=(rnorm(10000, 0.91, sd=1)),
-#   v41=(rnorm(10000, 0.91, sd=1)),
-#   v42=(rnorm(10000, 0.91, sd=1)),
-#   v43=(rnorm(10000, 0.91, sd=1)),
-#   v44=(rnorm(10000, 0.91, sd=1)),
-#   v45=(rnorm(10000, 0.91, sd=1)),
-#   v46=(rnorm(10000, 0.91, sd=1)),
-#   v47=(rnorm(10000, 0.93, sd=1)),
-#   v48=(rnorm(10000, 0.95, sd=1)),
-#   v49=(rnorm(10000, 0.97, sd=1)),
-#   v50=(rnorm(10000, 0.99, sd=1))
-#   
-#   
-# )
-# 
-# sim6<- data.frame(
-#   v1=(rnorm(10000, 0.01, sd=1)),
-#   v2=(rnorm(10000, 0.03, sd=1)),
-#   v3=(rnorm(10000, 0.05, sd=1)),
-#   v4=(rnorm(10000, 0.07, sd=1)),
-#   v5=(rnorm(10000, 0.09, sd=1)),
-#   v6=(rnorm(10000, 0.09, sd=1)),
-#   v7=(rnorm(10000, 0.09, sd=1)),
-#   v8=(rnorm(10000, 0.09, sd=1)),
-#   v9=(rnorm(10000, 0.09, sd=1)),
-#   v10=(rnorm(10000, 0.09, sd=1)),
-#   v11=(rnorm(10000, 0.09, sd=1)),
-#   v12=(rnorm(10000, 0.09, sd=1)),
-#   v13=(rnorm(10000, 0.09, sd=1)),
-#   v14=(rnorm(10000, 0.09, sd=1)),
-#   v15=(rnorm(10000, 0.09, sd=1)),
-#   v16=(rnorm(10000, 0.09, sd=1)),
-#   v17=(rnorm(10000, 0.09, sd=1)),
-#   v18=(rnorm(10000, 0.09, sd=1)),
-#   v19=(rnorm(10000, 0.09, sd=1)),
-#   v20=(rnorm(10000, 0.09, sd=1)),
-#   v21=(rnorm(10000, 0.09, sd=1)),
-#   v22=(rnorm(10000, 0.2, sd=1)),
-#   v23=(rnorm(10000, 0.2, sd=1)),
-#   v24=(rnorm(10000, 0.3, sd=1)),
-#   v25=(rnorm(10000, 0.3, sd=1)),
-#   v26=(rnorm(10000, 0.3, sd=1)),
-#   v27=(rnorm(10000, 0.4, sd=1)),
-#   v28=(rnorm(10000, 0.4, sd=1)),
-#   v29=(rnorm(10000, 0.57, sd=1)),
-#   v30=(rnorm(10000, 0.59, sd=1)),
-#   v31=(rnorm(10000, 0.61, sd=1)),
-#   v32=(rnorm(10000, 0.63, sd=1)),
-#   v33=(rnorm(10000, 0.65, sd=1)),
-#   v34=(rnorm(10000, 0.67, sd=1)),
-#   v35=(rnorm(10000, 0.69, sd=1)),
-#   v36=(rnorm(10000, 0.71, sd=1)),
-#   v37=(rnorm(10000, 0.73, sd=1)),
-#   v38=(rnorm(10000, 0.75, sd=1)),
-#   v39=(rnorm(10000, 0.77, sd=1)),
-#   v40=(rnorm(10000, 0.79, sd=1)),
-#   v41=(rnorm(10000, 0.81, sd=1)),
-#   v42=(rnorm(10000, 0.83, sd=1)),
-#   v43=(rnorm(10000, 0.85, sd=1)),
-#   v44=(rnorm(10000, 0.87, sd=1)),
-#   v45=(rnorm(10000, 0.89, sd=1)),
-#   v46=(rnorm(10000, 0.91, sd=1)),
-#   v47=(rnorm(10000, 0.93, sd=1)),
-#   v48=(rnorm(10000, 0.95, sd=1)),
-#   v49=(rnorm(10000, 0.97, sd=1)),
-#   v50=(rnorm(10000, 0.99, sd=1))
-#   
-#   
-# )
-# sim1means<- data.frame(colMeans(sim1))  
-# sim2means<-data.frame(colMeans(sim2)) 
-# sim4means<-data.frame(colMeans(sim4))
-# sim5means<-data.frame(colMeans(sim5))
-# sim6means<-data.frame(colMeans(sim6))
-# 
-# par(mfrow=c(2,3))
-# hist(sim1means$colMeans.sim1., xlim=c(0,1))
-# hist(sim2means$colMeans.sim2.)
-# hist(sim4means$colMeans.sim4.)
-# hist(sim5means$colMeans.sim5.)
-# hist(sim6means$colMeans.sim6.)
 
-
+par(mfrow=c(3,2))
 
 ###################### SIMULATION 1: ALL 0.5 ##############################
 x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim1<-data.frame(ifelse(x<0.5, 0, 1))
 sim1means<-colMeans(sim1)
-
+hist(sim1means)
 
 ###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
 
@@ -402,7 +166,7 @@ for(i in 1:100){
 }
 
 sim2means<-colMeans(sim2)
-
+hist(sim2means)
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 y<-data.frame(matrix(rnorm(100,0,1)))
@@ -412,6 +176,7 @@ for(i in 1:100){
   sim3[,i]<-ifelse(x[,i]<y[i,],0,1)
 }
 sim3means<-colMeans(sim3)
+hist(sim3means)
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 
@@ -428,6 +193,7 @@ for(i in 1:ncol(x)){
 }
 sim4<-cbind(sim4.1, sim4.2)
 sim4means<-colMeans(sim4)
+hist(sim4means)
 
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
@@ -440,6 +206,7 @@ for(i in 1:ncol(x)){
   sim5[,i]<-ifelse(x[,i]<(0.01*i), 0,1)
 }
 sim5means<-colMeans(sim5)
+hist(sim5means)
 
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
@@ -451,7 +218,7 @@ for(i in 1:ncol(x)){
   sim6[,i]<-ifelse(x[,i]>(0.01*i), 0,1)
 }
 sim6means<-colMeans(sim6)
-
+hist(sim6means)
 
 ```
 
