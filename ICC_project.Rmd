@@ -404,6 +404,15 @@ for(i in 1:100){
 sim2means<-colMeans(sim2)
 
 
+###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
+y<-data.frame(matrix(rnorm(100,0,1)))
+x<-data.frame(matrix(rnorm(10000,0,1), ncol=100, nrow=10000))
+sim3<-matrix(ncol=100, nrow=10000)
+for(i in 1:100){
+  sim3[,i]<-ifelse(x[,i]<y[i,],0,1)
+}
+sim3means<-colMeans(sim3)
+
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 
 x<-data.frame(matrix(rbeta(10000, 5, 2), ncol=50, nrow=10000))
