@@ -148,14 +148,16 @@ iN ORDER TO ESTIMATE THE RELATIONSHIP, WE SIMULATED ITEMS. We used 50 items but 
 
 ```{r simulation}
 library(descr)
-
-par(mfrow=c(3,2))
+library(ggplot2)         ## to visualize p-value distributions
 
 ###################### SIMULATION 1: ALL 0.5 ##############################
 x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim1<-data.frame(ifelse(x<0.5, 0, 1))
-sim1means<-colMeans(sim1)
-hist(sim1means)
+sim1means<-as.data.frame(colMeans(sim1))
+colnames(sim1means)[1] <- "pvalues"
+
+sim1means$cond<-"One"
+
 
 ###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
 
@@ -165,8 +167,11 @@ for(i in 1:100){
   sim2[,i]<-ifelse(x[,i]<0.01*i,0,1)
 }
 
-sim2means<-colMeans(sim2)
-hist(sim2means)
+sim2means<-as.data.frame(colMeans(sim2))
+colnames(sim2means)[1] <- "pvalues"
+
+sim2means$cond<-"Two"
+
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 y<-data.frame(matrix(rnorm(100,0,1)))
@@ -175,8 +180,11 @@ sim3<-matrix(ncol=100, nrow=10000)
 for(i in 1:100){
   sim3[,i]<-ifelse(x[,i]<y[i,],0,1)
 }
-sim3means<-colMeans(sim3)
-hist(sim3means)
+sim3means<-as.data.frame(colMeans(sim3))
+colnames(sim3means)[1] <- "pvalues"
+
+sim3means$cond<-"Three"
+
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 
@@ -192,8 +200,11 @@ for(i in 1:ncol(x)){
   sim4.2[,i]<-ifelse(x[,i]>(0.02*i), 0,1)
 }
 sim4<-cbind(sim4.1, sim4.2)
-sim4means<-colMeans(sim4)
-hist(sim4means)
+sim4means<-as.data.frame(colMeans(sim4))
+colnames(sim4means)[1] <- "pvalues"
+
+sim4means$cond<-"Four"
+
 
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
@@ -205,8 +216,11 @@ for(i in 1:ncol(x)){
   
   sim5[,i]<-ifelse(x[,i]<(0.01*i), 0,1)
 }
-sim5means<-colMeans(sim5)
-hist(sim5means)
+sim5means<-as.data.frame(colMeans(sim5))
+colnames(sim5means)[1] <- "pvalues"
+
+sim5means$cond<-"Five"
+
 
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
@@ -217,8 +231,17 @@ for(i in 1:ncol(x)){
   
   sim6[,i]<-ifelse(x[,i]>(0.01*i), 0,1)
 }
-sim6means<-colMeans(sim6)
-hist(sim6means)
+sim6means<-as.data.frame(colMeans(sim6))
+colnames(sim6means)[1] <- "pvalues"
+
+sim6means$cond<-"Six"
+
+##################################################################################
+
+together <- rbind(sim1means, sim2means, sim3means, sim4means, sim5means, sim6means)
+
+
+ggplot(together, aes(x=pvalues)) + geom_histogram() + facet_grid(cond ~ .)
 
 ```
 
