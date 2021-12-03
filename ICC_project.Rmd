@@ -141,10 +141,10 @@ As we can see, the higher the corrected item-total correlations, the higher the 
 Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics. This study intends to show evidence of the overlapping nature of CTT and IRT parameters when it comes to plotting ICCs. 
 
 
-# Study 1A - EsTABLISHING RELATIONSHIP BETWEEN THE irt AND ctt difficulty indices. 
+# Study 1A - Establishing relationship between the IRT and CTT difficulty indices. 
 
 ## Method
-iN ORDER TO ESTIMATE THE RELATIONSHIP, WE SIMULATED ITEMS. We used 50 items but then we generated 4 different distributions of p-values. One is that they're all uniform and roughly .5 values. Second is that they're all different but uniform (.1, .2, .3.... .99). Third is that they're normally distributed around a value of .5. Fourth is that they're a inverted normal distribution centered about .5. Fifth is that it is negatively skewed. Sixth is that it is positively skewed. 
+In order to estimate the relationship, we simulated items. We used 100 items but then we generated 4 different distributions of p-values. One is that they're all uniform and roughly .5 values. Second is that they're all different but uniform (.1, .2, .3.... .99). Third is that they're normally distributed around a value of .5. Fourth is that they're a inverted normal distribution centered about .5. Fifth is that it is negatively skewed. Sixth is that it is positively skewed. 
 
 ```{r simulation}
 library(descr)
@@ -174,16 +174,21 @@ sim2means$cond<-"Two"
 
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
-y<-data.frame(matrix(rnorm(100,0,1)))
+y<-data.frame(matrix(rnorm(100,.5,.2)))
 x<-data.frame(matrix(rnorm(10000,0,1), ncol=100, nrow=10000))
+x2<-data.frame(matrix(rnorm(10000,0,1), ncol=100, nrow=10000))
 sim3<-matrix(ncol=100, nrow=10000)
-for(i in 1:100){
-  sim3[,i]<-ifelse(x[,i]<y[i,],0,1)
-}
-sim3means<-as.data.frame(colMeans(sim3))
-colnames(sim3means)[1] <- "pvalues"
 
-sim3means$cond<-"Three"
+for(i in 1:100){
+  sim3[,i]<-sample(0:1, 10000, prob=c(y[i,], abs(y[i,]-1)), replace=TRUE)
+}
+
+
+
+sim3means<-as.data.frame(colMeans(sim3))
+
+
+
 
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
