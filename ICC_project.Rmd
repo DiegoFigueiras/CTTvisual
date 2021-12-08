@@ -146,6 +146,8 @@ Practitioners and researchers that don't use IRT or Rasch models and instead opt
 ## Method
 In order to estimate the relationship, we simulated items. We used 100 items but then we generated 4 different distributions of p-values. One is that they're all uniform and roughly .5 values. Second is that they're all different but uniform (.1, .2, .3.... .99). Third is that they're normally distributed around a value of .5. Fourth is that they're a inverted normal distribution centered about .5. Fifth is that it is negatively skewed. Sixth is that it is positively skewed. 
 
+Then we computed a regression predicting the b-parameters using the p-values on each simulation separately. 
+
 ```{r simulation}
 library(descr)
 library(ggplot2)         ## to visualize p-value distributions
@@ -250,7 +252,34 @@ ggplot(together, aes(x=pvalues)) + geom_histogram() + facet_grid(cond ~ .)
 
 ```
 
+```{r comparing difficulties of IRT vs CTT using simulation1}
 
+
+library(mirt)
+library(latticeExtra)
+pseudob<-abs(qnorm(.5))
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.3)
+c <- 0
+#change pseudob in this line for a scale that allows negative numbers
+p <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+
+curve(p, from=-5, to=5, ylim=c(0, 1), main="Item Characteristic Curves", xlab="Level of Trait")
+pseudob<-abs(qnorm(.2))
+pseudoa<-ahat(.7)
+curve(p, lty="longdash", add=TRUE)
+arrows(-3,0.4,-1.5,0.4,col="black")
+text(-3.8,0.4, "Low \n Discrimination",col="black")
+arrows(2,0.2,0.45,0.2,col="black")
+text(3,0.2, "High \n Discrimination",col="black")
+
+
+```
 
 
 
