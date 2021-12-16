@@ -245,7 +245,7 @@ sim6means$cond<-"Six"
 
 ##################################################################################
 
-together <- rbind(sim1means, sim2means, sim3means, sim4means, sim5means, sim6means)
+# together <- rbind(sim1means, sim2means, sim3means, sim4means, sim5means, sim6means)
 
 
 ggplot(together, aes(x=pvalues)) + geom_histogram() + facet_grid(cond ~ .)
