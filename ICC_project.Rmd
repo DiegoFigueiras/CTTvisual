@@ -167,6 +167,12 @@ x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim2<-matrix(ncol=100, nrow=10000)
 for(i in 1:100){
   sim2[,i]<-ifelse(x[,i]<0.01*i,0,1)
+  if(sum(sim2[,i])==0){
+    sim2[,i][i]<-1
+  }
+  if(sum(sim2[,i])==10000){
+    sim2[,i][i]<-0
+  }
 }
 
 sim2means<-as.data.frame(colMeans(sim2))
@@ -200,11 +206,23 @@ sim4.1<-matrix(ncol=50, nrow=10000)
 for(i in 1:ncol(x)){
   
   sim4.1[,i]<-ifelse(x[,i]<(0.02*i), 0,1)
+  if(sum(sim4.1[,i])==0){
+    sim4.1[,i][i]<-1
+  }
+  if(sum(sim4.1[,i])==10000){
+    sim4.1[,i][i]<-0
+  }
 }
 sim4.2<-matrix(ncol=50, nrow=10000)
 for(i in 1:ncol(x)){
   
   sim4.2[,i]<-ifelse(x[,i]>(0.02*i), 0,1)
+  if(sum(sim4.2[,i])==0){
+    sim4.2[,i][i]<-1
+  }
+  if(sum(sim4.2[,i])==10000){
+    sim4.2[,i][i]<-0
+  }
 }
 sim4<-cbind(sim4.1, sim4.2)
 sim4means<-as.data.frame(colMeans(sim4))
@@ -222,6 +240,12 @@ sim5<-matrix(ncol=100, nrow=10000)
 for(i in 1:ncol(x)){
   
   sim5[,i]<-ifelse(x[,i]<(0.01*i), 0,1)
+  if(sum(sim5[,i])==0){
+    sim5[,i][i]<-1
+  }
+  if(sum(sim5[,i])==10000){
+    sim5[,i][i]<-0
+  }
 }
 sim5means<-as.data.frame(colMeans(sim5))
 colnames(sim5means)[1] <- "pvalues"
@@ -237,6 +261,12 @@ sim6<-matrix(ncol=100, nrow=10000)
 for(i in 1:ncol(x)){
   
   sim6[,i]<-ifelse(x[,i]>(0.01*i), 0,1)
+  if(sum(sim6[,i])==0){
+    sim6[,i][i]<-1
+  }
+  if(sum(sim6[,i])==10000){
+    sim6[,i][i]<-0
+  }
 }
 sim6means<-as.data.frame(colMeans(sim6))
 colnames(sim6means)[1] <- "pvalues"
@@ -245,7 +275,7 @@ sim6means$cond<-"Six"
 
 ##################################################################################
 
-# together <- rbind(sim1means, sim2means, sim3means, sim4means, sim5means, sim6means)
+together <- rbind(sim1means, sim2means, sim3means, sim4means, sim5means, sim6means)
 
 
 ggplot(together, aes(x=pvalues)) + geom_histogram() + facet_grid(cond ~ .)
