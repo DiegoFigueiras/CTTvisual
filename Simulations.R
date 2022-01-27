@@ -15,13 +15,17 @@ sim1means$cond<-"One"
 
 x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim2<-matrix(ncol=100, nrow=10000)
+random<-sample(5000)
 for(i in 1:100){
   sim2[,i]<-ifelse(x[,i]<0.01*i,0,1)
   if(sum(sim2[,i])==0){
-    sim2[,i][i]<-1
+    sim2[,i][random]<-1
+
+    
   }
   if(sum(sim2[,i])==10000){
     sim2[,i][i]<-0
+    
   }
 }
 
@@ -85,7 +89,7 @@ sim4means$cond<-"Four"
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
 
-x<-data.frame(matrix((rbeta(10000,5,2)), ncol=100, nrow=10000))
+x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
 sim5<-matrix(ncol=100, nrow=10000)
 for(i in 1:ncol(x)){
   
@@ -106,7 +110,7 @@ sim5means$cond<-"Five"
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
 
-x<-data.frame(matrix((rbeta(10000,5,2)), ncol=100, nrow=10000))
+x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
 sim6<-matrix(ncol=100, nrow=10000)
 for(i in 1:ncol(x)){
   
@@ -132,9 +136,51 @@ ggplot(together, aes(x=pvalues)) + geom_histogram() + facet_grid(cond ~ .)
 
 
 
+
+
+############################## Regression for simulation 1 #########################################
+
+
+pseudob<-data.frame(qnorm(sim1means$pvalues))
+pvalues<-data.frame(sim1means$pvalues)
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+library(psych)
+
+alphas<-alpha(sim1)
+pseudoA<-data.frame(ahat(alphas$item.stats$r.drop))
+
+mod<-mirt(data.frame(sim2), 1, itemtype="2PL")
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(pseudob, pvalues,pseudoA, irt))
+colnames(df)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
+
+reg<-lm(b ~ pseudob, df)
+summary(reg)
+coef(reg)
+reg2<-lm(b ~ pvalues, df)
+summary(reg2)
+coef(reg2)
+
+library(tidyverse)
+df%>%ggplot(aes(x=b, y=pvalues))+
+  geom_point()+
+  geom_text(aes(label=pvalues))
+
+
+
+
+
 ################################ Regressions for simulation 2 #######################################
 
 pseudob<-data.frame(qnorm(sim2means$pvalues))
+pvalues<-data.frame(sim2means$pvalues)
 
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -150,15 +196,56 @@ pseudoA<-data.frame(ahat(alphas$item.stats$r.drop))
 mod<-mirt(data.frame(sim2), 1, itemtype="2PL")
 IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
 irt <- IRT_parms$items
+df<-as.data.frame(cbind(pseudob, pvalues,pseudoA, irt))
+colnames(df)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
 
-
+reg<-lm(b ~ pseudob, df)
+summary(reg)
+coef(reg)
+reg2<-lm(b ~ pvalues, df)
+summary(reg2)
+coef(reg2)
                     
+library(tidyverse)
+df%>%ggplot(aes(x=b, y=pvalues))+
+  geom_point()+
+  geom_text(aes(label=pvalues))
 
 
 
+################################# Regression for simulation 3 ####################################
 
+pseudob<-data.frame(qnorm(sim3means$pvalues))
+pvalues<-data.frame(sim3means$pvalues)
 
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+library(psych)
 
+alphas<-alpha(sim3)
+pseudoA<-data.frame(ahat(alphas$item.stats$r.drop))
+
+mod<-mirt(data.frame(sim3), 1, itemtype="2PL")
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(pseudob, pvalues,pseudoA, irt))
+colnames(df)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
+
+reg<-lm(b ~ pseudob, df)
+summary(reg)
+coef(reg)
+reg2<-lm(b ~ pvalues, df)
+summary(reg2)
+coef(reg2)
+
+library(tidyverse)
+df%>%ggplot(aes(x=b, y=pvalues))+
+  geom_point()+
+  geom_text(aes(label=pvalues))
 
 
 
