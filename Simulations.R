@@ -42,9 +42,9 @@ for(i in 1:100){
 }
 
 
-
+colnames(sim3means)[1] <- "pvalues"
 sim3means<-as.data.frame(colMeans(sim3))
-
+sim3means$cond<-"Three"
 
 
 
@@ -130,6 +130,29 @@ together <- rbind(sim1means, sim2means, sim3means, sim4means, sim5means, sim6mea
 
 ggplot(together, aes(x=pvalues)) + geom_histogram() + facet_grid(cond ~ .)
 
+
+
+################################ Regressions for simulation 2 #######################################
+
+pseudob<-data.frame(qnorm(sim2means$pvalues))
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+library(psych)
+
+alphas<-alpha(sim2)
+pseudoA<-data.frame(ahat(alphas$item.stats$r.drop))
+
+mod<-mirt(data.frame(sim2), 1, itemtype="2PL")
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+
+
+                    
 
 
 
