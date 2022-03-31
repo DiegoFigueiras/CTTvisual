@@ -55,6 +55,10 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE, message=FALSE)
 ```
 
+Notes: 
+1. Describe all the analysis we did for the pseudoB scale (regressions with different simulated distributions)
+
+
 Item characteristic curves are frequently referenced by psychometricians as visual indicators of important attributes of assessment items - most frequently *difficulty* and *discrimination*. Within these visual presentations the x-axis ranges along "trait" levels (by convention annotated with the greek $\theta$), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a "correct" response. From this visualization, the observer extracts the likelihood that respondents of any trait level would answer a focal item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., "left" on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated differently, it does not take much $\theta$ to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. If the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination.  
 
 ```{r, include=TRUE, fig.cap="Item characteristic curves primarily reflecting differences in discrimination.", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
@@ -144,9 +148,9 @@ Practitioners and researchers that don't use IRT or Rasch models and instead opt
 # Study 1A - Establishing relationship between the IRT and CTT difficulty indices. 
 
 ## Method
-In order to estimate the relationship, we simulated items. We used 100 items but then we generated 4 different distributions of p-values. One is that they're all uniform and roughly .5 values. Second is that they're all different but uniform (.1, .2, .3.... .99). Third is that they're normally distributed around a value of .5. Fourth is that they're a inverted normal distribution centered about .5. Fifth is that it is negatively skewed. Sixth is that it is positively skewed. 
+In order to estimate the relationship, we simulated items. We used 100 items and generated 4 different distributions of the p-values for each item. The first distribution was uniform, with all p-values set roughly at 0.5. The second distribution was also uniform, but with the p-values all being different, ranging from 0.1 to 0.99. The third distribution was a normal distribution of p-values, centered around 0.5. The fourth distribution was an inverted normal distribution also centered around 0.5. The fifth distribution was a left skewed distribution of p-values, and the sixth was right skewed. 
 
-Then we computed a regression predicting the b-parameters using the p-values on each simulation separately. 
+Then we computed regressions predicting the b-parameters using the standard normal deviate associated with the p-values on each simulation separately. The resulting regression coefficients for all simulations was approximately 2 and 0, indicating that our scaling was not sample dependent. 
 
 
 
@@ -317,7 +321,7 @@ The same simulated data as in study 1 was used. The mirt package from @R-mirt wa
 
 ## Results
 
-We used `r cite_r("r-references.bib")` for all our analyses.  -->
+We used `r cite_r("r-references.bib")` for all our analyses.
 
 The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35. 
 For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure. 
