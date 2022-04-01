@@ -55,8 +55,9 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE, message=FALSE)
 ```
 
-Notes: 
-1. Describe all the analysis we did for the pseudoB scale (regressions with different simulated distributions)
+
+Notes: Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method. 
+
 
 
 Item characteristic curves are frequently referenced by psychometricians as visual indicators of important attributes of assessment items - most frequently *difficulty* and *discrimination*. Within these visual presentations the x-axis ranges along "trait" levels (by convention annotated with the greek $\theta$), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a "correct" response. From this visualization, the observer extracts the likelihood that respondents of any trait level would answer a focal item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., "left" on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated differently, it does not take much $\theta$ to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. If the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination.  
@@ -359,9 +360,11 @@ for (i in 1:nrow(df)){
   cttB<-eq_CTT(seq(-6,6, by=.1))
   eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
   irtB<-eq_IRT(seq(-6,6, by=.1))
-  auc[i]<-abs(geiger:::.area.between.curves(theta, cttB, irtB))
+  f1 <- approxfun(theta, cttB-irtB)     # piecewise linear function
+  f2 <- function(x) abs(f1(x))                 # take the positive value
+  auc[i]<-integrate(f2, -6,6)
 }
-
+auc<-unlist(auc)
 h<-hist(auc, col="red", xlab="Areas Between Curves",
    main="Histogram of Areas Between ICCs")
 h
@@ -373,6 +376,39 @@ lines(xfit, yfit, col="blue", lwd=2)
 
 
 
+
+
+################################################################################################################################
+
+
+
+#   eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*((ahat(.1))*(x-(abs(qnorm(.5)))))))))}
+#   cttB<-eq_CTT(seq(-6,6, by=.1))
+#   eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*((ahat(.8))*(x-(qnorm(.89))))))))}
+#   irtB<-eq_IRT(seq(-6,6, by=.1))
+#   auc_test1<-abs(geiger:::.area.between.curves(theta, cttB, irtB, xrange=c(-6,6)))
+#   auc_test2<-abs(geiger:::.area.between.curves(theta, irtB, cttB, xrange=c(-6,6)))
+# 
+#   library(ggplot2)
+# base <-
+#   ggplot()
+# 
+# 
+# base+
+#   xlim(-6,6)+
+#   geom_function(fun=eq_CTT, size=1.5, linetype="twodash", aes(color="Moderate Discrimination & Low Difficulty"))+
+#   geom_function(fun=eq_IRT, size=2, aes(color="High Discrimination & Moderate Difficulty"))+
+#   labs(x="Theta",
+#        y="p(1.0)",
+#        color="Legend")+
+#   scale_color_manual(values=colors)+
+#   theme(legend.position="bottom")+
+#   guides(colour = guide_legend(nrow = 2))
+# 
+#     f1 <- approxfun(theta, cttB-irtB)     # piecewise linear function
+#     f2 <- function(x) abs(f1(x))                 # take the positive value
+# 
+#     integrate(f2, -3,3)
 
 ```
 
@@ -390,7 +426,7 @@ for (i in 1:nrow(df)){
   cttB<-eq_CTT(seq(-6,6, by=.1))
   eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
   irtB<-eq_IRT(seq(-6,6, by=.1))
-  auc[i]<-abs(geiger:::.area.between.curves(theta, cttB, irtB))
+  auc[i]<-abs(geiger:::.area.between.curves(theta, cttB, irtB, xrange=c(-6,6)))
 }
 p_ctt
 arrows(3.2,0.85,2.2,0.85,col="purple")
