@@ -15,31 +15,31 @@ sim1means$cond<-"One"
 
 ###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
 
-coeficients<-NULL
+coeficients<-NULL#declare the dataframe were coefficients for all 10,000 simulations will be stored
 
 for(j in 1:1){
 
 
-        x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
-        sim2<-matrix(ncol=100, nrow=10000)
-        random<-sample(10000, 500)
-        for(i in 1:100){
-          sim2[,i]<-ifelse(x[,i]<0.01*i,0,1)
-          if(sum(sim2[,i])==0){
-            sim2[,i][random]<-1
+        x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000)) #creating a matrix of random numbers
+        sim2<-matrix(ncol=100, nrow=10000) #declaring the dataframe where the simulated responses will be stored.
+        random<-sample(10000, 500) #sampling 500 random numbers from a pool of 10,000
+        for(i in 1:100){ #this loop simulates the data from the uniform distribution
+          sim2[,i]<-ifelse(x[,i]<0.01*i,0,1) #if each value in x is less than 0.01*i, it stores a 0 on sim2. Otherwise, it stores a 1. 
+          if(sum(sim2[,i])==0){ #this conditional statement was just added to account for the possibility there will be a column with all 0s or all 1s.
+            sim2[,i][random]<-1 #if the column has all 0s, it chages a random row into a 1 (this was the point of creating the random object, to select a random row)
         
             
           }
-          if(sum(sim2[,i])==10000){
+          if(sum(sim2[,i])==10000){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
             sim2[,i][random]<-0
             
           }
         }
         
-        sim2means<-data.frame(colMeans(sim2))
-        colnames(sim2means)[1]<-"pvalues"
-        pseudob2<-data.frame(qnorm(sim2means$pvalues))
-        pvalues2<-data.frame(sim2means$pvalues)
+        sim2means<-data.frame(colMeans(sim2)) #calculating the mean of each column simulated in the above loop
+        colnames(sim2means)[1]<-"pvalues" #renaming the header "pvalues"
+        pseudob2<-data.frame(qnorm(sim2means$pvalues)) #getting Zg
+        pvalues2<-data.frame(sim2means$pvalues) #getting simple pvalues (not really needed)
         
         ahat<-function(x){
           r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -50,19 +50,19 @@ for(j in 1:1){
         library(psych)
         library(mirt)
         alphas<-psych::alpha(sim2)
-        pseudoA2<-data.frame(ahat(alphas$item.stats$r.drop))
+        pseudoA2<-data.frame(ahat(alphas$item.stats$r.drop)) #getting pseudoA
         
-        mod2<-mirt(data.frame(sim2), 1, itemtype="2PL")
-        IRT_parms2 <- coef(mod2, IRTpars = TRUE, simplify = TRUE)
+        mod2<-mirt(data.frame(sim2), 1, itemtype="2PL") #getting IRT model
+        IRT_parms2 <- coef(mod2, IRTpars = TRUE, simplify = TRUE) #getting IRT parameters
         irt2 <- IRT_parms2$items
-        df2<-as.data.frame(cbind(pseudob2, pvalues2,pseudoA2, irt2))
-        colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
+        df2<-as.data.frame(cbind(pseudob2, pvalues2,pseudoA2, irt2)) #putting pseudob from line 41, pvalues from line 42, pseudoA from line 53 and IRT parameters from line 57 together in a DF.
+        colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")#renaming the headers of the above DF.
         
-        reg<-lm(b ~ pseudob, df2)
+        reg<-lm(b ~ pseudob, df2)#calculating regression of pseudob on b
         
         
         
-        coeficients<-coeficients%>%rbind(data.frame(
+        coeficients<-coeficients%>%rbind(data.frame( #putting the intercept, slope, pvalue and label of the above regression model into a DF.Rbinds with each iteration
           intercept=summary(reg)$coefficients[1,1],
           slope=summary(reg)$coefficients[2,1],
           pvalue=summary(reg)$coefficients[2,4],
