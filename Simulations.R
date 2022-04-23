@@ -1,8 +1,10 @@
-
+library(tidyverse)
 library(descr)
 library(ggplot2)         ## to visualize p-value distributions
 
 ###################### SIMULATION 1: ALL 0.5 ##############################
+
+
 x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
 sim1<-data.frame(ifelse(x<0.5, 0, 1))
 sim1means<-as.data.frame(colMeans(sim1))
@@ -13,26 +15,62 @@ sim1means$cond<-"One"
 
 ###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
 
-x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
-sim2<-matrix(ncol=100, nrow=10000)
-random<-sample(10000, 500)
-for(i in 1:100){
-  sim2[,i]<-ifelse(x[,i]<0.01*i,0,1)
-  if(sum(sim2[,i])==0){
-    sim2[,i][random]<-1
+coeficients<-NULL#declare the dataframe were coefficients for all 10,000 simulations will be stored
 
-    
-  }
-  if(sum(sim2[,i])==10000){
-    sim2[,i][random]<-0
-    
-  }
+for(j in 1:1){
+
+
+        x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000)) #creating a matrix of random numbers
+        sim2<-matrix(ncol=100, nrow=10000) #declaring the dataframe where the simulated responses will be stored.
+        random<-sample(10000, 500) #sampling 500 random numbers from a pool of 10,000
+        for(i in 1:100){ #this loop simulates the data from the uniform distribution
+          sim2[,i]<-ifelse(x[,i]<0.01*i,0,1) #if each value in x is less than 0.01*i, it stores a 0 on sim2. Otherwise, it stores a 1. 
+          if(sum(sim2[,i])==0){ #this conditional statement was just added to account for the possibility there will be a column with all 0s or all 1s.
+            sim2[,i][random]<-1 #if the column has all 0s, it chages a random row into a 1 (this was the point of creating the random object, to select a random row)
+        
+            
+          }
+          if(sum(sim2[,i])==10000){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+            sim2[,i][random]<-0
+            
+          }
+        }
+        
+        sim2means<-data.frame(colMeans(sim2)) #calculating the mean of each column simulated in the above loop
+        colnames(sim2means)[1]<-"pvalues" #renaming the header "pvalues"
+        pseudob2<-data.frame(qnorm(sim2means$pvalues)) #getting Zg
+        pvalues2<-data.frame(sim2means$pvalues) #getting simple pvalues (not really needed)
+        
+        ahat<-function(x){
+          r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+          
+          ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
+          
+        }
+        library(psych)
+        library(mirt)
+        alphas<-psych::alpha(sim2)
+        pseudoA2<-data.frame(ahat(alphas$item.stats$r.drop)) #getting pseudoA
+        
+        mod2<-mirt(data.frame(sim2), 1, itemtype="2PL") #getting IRT model
+        IRT_parms2 <- coef(mod2, IRTpars = TRUE, simplify = TRUE) #getting IRT parameters
+        irt2 <- IRT_parms2$items
+        df2<-as.data.frame(cbind(pseudob2, pvalues2,pseudoA2, irt2)) #putting pseudob from line 41, pvalues from line 42, pseudoA from line 53 and IRT parameters from line 57 together in a DF.
+        colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")#renaming the headers of the above DF.
+        
+        reg<-lm(b ~ pseudob, df2)#calculating regression of pseudob on b
+        
+        
+        
+        coeficients<-coeficients%>%rbind(data.frame( #putting the intercept, slope, pvalue and label of the above regression model into a DF.Rbinds with each iteration
+          intercept=summary(reg)$coefficients[1,1],
+          slope=summary(reg)$coefficients[2,1],
+          pvalue=summary(reg)$coefficients[2,4],
+          simulation="Simulation 2"
+          
+        ))
+
 }
-
-sim2means<-as.data.frame(colMeans(sim2))
-colnames(sim2means)[1] <- "pvalues"
-
-sim2means$cond<-"Two"
 
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
@@ -203,7 +241,18 @@ colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
 
 reg<-lm(b ~ pseudob, df2)
 summary(reg)
-coeficients<-data.frame(coef(reg))
+
+
+
+coeficients<- data.frame(
+  intercept=summary(reg)$coefficients[1,1],
+  slope=summary(reg)$coefficients[2,1],
+  pvalue=summary(reg)$coefficients[2,4],
+  simulation="Simulation 2"
+  
+)
+
+
 
 
 
@@ -234,7 +283,14 @@ colnames(df3)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
 reg<-lm(b ~ pseudob, df3)
 summary(reg)
 coef(reg)
-coeficients<-coeficients%>%rbind(data.frame(coef(reg)))
+coeficients<-coeficients%>%rbind(data.frame(
+  intercept=summary(reg)$coefficients[1,1],
+  slope=summary(reg)$coefficients[2,1],
+  pvalue=summary(reg)$coefficients[2,4],
+  simulation="Simulation 3"
+  
+))
+                                 
 
 
 ################### Regression for simulation 4 ###########################################
@@ -265,10 +321,13 @@ colnames(df4)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
 
 reg<-lm(b ~ pseudob, df4)
 summary(reg)
-coef(reg)
-reg2<-lm(b ~ pvalues, df4)
-summary(reg2)
-coef(reg2)
+coeficients<-coeficients%>%rbind(data.frame(
+  intercept=summary(reg)$coefficients[1,1],
+  slope=summary(reg)$coefficients[2,1],
+  pvalue=summary(reg)$coefficients[2,4],
+  simulation="Simulation 4"
+  
+))
 
 library(tidyverse)
 df4%>%ggplot(aes(x=b, y=pvalues))+
@@ -307,10 +366,13 @@ colnames(df5)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
 
 reg<-lm(b ~ pseudob, df5)
 summary(reg)
-coef(reg)
-reg2<-lm(b ~ pvalues, df5)
-summary(reg2)
-coef(reg2)
+coeficients<-coeficients%>%rbind(data.frame(
+  intercept=summary(reg)$coefficients[1,1],
+  slope=summary(reg)$coefficients[2,1],
+  pvalue=summary(reg)$coefficients[2,4],
+  simulation="Simulation 5"
+  
+))
 
 library(tidyverse)
 df5%>%ggplot(aes(x=b, y=pvalues))+
@@ -353,10 +415,13 @@ colnames(df6)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
 
 reg<-lm(b ~ pseudob, df6)
 summary(reg)
-coef(reg)
-reg2<-lm(b ~ pvalues, df6)
-summary(reg2)
-coef(reg2)
+coeficients<-coeficients%>%rbind(data.frame(
+  intercept=summary(reg)$coefficients[1,1],
+  slope=summary(reg)$coefficients[2,1],
+  pvalue=summary(reg)$coefficients[2,4],
+  simulation="Simulation 6"
+  
+)) 
 
 library(tidyverse)
 df6%>%ggplot(aes(x=b, y=pvalues))+
@@ -382,6 +447,8 @@ df6%>%ggplot(aes(x=b, y=pseudob))+
 # We found a relationship between the slope and the ability (thetas). In WinGen the thetas are generated differently, with more variability.
 # The more variability, the smaller the slope. 
 
+# Loop through all 6 simulations 10000 times. Store the regression coefficients for each of the
+# 10000 into a database. 
 
 
 
