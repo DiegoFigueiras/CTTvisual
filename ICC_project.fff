@@ -1,0 +1,42 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-1-1.pdf}
+\caption{\label{fig:unnamed-chunk-1}Item characteristic curves primarily reflecting differences in discrimination.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/acorrected-1.pdf}
+\caption{\label{fig:acorrected}Empricially-derived functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/plotting-1.pdf}
+\caption{\label{fig:plotting}Four ICCs showcasing the difference between CTT and IRT-derivated curves at different levels.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/histrogram-1.pdf}
+\caption{\label{fig:histrogram}Histogram of all areas between curves plotted using IRT parameters vs curves plotted using CTT parameters.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/cttcurves-1.pdf}
+\caption{\label{fig:cttcurves}ICCs derived from only CTT parameters (with two noteworthy ICCs annotated).}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/irtcurves-1.pdf}
+\caption{\label{fig:irtcurves}Typical ICCs derived from IRT parameters (same noteworthy items annotated).}
+\end{figure*}

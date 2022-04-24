@@ -1,5 +1,5 @@
 ---
-title             : "Item Characteristic Curves generated from common CTT Item Statistics"
+title             : "Item Characteristic Curve specification from Classical Test Theory Indices"
 shorttitle        : "CTT ICCs"
 author: 
   - name          : "Diego Figueiras"
@@ -19,9 +19,7 @@ affiliation:
 authornote: 
 
 abstract: |
-  Item characteristic curves (ICC's) are visual indicators of important attributes of assessment items - most typically *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition into the Classical Test Theory (CTT) framework. We first propose an application of ICCs with CTT indices then simulate data and quantify similarities and discrepancies between the IRT- and CTT-generated ICCs. Initial results are predominantly promising regaring ICC comparability. 
-  
-  <!-- https://tinyurl.com/ybremelq -->
+  Item characteristic curves (ICC's) provide visual indication of important attributes of assessment items - most typically *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with controlled item difficulty characteristics to generate linking parameters between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was implicated by calculating the geometric area between the IRT- and CTT- specified ogives. The DIF was .... , providing a moderate degree of confidence regarding ICC comparability, providing assessment specialists with a visual tool regarding CTT-derived item characteristics. An `R` package, `ctticc`, performs the ICC estimations presented in the current paper.
   
 keywords          : "keywords"
 wordcount         : "X"
@@ -39,7 +37,7 @@ draft             : no
 csl               : "apa7.csl"
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_word
+output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE}
@@ -119,7 +117,7 @@ The @kulas2017approximate investigations (both simulated and utilizing real-worl
 
 $$\hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r-e^{-r}}{e-e^r}]$$
 
-Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "p-value" of .5). $Z_g$ is the standard normal deviate associated with $g$. This transformation of the standard p-value was recommended in order to scale this index along an interval-level metric more directly analogous to the IRT *b*-parameter. Figure 2 visualizes the re-specifications of Lord's formula at p-values (difficulty) of .5, .3 (or .7), and .1 (or .9) and highlights the nonlinear nature of this relationship - especially noticeable at high(er) levels of discrimination.
+Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "p-value" of .5). $z_g$ is the standard normal deviate associated with $g$. This transformation of the standard p-value was recommended in order to scale this index along an interval-level metric more directly analogous to the IRT *b*-parameter. Figure 2 visualizes the re-specifications of Lord's formula at p-values (difficulty) of .5, .3 (or .7), and .1 (or .9) and highlights the nonlinear nature of this relationship - especially noticeable at high(er) levels of discrimination.
 
 ```{r acorrected, fig.cap="Empricially-derived functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
 g<-abs(qnorm(.5))
@@ -149,6 +147,12 @@ Practitioners and researchers that don't use IRT or Rasch models and instead opt
 # Study 1A - Establishing relationship between the IRT and CTT difficulty indices. 
 
 ## Method
+
+Although the ogives could be specified directly from the CTT-derived statistics, we made a procedural decision to retain the IRT 2PL as our function specification: 
+
+$$P(\Theta)=\frac{1}{1+e^{-1.7a(\Theta-b)}}$$
+Our procedure therefore required the estimation of "pseudo" IRT parameters from the CTT indices. The *a* parameter was estimated via the formula specified in  @kulas2017approximate, while the *b* parameter was estimated via linking parameters identified via simulation.
+
 In order to estimate the relationship, we simulated items. We used 100 items and generated 6 different distributions of the p-values of the items. The first distribution was uniform, with all p-values set roughly at 0.5. The second distribution was also uniform, but with the p-values all being different, ranging from 0.1 to 0.99. The third distribution was a normal distribution of p-values, centered around 0.5. The fourth distribution was an inverted normal distribution also centered around 0.5. The fifth distribution was a left skewed distribution of p-values, and the sixth was right skewed. 
 
 Then we computed regressions predicting the b-parameters using the standard normal deviate associated with the p-values on each simulation. The resulting regression coefficients for all simulations was approximately 2 and 0, indicating that our scaling was not sample dependent. 
