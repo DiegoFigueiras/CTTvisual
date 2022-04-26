@@ -1,9 +1,7 @@
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
-\centering
-\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-1-1.pdf}
-\caption{\label{fig:unnamed-chunk-1}Item characteristic curves primarily reflecting differences in discrimination.}
+\includegraphics[width=1\linewidth,height=0.8\textheight]{ICC_project_files/figure-latex/example-1} \caption{Item characteristic curves reflecting predominant visual differences in difficulty and discrimination.}\label{fig:example}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}

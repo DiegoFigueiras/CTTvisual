@@ -53,14 +53,8 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE, message=FALSE)
 ```
 
+```{r example, include=TRUE, fig.cap="Item characteristic curves reflecting predominant visual differences in difficulty and discrimination.", echo=FALSE, warning=FALSE, message=FALSE, out.width = "100%", out.height="80%"}
 
-Notes: Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method. 
-
-
-
-Item characteristic curves are frequently referenced by psychometricians as visual indicators of important attributes of assessment items - most frequently *difficulty* and *discrimination*. Within these visual presentations the x-axis ranges along "trait" levels (by convention annotated with the greek $\theta$), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a "correct" response. From this visualization, the observer extracts the likelihood that respondents of any trait level would answer a focal item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., "left" on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated differently, it does not take much $\theta$ to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. If the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination.  
-
-```{r, include=TRUE, fig.cap="Item characteristic curves primarily reflecting differences in discrimination.", echo=FALSE, warning=FALSE, message=FALSE, fig.height=4}
 
 data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
@@ -76,18 +70,51 @@ ahat<-function(x){
 pseudoa<-ahat(.3)
 c <- 0
 #change pseudob in this line for a scale that allows negative numbers
-p <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
 
-curve(p, from=-5, to=5, ylim=c(0, 1), main="Item Characteristic Curves", xlab="Level of Trait")
-pseudob<-abs(qnorm(.2))
-pseudoa<-ahat(.7)
-curve(p, lty="longdash", add=TRUE)
-arrows(-3,0.4,-1.5,0.4,col="black")
-text(-3.8,0.4, "Low \n Discrimination",col="black")
-arrows(2,0.2,0.45,0.2,col="black")
-text(3,0.2, "High \n Discrimination",col="black")
+pseudob  <-       qnorm(.02)   ## note these "p-values" operate in reverse
+pseudoa  <-        ahat(.3)
+
+pseudob2  <-  abs(qnorm(.5))
+pseudoa2  <-       ahat(.7)
+
+pseudob3  <-      qnorm(.99)
+pseudoa3  <-       ahat(.7)
+
+pseudob4  <-  abs(qnorm(.5))
+pseudoa4  <-       ahat(.1)
+
+colors<-c("Moderate Discrimination & Low Difficulty"="#aeb0af", 
+          "High Discrimination & Moderate Difficulty"="#7c807d", 
+          "High Discrimination & High Difficulty"="#1c1c1c", 
+          "Low Discrimination & Moderate Difficulty"="#dfe0e0")
+
+p <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+p2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
+p3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
+p4<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
+
+library(ggplot2)
+library(scales)
+base <-
+  ggplot()
+
+
+base+
+  xlim(-3,3)+
+  geom_function(fun=p, size=1.5, linetype="twodash", aes(color="Moderate Discrimination & Low Difficulty"))+
+  geom_function(fun=p2, size=2, aes(color="High Discrimination & Moderate Difficulty"))+
+  geom_function(fun=p3, size=2, aes(color="High Discrimination & High Difficulty"))+
+  geom_function(fun=p4, size=1.5, linetype="twodash", aes(color="Low Discrimination & Moderate Difficulty"))+
+  labs(x="Theta",
+       y="p(1.0)",
+       color="Legend")+
+  scale_color_manual(values=colors)+
+  theme(legend.position="bottom")+
+  guides(colour = guide_legend(nrow = 2))
 
 ```
+
+Item characteristic curves are frequently referenced by psychometricians as visual indicators of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Within these visual presentations the x-axis ranges along "trait" levels (by convention typically denoted with the greek $\theta$), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a "correct" response. From this visualization, the observer extracts the likelihood that respondents of any trait level would answer a focal item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., "left" on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated in the parlance of IRT or Rasch traditions, it does not take much $\theta$ to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. Through the lens of IRT, if discrimination is modeled and the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination (see Figure \@ref(fig:example)).  
 
 Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. These frameworks provide the parameters necessary to plot the ogive functions. Rasch models only estimate difficulty, and assume that differences in discrimination represent flaws in measurement. The IRT 2 parameter logistic model (2PL), however, models both item difficulty as well as item discrimination. Item difficulty (the *b*-parameter) is scaled as the trait level associated with a 50% likelihood of correct response (e.g., it is scaled to $\theta$). Item discrimination (*a*-parameter) is the degree to which an item differentiates across individuals who are characterized as being relatively lower or higher on the trait.  From a Classical Test Theory (CTT) orientation, item  difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p-value*). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted index is the corrected item total correlation. 
 
@@ -157,39 +184,6 @@ In order to estimate the relationship, we simulated items. We used 100 items and
 
 Then we computed regressions predicting the b-parameters using the standard normal deviate associated with the p-values on each simulation. The resulting regression coefficients for all simulations was approximately 2 and 0, indicating that our scaling was not sample dependent. 
 
-
-
-```{r comparing difficulties of IRT vs CTT using simulation1}
-
-
-library(mirt)
-library(latticeExtra)
-pseudob<-abs(qnorm(.5))
-
-ahat<-function(x){
-  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
-  
-}
-pseudoa<-ahat(.3)
-c <- 0
-#change pseudob in this line for a scale that allows negative numbers
-p <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-curve(p, from=-5, to=5, ylim=c(0, 1), main="Item Characteristic Curves", xlab="Level of Trait")
-pseudob<-abs(qnorm(.2))
-pseudoa<-ahat(.7)
-curve(p, lty="longdash", add=TRUE)
-arrows(-3,0.4,-1.5,0.4,col="black")
-text(-3.8,0.4, "Low \n Discrimination",col="black")
-arrows(2,0.2,0.45,0.2,col="black")
-text(3,0.2, "High \n Discrimination",col="black")
-
-
-```
-
-
-
 # Study 1B - Estimating CTT-derived ICC's
 
 The purpose of study 1 is to look at the visualizations resulting from @kulas2017approximate formula on simulated data. We hypothesize that the relationship between the estimated IRT a-parameter and the corrected item-total correlations will be an exponential function instead of a linear relationship, and it will become stronger as the corrected item-total correlations and the p-values deviate from 0, which would mean that the item has more discrimination. 
@@ -200,120 +194,6 @@ We simulated data using @han2007wingen3 software. Our sample was 10,000 observat
 
 ## Results
 As shown by Figure 2, our plot looks very similar to that of [@kulas2017approximate, p.8]. This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications; @kulas2017approximate]. Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters. 
-
-```{r plotting, results="hide", fig.cap="Four ICCs showcasing the difference between CTT and IRT-derivated curves at different levels." }
-
-data<-read.csv("simulated_data.csv", header=FALSE)
-#data$v30<-abs(data$v30-1)
-library(mirt)
-library(latticeExtra)
-library(irtplay)
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
-  
-}
-
-mod<-mirt(data, 1, itemtype="2PL")
-# plot(mod, type="trace")
-# 
-alphas<-alpha(data)
-citcs<-data.frame(alphas$item.stats$r.drop)
-pseudoA<-data.frame(ahat(citcs))
-pseudoB<-data.frame(qnorm(colMeans(data)))
-IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
-irt <- IRT_parms$items
-df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
-colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
-
-# plot(df$PseudoA, df$a)
-# plot(df$b, df$PseudoB)
-
-lm.reg<-lm(b ~PseudoB, data=df)
- 
-
-b<-0.01479-(-1.33142*pseudoB) 
-dat<-data.frame(b, alphas$item.stats$r.drop)
-colnames(dat)<-c("b", "corrected item totals")
-par(cex.axis=1, cex.lab=1, cex.main=2, cex.sub=0.1)
-
-###############################################################
-pseudob<-dat$b[47]
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
-  
-}
-
-pseudoa<-ahat(dat$`corrected item totals`[47])
-c <- 0
-
-eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-
-p1<-plot(mod, which.items=c(47), main=FALSE, sub="Moderate DIF \n(area between curves = 0.36 )", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq, col="red"))
-################################################################
-
-pseudob2<-dat$b[1]
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
-  
-}
-
-pseudoa2<-ahat(dat$`corrected item totals`[1])
-c <- 0
-
-eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
-
-p2<-plot(mod, which.items=c(1),main=FALSE, sub="Small DIF \n(area between curves = 0.03)", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq2, col="red"))
-
-
-#####################################################################
-
-pseudob3<-dat$b[54]
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob3)+(0.301*pseudob3^2))*r)+((0.57-(0.009*pseudob3)+(0.19*pseudob3^2))*r)
-  
-}
-
-pseudoa3<-ahat(dat$`corrected item totals`[54])
-c <- 0
-
-eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
-
-p3<-plot(mod, which.items=c(54), main=FALSE, sub="Small DIF \n(area between curves  = 0.09)", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq3, col="red"))
-
-###############################################################################
-pseudob4<- dat$b[25]
-ahat<-function(x){
-  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
-  
-  ((0.51+(0.02*pseudob4)+(0.301*pseudob4^2))*r)+((0.57-(0.009*pseudob4)+(0.19*pseudob4^2))*r)
-  
-}
-
-pseudoa4<-ahat(dat$`corrected item totals`[25])
-c <- 0
-
-eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
-
-p4<-plot(mod, which.items=c(25), main=FALSE, sub="Large DIF \n(area between curves = 0.81)", cex.main=5)+latticeExtra::layer(panel.curve(eq4, col="red", cex.sub=1))
-
-###############################################################################
-require(gridExtra)
-grid.arrange(p2,p1,p3,p4, top="Item Characteristic Curves",nrow=2, ncol=2)
-
-##############################################################################
-
-
-
-```
-
 
 # Study 2 - Evaluating the Comparability of IRT and CTT ICC's 
 
@@ -328,10 +208,95 @@ The same simulated data as in study 1 was used. The mirt package from @R-mirt wa
 
 We used `r cite_r("r-references.bib")` for all our analyses.
 
-The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35. 
+The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35[^method]. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35. 
 For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure. 
 
+[^method]: *Note*. Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.
 
+```{r plotting, results="hide", fig.cap="Four ICCs showcasing the difference between CTT and IRT-derivated curves at different levels." }
+data<-read.csv("simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+library(irtplay)
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+mod<-mirt(data, 1, itemtype="2PL")
+# plot(mod, type="trace")
+# 
+alphas<-psych::alpha(data)
+citcs<-data.frame(alphas$item.stats$r.drop)
+pseudoA<-data.frame(ahat(citcs))
+pseudoB<-data.frame(qnorm(colMeans(data)))
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
+colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
+# plot(df$PseudoA, df$a)
+# plot(df$b, df$PseudoB)
+lm.reg<-lm(b ~PseudoB, data=df)
+ 
+b<-0.01479-(-1.33142*pseudoB) 
+dat<-data.frame(b, alphas$item.stats$r.drop)
+colnames(dat)<-c("b", "corrected item totals")
+par(cex.axis=1, cex.lab=1, cex.main=2, cex.sub=0.1)
+###############################################################
+pseudob<-dat$b[47]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(dat$`corrected item totals`[47])
+c <- 0
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+p1<-plot(mod, which.items=c(47), main=FALSE, sub="Moderate DIF \n(area between curves = 0.36 )", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq, col="red"))
+################################################################
+pseudob2<-dat$b[1]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
+  
+}
+pseudoa2<-ahat(dat$`corrected item totals`[1])
+c <- 0
+eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
+p2<-plot(mod, which.items=c(1),main=FALSE, sub="Small DIF \n(area between curves = 0.03)", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq2, col="red"))
+#####################################################################
+pseudob3<-dat$b[54]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob3)+(0.301*pseudob3^2))*r)+((0.57-(0.009*pseudob3)+(0.19*pseudob3^2))*r)
+  
+}
+pseudoa3<-ahat(dat$`corrected item totals`[54])
+c <- 0
+eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
+p3<-plot(mod, which.items=c(54), main=FALSE, sub="Small DIF \n(area between curves  = 0.09)", cex.sub=0.2)+latticeExtra::layer(panel.curve(eq3, col="red"))
+###############################################################################
+pseudob4<- dat$b[25]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob4)+(0.301*pseudob4^2))*r)+((0.57-(0.009*pseudob4)+(0.19*pseudob4^2))*r)
+  
+}
+pseudoa4<-ahat(dat$`corrected item totals`[25])
+c <- 0
+eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
+p4<-plot(mod, which.items=c(25), main=FALSE, sub="Large DIF \n(area between curves = 0.81)", cex.main=5)+latticeExtra::layer(panel.curve(eq4, col="red", cex.sub=1))
+###############################################################################
+require(gridExtra)
+grid.arrange(p2,p1,p3,p4, top="Item Characteristic Curves",nrow=2, ncol=2)
+##############################################################################
+```
 
 ```{r histrogram, results="hide", fig.cap="Histogram of all areas between curves plotted using IRT parameters vs curves plotted using CTT parameters."}
 #Area between curves
@@ -376,43 +341,6 @@ xfit<-seq(min(auc),max(auc),length=40)
 yfit<-dnorm(xfit,mean=mean(auc),sd=sd(auc))
 yfit <- yfit*diff(h$mids[1:2])*length(auc)
 lines(xfit, yfit, col="blue", lwd=2)
-
-
-
-
-
-
-################################################################################################################################
-
-
-
-#   eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*((ahat(.1))*(x-(abs(qnorm(.5)))))))))}
-#   cttB<-eq_CTT(seq(-6,6, by=.1))
-#   eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*((ahat(.8))*(x-(qnorm(.89))))))))}
-#   irtB<-eq_IRT(seq(-6,6, by=.1))
-#   auc_test1<-abs(geiger:::.area.between.curves(theta, cttB, irtB, xrange=c(-6,6)))
-#   auc_test2<-abs(geiger:::.area.between.curves(theta, irtB, cttB, xrange=c(-6,6)))
-# 
-#   library(ggplot2)
-# base <-
-#   ggplot()
-# 
-# 
-# base+
-#   xlim(-6,6)+
-#   geom_function(fun=eq_CTT, size=1.5, linetype="twodash", aes(color="Moderate Discrimination & Low Difficulty"))+
-#   geom_function(fun=eq_IRT, size=2, aes(color="High Discrimination & Moderate Difficulty"))+
-#   labs(x="Theta",
-#        y="p(1.0)",
-#        color="Legend")+
-#   scale_color_manual(values=colors)+
-#   theme(legend.position="bottom")+
-#   guides(colour = guide_legend(nrow = 2))
-# 
-#     f1 <- approxfun(theta, cttB-irtB)     # piecewise linear function
-#     f2 <- function(x) abs(f1(x))                 # take the positive value
-# 
-#     integrate(f2, -3,3)
 
 ```
 
