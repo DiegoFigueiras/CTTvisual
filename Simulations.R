@@ -7,12 +7,12 @@ library(ggplot2)         ## to visualize p-value distributions
 ###################### SIMULATION 1: ALL 0.5 ##############################
 
 
-x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
-sim1<-data.frame(ifelse(x<0.5, 0, 1))
-sim1means<-as.data.frame(colMeans(sim1))
-colnames(sim1means)[1] <- "pvalues"
-
-sim1means$cond<-"One"
+# x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000))
+# sim1<-data.frame(ifelse(x<0.5, 0, 1))
+# sim1means<-as.data.frame(colMeans(sim1))
+# colnames(sim1means)[1] <- "pvalues"
+# 
+# sim1means$cond<-"One"
 
 
 ###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
@@ -75,16 +75,7 @@ for(j in 1:3){
         colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")#renaming the headers of the above DF.
         
         
-        i<-1
-        while(i<=nrow(df2)){
-          if(df2$b[i]>2*sd(df2$b)){
-            df2<-df2[-i,]
-          }
-          if(df2$b[i]<(-2*sd(df2$b))){
-            df2<-df2[-i,]
-          }
-          i<-i+1
-        }
+        df2<-df2%>%filter(b<3)%>%filter(b>-3)
         
         
         reg<-lm(b ~ pseudob, df2)#calculating regression of pseudob on b
@@ -102,19 +93,24 @@ for(j in 1:3){
 }
 
 
+df2%>%ggplot(aes(x=b, y=pseudob))+
+  geom_point()+
+  geom_text(aes(label=pseudob))
+
+
+hist(sim2means$pvalues)
+
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
 
 for(j in 1:3){
 
 
-        y<-data.frame(matrix(rnorm(100,.5,.2)))
-        x<-data.frame(matrix(rnorm(10000,0,1), ncol=100, nrow=10000))
-        x2<-data.frame(matrix(rnorm(10000,0,1), ncol=100, nrow=10000))
-        sim3<-matrix(ncol=100, nrow=10000)
+        y<-data.frame(matrix(rnorm(100,.5,.2))) #creates a normal distribution that will be used later for creating the simulated binary data
+        sim3<-matrix(ncol=100, nrow=10000) #declaring the dataframe where the simulated responses will be stored.
         
         for(i in 1:100){
-          sim3[,i]<-sample(0:1, 10000, prob=c(abs(y[i,]), abs(y[i,]-1)), replace=TRUE)
+          sim3[,i]<-sample(0:1, 10000, prob=c(abs(y[i,]), abs(y[i,]-1)), replace=TRUE) #using the sample() function to simulate the binary data and put it in sim3. Each iteration uses the values in y as the probabilities.
         }
         
         
@@ -138,18 +134,7 @@ for(j in 1:3){
         irt3 <- IRT_parms3$items
         df3<-as.data.frame(cbind(pseudob3, pvalues3,pseudoA3, irt3))
         colnames(df3)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
-        
-        
-        i<-1
-        while(i<nrow(df3)){
-          if(df3$b[i]>2*sd(df3$b)){
-            df3<-df3[-i,]
-          }
-          if(df3$b[i]<(-2*sd(df3$b))){
-            df3<-df3[-i,]
-          }
-          i<-i+1
-        }
+        df3<-df3%>%filter(b<3)%>%filter(b>-3)
         
         
         reg<-lm(b ~ pseudob, df3)
@@ -166,24 +151,30 @@ for(j in 1:3){
 }
 
 
+df3%>%ggplot(aes(x=b, y=pseudob))+
+  geom_point()+
+  geom_text(aes(label=pseudob))
+
+hist(sim3means$pvalues)
+
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 
 for(j in 1:3){
 
 
-        x<-data.frame(matrix(rbeta(10000, 5, 2), ncol=50, nrow=10000))
+        x<-data.frame(matrix(rbeta(10000, 5, 2), ncol=50, nrow=10000))#creating a matrix of skewed data that will be used later for simulating the binary distribution
         sim4.1<-matrix(ncol=50, nrow=10000)
         for(i in 1:ncol(x)){
           
-          sim4.1[,i]<-ifelse(x[,i]<(0.02*i), 0,1)
-          if(sum(sim4.1[,i])==0){
+          sim4.1[,i]<-ifelse(x[,i]<(0.02*i), 0,1)#if each number in x is less than 0.02*index, it outputs a 0, otherwise a 1. 
+          if(sum(sim4.1[,i])==0){#lines 168-172 are just to scatter 1s into columns that have all 0s and to scatter 0s to columns that have all 1s.
             sim4.1[,i][random]<-1
           }
           if(sum(sim4.1[,i])==10000){
             sim4.1[,i][random]<-0
           }
         }
-        sim4.2<-matrix(ncol=50, nrow=10000)
+        sim4.2<-matrix(ncol=50, nrow=10000)#same process as the previos simulation, but changing the inequality sign in the ifelse so it is skewed in the opposite direction
         for(i in 1:ncol(x)){
           
           sim4.2[,i]<-ifelse(x[,i]>(0.02*i), 0,1)
@@ -194,7 +185,7 @@ for(j in 1:3){
             sim4.2[,i][random]<-0
           }
         }
-        sim4<-cbind(sim4.1, sim4.2)
+        sim4<-cbind(sim4.1, sim4.2)#merging the two skewed distributions so we get that U-shaped distribution. 
         sim4means<-as.data.frame(colMeans(sim4))
         colnames(sim4means)[1] <- "pvalues"
         pseudob4<-data.frame(qnorm(sim4means$pvalues))
@@ -216,17 +207,7 @@ for(j in 1:3){
         df4<-as.data.frame(cbind(pseudob4, pvalues4,pseudoA4, irt4))
         colnames(df4)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        
-        i<-1
-        while(i<nrow(df4)){
-          if(df4$b[i]>2*sd(df4$b)){
-            df4<-df4[-i,]
-          }
-          if(df4$b[i]<(-2*sd(df4$b))){
-            df4<-df4[-i,]
-          }
-          i<-i+1
-        }
+        df4<-df4%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df4)
         summary(reg)
@@ -242,6 +223,12 @@ for(j in 1:3){
 
 }
 
+
+df4%>%ggplot(aes(x=b, y=pseudob))+
+  geom_point()+
+  geom_text(aes(label=pseudob))
+
+hist(sim4means$pvalues)
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
@@ -281,18 +268,7 @@ for(j in 1:3){
         df5<-as.data.frame(cbind(pseudob5, pvalues5,pseudoA5, irt5))
         colnames(df5)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        
-        i<-1
-        while(i<=nrow(df5)){
-          if(df5$b[i]>2*sd(df5$b)){
-            df5<-df5[-i,]
-          }
-          if(df5$b[i]<(-2*sd(df5$b))){
-            df5<-df5[-i,]
-          }
-          i<-i+1
-        }
-        
+        df5<-df5%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df5)
         summary(reg)
         coef(reg)
@@ -303,8 +279,19 @@ for(j in 1:3){
           simulation="Simulation 5"
           
         ))
+        
+      
 
 }
+
+
+
+df5%>%ggplot(aes(x=b, y=pseudob))+
+  geom_point()+
+  geom_text(aes(label=pseudob))
+
+
+hist(sim5means$pvalues)
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
 
@@ -344,16 +331,7 @@ for(j in 1:3){
         df6<-as.data.frame(cbind(pseudob6, pvalues6,pseudoA6, irt6))
         colnames(df6)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        i<-1
-        while(i<=nrow(df6)){
-          if(df6$b[i]>2*sd(df6$b)){
-            df6<-df6[-i,]
-          }
-          if(df6$b[i]<(-2*sd(df6$b))){
-            df6<-df6[-i,]
-          }
-          i<-i+1
-        }
+        df6<-df6%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df6)
         summary(reg)
@@ -367,7 +345,15 @@ for(j in 1:3){
         ))
         
         
-}     
+}  
+
+
+df6%>%ggplot(aes(x=b, y=pseudob))+
+  geom_point()+
+  geom_text(aes(label=pseudob))
+
+
+hist(sim6means$pvalues)
 
 ##################################  Plot  ################################################
 
