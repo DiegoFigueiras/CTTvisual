@@ -21,7 +21,7 @@ library(faux)
 
 coeficients<-NULL#declare the dataframe were coefficients for all 10,000 simulations will be stored
 
-for(j in 1:3){
+for(j in 1:1000){
 
 
         x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000)) #creating a matrix of random numbers
@@ -71,7 +71,7 @@ for(j in 1:3){
         pseudoA2<-data.frame(ahat(alphas$item.stats$r.drop)) #getting pseudoA
         
         
-        mod2<-mirt(data.frame(sim2), 1, itemtype="2PL") #getting IRT model
+        mod2<-mirt(data.frame(sim2), 1, itemtype="2PL", technical = list(NCYCLES = 1000)) #getting IRT model
         IRT_parms2 <- coef(mod2, IRTpars = TRUE, simplify = TRUE) #getting IRT parameters
         irt2 <- IRT_parms2$items
         df2<-as.data.frame(cbind(pseudob2, pvalues2,pseudoA2, irt2)) #putting pseudob from line 41, pvalues from line 42, pseudoA from line 53 and IRT parameters from line 57 together in a DF.
@@ -109,7 +109,7 @@ hist(sim2means$pvalues)
 
 
 
-for(j in 1:3){
+for(j in 1:1000){
 
 
         y<-data.frame(matrix(rnorm(100,.5,.2))) #creates a normal distribution that will be used later for creating the simulated binary data
@@ -141,7 +141,7 @@ for(j in 1:3){
         colnames(df3)<-c("pseudob", "pvalues","PseudoA")#renaming the headers of the above DF.
         df3<-df3%>%filter(pvalues<.9)%>%filter(pvalues>.1)
         
-        mod3<-mirt(data.frame(sim3), 1, itemtype="2PL")
+        mod3<-mirt(data.frame(sim3), 1, itemtype="2PL", technical = list(NCYCLES = 1000))
         IRT_parms3 <- coef(mod3, IRTpars = TRUE, simplify = TRUE)
         irt3 <- IRT_parms3$items
         df3<-as.data.frame(cbind(pseudob3, pvalues3,pseudoA3, irt3))
@@ -173,7 +173,7 @@ hist(sim3means$pvalues)
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 
-for(j in 1:3){
+for(j in 1:1000){
 
 
         x<-data.frame(matrix(rbeta(10000, 5, 2), ncol=50, nrow=10000))#creating a matrix of skewed data that will be used later for simulating the binary distribution
@@ -218,7 +218,7 @@ for(j in 1:3){
         alphas<-psych::alpha(sim4)
         pseudoA4<-data.frame(ahat(alphas$item.stats$r.drop))
         
-        mod4<-mirt(data.frame(sim4), 1, itemtype="2PL")
+        mod4<-mirt(data.frame(sim4), 1, itemtype="2PL", technical = list(NCYCLES = 1000))
         IRT_parms4 <- coef(mod4, IRTpars = TRUE, simplify = TRUE)
         irt4 <- IRT_parms4$items
         df4<-as.data.frame(cbind(pseudob4, pvalues4,pseudoA4, irt4))
@@ -252,7 +252,7 @@ hist(sim4means$pvalues)
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
 
-for(j in 1:3){
+for(j in 1:1000){
 
         x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
         sim5<-matrix(ncol=100, nrow=10000)
@@ -281,7 +281,7 @@ for(j in 1:3){
         alphas<-psych::alpha(sim5)
         pseudoA5<-data.frame(ahat(alphas$item.stats$r.drop))
         
-        mod5<-mirt(data.frame(sim5), 1, itemtype="2PL")
+        mod5<-mirt(data.frame(sim5), 1, itemtype="2PL", technical = list(NCYCLES = 1000))
         IRT_parms5 <- coef(mod5, IRTpars = TRUE, simplify = TRUE)
         irt5 <- IRT_parms5$items
         df5<-as.data.frame(cbind(pseudob5, pvalues5,pseudoA5, irt5))
@@ -316,7 +316,7 @@ hist(sim5means$pvalues)
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
 
-for(j in 1:3){
+for(j in 1:1000){
 
 
         x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
@@ -346,7 +346,7 @@ for(j in 1:3){
         alphas<-psych::alpha(sim6)
         pseudoA6<-data.frame(ahat(alphas$item.stats$r.drop))
         
-        mod6<-mirt(data.frame(sim6), 1, itemtype="2PL")
+        mod6<-mirt(data.frame(sim6), 1, itemtype="2PL", technical = list(NCYCLES = 1000))
         IRT_parms6 <- coef(mod6, IRTpars = TRUE, simplify = TRUE)
         irt6 <- IRT_parms6$items
         df6<-as.data.frame(cbind(pseudob6, pvalues6,pseudoA6, irt6))
@@ -379,5 +379,5 @@ df6%>%ggplot(aes(x=b, y=pseudob))+
 hist(sim6means$pvalues)
 
 
-
+write.csv(coeficients, "pvalue_to_b_estimates.csv")
 
