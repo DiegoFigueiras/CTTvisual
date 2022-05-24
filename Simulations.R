@@ -88,7 +88,9 @@ for(j in 1:3){
         coeficients<-coeficients%>%rbind(data.frame( #putting the intercept, slope, pvalue and label of the above regression model into a DF.Rbinds with each iteration
           intercept=summary(reg)$coefficients[1,1],
           slope=summary(reg)$coefficients[2,1],
-          pvalue=summary(reg)$coefficients[2,4],
+          seint=summary(reg)$coefficients[1,2],
+          seslope=summary(reg)$coefficients[2,2],
+          scrubbedn=nrow(df2),
           simulation="Simulation 2"
           
         ))
@@ -153,7 +155,9 @@ for(j in 1:3){
         coeficients<-coeficients%>%rbind(data.frame(
           intercept=summary(reg)$coefficients[1,1],
           slope=summary(reg)$coefficients[2,1],
-          pvalue=summary(reg)$coefficients[2,4],
+          seint=summary(reg)$coefficients[1,2],
+          seslope=summary(reg)$coefficients[2,2],
+          scrubbedn=nrow(df3),
           simulation="Simulation 3"
           
         ))
@@ -228,7 +232,9 @@ for(j in 1:3){
         coeficients<-coeficients%>%rbind(data.frame(
           intercept=summary(reg)$coefficients[1,1],
           slope=summary(reg)$coefficients[2,1],
-          pvalue=summary(reg)$coefficients[2,4],
+          seint=summary(reg)$coefficients[1,2],
+          seslope=summary(reg)$coefficients[2,2],
+          scrubbedn=nrow(df4),
           simulation="Simulation 4"
           
         ))
@@ -288,7 +294,9 @@ for(j in 1:3){
         coeficients<-coeficients%>%rbind(data.frame(
           intercept=summary(reg)$coefficients[1,1],
           slope=summary(reg)$coefficients[2,1],
-          pvalue=summary(reg)$coefficients[2,4],
+          seint=summary(reg)$coefficients[1,2],
+          seslope=summary(reg)$coefficients[2,2],
+          scrubbedn=nrow(df5),
           simulation="Simulation 5"
           
         ))
@@ -352,7 +360,9 @@ for(j in 1:3){
         coeficients<-coeficients%>%rbind(data.frame(
           intercept=summary(reg)$coefficients[1,1],
           slope=summary(reg)$coefficients[2,1],
-          pvalue=summary(reg)$coefficients[2,4],
+          seint=summary(reg)$coefficients[1,2],
+          seslope=summary(reg)$coefficients[2,2],
+          scrubbedn=nrow(df6),
           simulation="Simulation 6"
           
         ))
