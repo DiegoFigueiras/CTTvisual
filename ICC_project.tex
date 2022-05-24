@@ -186,8 +186,6 @@
 
 \authornote{
 
-The authors made the following contributions. John T. Kulas: .
-
 Correspondence concerning this article should be addressed to Diego Figueiras, Dickson Hall 226. E-mail: \href{mailto:figueirasd1@montclair.edu}{\nolinkurl{figueirasd1@montclair.edu}}
 
 }
@@ -195,7 +193,7 @@ Correspondence concerning this article should be addressed to Diego Figueiras, D
 \affiliation{\vspace{0.5cm}\textsuperscript{1} Montclair State University}
 
 \abstract{%
-Item characteristic curves (ICC's) provide visual indication of important attributes of assessment items - most typically \emph{difficulty} and \emph{discrimination}. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the Classical Test Theory (CTT) framework. We first simulate binary (e.g., true \emph{test}) data with controlled item difficulty characteristics to generate linking parameters between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was implicated by calculating the geometric area between the IRT- and CTT- specified ogives. The DIF was \ldots. , providing a moderate degree of confidence regarding ICC comparability, providing assessment specialists with a visual tool regarding CTT-derived item characteristics. An \texttt{R} package, \texttt{ctticc}, performs the ICC estimations presented in the current paper.
+Item characteristic curves (ICC's) provide visual indication of important attributes of assessment items - most typically \emph{difficulty} and \emph{discrimination}. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the Classical Test Theory (CTT) framework. We first simulate binary (e.g., true \emph{test}) data with controlled item difficulty characteristics to generate linking parameters between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was implicated by calculating the geometric area between the IRT- and CTT- specified ogives. The DIF was \ldots. An \texttt{R} package, \texttt{ctticc}, performs the ICC estimations presented in the current paper and provides assessment specialists with a visual representation of CTT-derived item characteristics.
 }
 
 
@@ -207,7 +205,7 @@ Item characteristic curves (ICC's) provide visual indication of important attrib
 \includegraphics[width=1\linewidth,height=0.8\textheight]{ICC_project_files/figure-latex/example-1} \caption{Item characteristic curves reflecting predominant visual differences in difficulty and discrimination.}\label{fig:example}
 \end{figure}
 
-Item characteristic curves are frequently referenced by psychometricians as visual indicators of important attributes of assessment items - most commonly \emph{difficulty} and \emph{discrimination}. Within these visual presentations the x-axis ranges along ``trait'' levels (by convention typically denoted with the greek \(\theta\)), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a ``correct'' response. From this visualization, the observer extracts the likelihood that respondents of any trait level would answer a focal item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., ``left'' on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated in the parlance of IRT or Rasch traditions, it does not take much \(\theta\) to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. Through the lens of IRT, if discrimination is modeled and the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination (see Figure \ref{fig:example}).
+Item characteristic curves are frequently evaluated by psychometricians as visual indicators of important attributes of assessment items - most commonly \emph{difficulty} and \emph{discrimination}. Within these visual presentations the x-axis ranges along ``trait'' levels (by convention typically denoted with the greek \(\theta\)), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary, and the y-axis probability refers to the likelihood of a ``correct'' response. From this visualization, the observer extracts the likelihood that respondents of any trait level would answer a focal item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., ``left'' on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated in the parlance of IRT or Rasch traditions, it does not take much \(\theta\) to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. Through the lens of IRT, if discrimination is modeled and the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination (see Figure \ref{fig:example}).
 
 Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. These frameworks provide the parameters necessary to plot the ogive functions. Rasch models only estimate difficulty, and assume that differences in discrimination represent flaws in measurement. The IRT 2 parameter logistic model (2PL), however, models both item difficulty as well as item discrimination. Item difficulty (the \emph{b}-parameter) is scaled as the trait level associated with a 50\% likelihood of correct response (e.g., it is scaled to \(\theta\)). Item discrimination (\emph{a}-parameter) is the degree to which an item differentiates across individuals who are characterized as being relatively lower or higher on the trait. From a Classical Test Theory (CTT) orientation, item difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a \emph{p-value}). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted index is the corrected item total correlation.
 
@@ -222,12 +220,12 @@ Fan (1998) also investigated item invariance for all models. In theory, the majo
 
 There has also been occasions in which the invariance parameter has been conceptualized as a graded continuum instead of a categorical population property (Hambleton et al., 1991; Rupp \& Zumbo, 2004). Estimates of IRT parameters across different calibration runs can be looked at for evidence of a possible lack of invariance. This doesn't happen with CTT item parameters, since they will always be sample-dependent. This dependency, however, is greatly influenced by the sampling strategy. Large scale data, truly random sampling, and large range items could give comparable CTT item and person statistics across testing populations and occasions (Kulas et al., 2017). Additionally, there are several empirical investigations that note high levels of ``invariance'' of CTT estimates, in some cases surpassing IRT item estimates in their capacity to have cross-sample stability (Fan, 1998; Macdonald \& Paunonen, 2002).
 
-An adjustment to Lord (2012)'s formula giving the functional relationship between the ``non-invariant'' CTT and ``invariant'' IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by Kulas et al. (2017), noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT ``invariance''.
+An adjustment to F. M. Lord (2012)'s formula giving the functional relationship between the ``non-invariant'' CTT and ``invariant'' IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by Kulas et al. (2017), noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT ``invariance''.
 
 \hypertarget{relationship-between-irt-and-ctt-indices}{%
 \subsection{Relationship between IRT and CTT indices}\label{relationship-between-irt-and-ctt-indices}}
 
-Lord (2012) described a function that approximates the relationship between the IRT \emph{a}-parameter and the CTT discrimination index of an item-test biserial correlation:
+F. Lord (1980) described a function that approximates the relationship between the IRT \emph{a}-parameter and the CTT discrimination index of an item-test biserial correlation:
 
 \[a_i\cong \frac{r_i}{\sqrt{1-r_i^2}}\]
 
@@ -249,8 +247,10 @@ As we can see, the higher the corrected item-total correlations, the higher the 
 
 Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics. This study intends to show evidence of the overlapping nature of CTT and IRT parameters when it comes to plotting ICCs.
 
-\hypertarget{study-1a---establishing-relationship-between-the-irt-and-ctt-difficulty-indices.}{%
-\section{Study 1A - Establishing relationship between the IRT and CTT difficulty indices.}\label{study-1a---establishing-relationship-between-the-irt-and-ctt-difficulty-indices.}}
+\hypertarget{study-1}{%
+\section{Study 1}\label{study-1}}
+
+Establishing relationship between the IRT and CTT difficulty indices.
 
 \hypertarget{method}{%
 \subsection{Method}\label{method}}
@@ -264,20 +264,22 @@ In order to estimate the relationship, we simulated items. We used 100 items and
 
 Then we computed regressions predicting the b-parameters using the standard normal deviate associated with the p-values on each simulation. The resulting regression coefficients for all simulations was approximately 2 and 0, indicating that our scaling was not sample dependent.
 
-\hypertarget{study-1b---estimating-ctt-derived-iccs}{%
-\section{Study 1B - Estimating CTT-derived ICC's}\label{study-1b---estimating-ctt-derived-iccs}}
+\hypertarget{study-2}{%
+\section{Study 2}\label{study-2}}
+
+Estimating CTT-derived ICC's
 
 The purpose of study 1 is to look at the visualizations resulting from Kulas et al. (2017) formula on simulated data. We hypothesize that the relationship between the estimated IRT a-parameter and the corrected item-total correlations will be an exponential function instead of a linear relationship, and it will become stronger as the corrected item-total correlations and the p-values deviate from 0, which would mean that the item has more discrimination.
 
 \hypertarget{procedure-and-methods}{%
 \subsection{Procedure and methods}\label{procedure-and-methods}}
 
-We simulated data using Han (2007) software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0). The mean for the a-parameter for the simulated data was 2, and the standard deviation 0.8. The mean for the b-parameter was 0 and the standard deviation 0.5. The mirt package from Chalmers (2012) was used to compute the IRT a-parameters and to plot the 2PL resulting model. As for the CTT-derived a-parameter, the modification to Lord (2012)'s formula described earlier was used, as well as the re-scaling for the p-values. We additionally changed the scale of the difficulty estimates of CTT so they were on the same scale as the IRT estimates. This was done by building a regression model using the CTT a-estimate to predict the IRT a-parameter. The resulting values from this model were used in plotting the CTT-derived ICC's.
+We simulated data using Han (2007) software. Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0). The mean for the a-parameter for the simulated data was 2, and the standard deviation 0.8. The mean for the b-parameter was 0 and the standard deviation 0.5. The mirt package from Chalmers (2012) was used to compute the IRT a-parameters and to plot the 2PL resulting model. As for the CTT-derived a-parameter, the modification to F. M. Lord (2012)'s formula described earlier was used, as well as the re-scaling for the p-values. We additionally changed the scale of the difficulty estimates of CTT so they were on the same scale as the IRT estimates. This was done by building a regression model using the CTT a-estimate to predict the IRT a-parameter. The resulting values from this model were used in plotting the CTT-derived ICC's.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
 
-As shown by Figure 2, our plot looks very similar to that of (Kulas et al., 2017, p. 8). This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in (Kulas et al., 2017; Lord, 2012). Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters.
+As shown by Figure 2, our plot looks very similar to that of (Kulas et al., 2017, p. 8). This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in (Kulas et al., 2017; F. M. Lord, 2012). Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters.
 
 \hypertarget{study-2---evaluating-the-comparability-of-irt-and-ctt-iccs}{%
 \section{Study 2 - Evaluating the Comparability of IRT and CTT ICC's}\label{study-2---evaluating-the-comparability-of-irt-and-ctt-iccs}}
@@ -300,13 +302,13 @@ For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figur
 \begin{figure}
 \centering
 \includegraphics{ICC_project_files/figure-latex/plotting-1.pdf}
-\caption{\label{fig:plotting}Four ICCs showcasing the difference between CTT and IRT-derivated curves at different levels.}
+\caption{\label{fig:plotting}Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF.}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics{ICC_project_files/figure-latex/histrogram-1.pdf}
-\caption{\label{fig:histrogram}Histogram of all areas between curves plotted using IRT parameters vs curves plotted using CTT parameters.}
+\caption{\label{fig:histrogram}Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters.}
 \end{figure}
 
 \begin{figure}
@@ -390,6 +392,9 @@ Kulas, J. T., Smith, J. A., \& Xu, H. (2017). Approximate functional relationshi
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-irtplay}{}}%
 Lim, H. (2020). \emph{Irtplay: Unidimensional item response theory modeling}. \url{https://CRAN.R-project.org/package=irtplay}
+
+\leavevmode\vadjust pre{\hypertarget{ref-lord1980applications}{}}%
+Lord, F. (1980). \emph{Applications of IRT to practical problems}. Hillsdale: Lawrence Erlbaum Associates.
 
 \leavevmode\vadjust pre{\hypertarget{ref-lord2012applications}{}}%
 Lord, F. M. (2012). \emph{Applications of item response theory to practical testing problems}. Routledge.

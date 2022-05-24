@@ -15,14 +15,14 @@
 
 \centering
 \includegraphics{ICC_project_files/figure-latex/plotting-1.pdf}
-\caption{\label{fig:plotting}Four ICCs showcasing the difference between CTT and IRT-derivated curves at different levels.}
+\caption{\label{fig:plotting}Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF.}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{ICC_project_files/figure-latex/histrogram-1.pdf}
-\caption{\label{fig:histrogram}Histogram of all areas between curves plotted using IRT parameters vs curves plotted using CTT parameters.}
+\caption{\label{fig:histrogram}Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters.}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
