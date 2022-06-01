@@ -43,7 +43,7 @@ output            : papaja::apa6_pdf
 library("papaja")
 library(psych)
 library(reticulate)
-r_refs("r-references.bib")
+r_refs("r-references.bib", append=FALSE)         ## append=FALSE auto-updates package version 
 ```
 
 ```{r analysis-preferences}

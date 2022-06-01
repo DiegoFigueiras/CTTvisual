@@ -277,7 +277,7 @@ The purpose of study 1 is to look at the visualizations resulting from Kulas et 
 \emph{Note}. Maybe do a different linking via machine learning. Try to find the linking parameters (including p-value distributional shape and location) that minimize DIF across CTT and IRT ICCs (5/27/22 after unsuccessful Friday brainstorming especially regarding simulation 3 {[}the normally distributed p-values{]})
 \end{quote}
 
-We simulated data using the WinGen program (Han, 2007). Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0). The mean for the a-parameter for the simulated data was 2, and the standard deviation 0.8. The mean for the b-parameter was 0 and the standard deviation 0.5. The mirt package from Chalmers (2012) was used to compute the IRT a-parameters and to plot the 2PL resulting model. As for the CTT-derived a-parameter, the modification to F. M. Lord (2012)'s formula described earlier was used, as well as the re-scaling for the p-values. We additionally changed the scale of the difficulty estimates of CTT so they were on the same scale as the IRT estimates. This was done by building a regression model using the CTT a-estimate to predict the IRT a-parameter. The resulting values from this model were used in plotting the CTT-derived ICC's.
+We simulated data using the WinGen program (\textbf{han2007wingen3?}). Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0). The mean for the a-parameter for the simulated data was 2, and the standard deviation 0.8. The mean for the b-parameter was 0 and the standard deviation 0.5. The mirt package from (\textbf{R-mirt?}) was used to compute the IRT a-parameters and to plot the 2PL resulting model. As for the CTT-derived a-parameter, the modification to F. M. Lord (2012)'s formula described earlier was used, as well as the re-scaling for the p-values. We additionally changed the scale of the difficulty estimates of CTT so they were on the same scale as the IRT estimates. This was done by building a regression model using the CTT a-estimate to predict the IRT a-parameter. The resulting values from this model were used in plotting the CTT-derived ICC's.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
@@ -292,12 +292,12 @@ The purpose of study 2 is to simulate test data and generate ICC's based on the 
 \hypertarget{procedure-and-materials}{%
 \subsection{Procedure and materials}\label{procedure-and-materials}}
 
-The same simulated data as in study 1 was used. The mirt package from Chalmers (2012) was used to compute and plot the IRT statistics. As we can see on Figure 3, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with Kulas et al. (2017) formulas). To quantify the degree of difference between the two curves, the Area Between Curves was computed using Alfaro et al. (2009)'s package. This procedure was done for all 100 items.
+The same simulated data as in study 1 was used. The mirt package from (\textbf{R-mirt?}) was used to compute and plot the IRT statistics. As we can see on Figure 3, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with Kulas et al. (2017) formulas). To quantify the degree of difference between the two curves, the Area Between Curves was computed using (\textbf{R-geiger\_a?})'s package. This procedure was done for all 100 items.
 
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
 
-We used R (Version 4.1.1; R Core Team, 2020) and the R-packages \emph{\}ape} {[}@\}R-ape{]}, \emph{descr} (Version 1.1.5; Dirk Enzmann et al., 2021), \emph{devtools} (Version 2.4.2; Wickham, Hester, et al., 2021), \emph{geiger} (Version 2.0.7; Alfaro et al., 2009; Eastman et al., 2011; Harmon et al., 2008; Pennell et al., 2014; Slater et al., 2012), \emph{ggplot2} (Version 3.3.6; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017), \emph{installr} (Galili, 2021), \emph{irtplay} (Version 1.6.2; Lim, 2020), \emph{knitr} (Version 1.39; Xie, 2015), \emph{lattice} (Version 0.20.44; Sarkar, 2008; Sarkar \& Andrews, 2019), \emph{latticeExtra} (Version 0.6.29; Sarkar \& Andrews, 2019), \emph{markdown} (Version 1.1; Allaire et al., 2019; Xie et al., 2018, 2020), \emph{mirt} (Version 1.34; Chalmers, 2012), \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2020), \emph{psych} (Version 2.1.9; Revelle, 2021), \emph{reticulate} (Version 1.22; Ushey et al., 2021), \emph{rmarkdown} (Version 2.14; Xie et al., 2018, 2020), \emph{tinylabels} (Version 0.2.3; Barth, 2022), \emph{tinytex} (Version 0.39; Xie, 2019), and \emph{usethis} (Version 2.0.1; Wickham, Bryan, et al., 2021) for all our analyses.
+We used R (Version 4.1.1; R Core Team, 2021) and the R-packages \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2022), \emph{psych} (Version 2.1.9; Revelle, 2021), \emph{reticulate} (Version 1.22; Ushey et al., 2021), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35\footnote{\emph{Note}. Did the integral of the difference between the CTT and IRT functions using the ``integrate'' function in the ``stats'' package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.}. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35.
 For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure.
@@ -350,35 +350,14 @@ Additionally, if there is interest in this general idea we would likely publish 
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_a}{}}%
-Alfaro, M., Santini, F., Brock, C., Alamillo, H., Dornburg, A., Rabosky, D., Carnevale, G., \& Harmon, L. (2009). Nine exceptional radiations plus high turnover explain species diversity in jawed vertebrates. \emph{Proceedings of the National Academy of Sciences of the United States of America}, \emph{106}, 13410--13414.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-markdown}{}}%
-Allaire, J., Horner, J., Xie, Y., Marti, V., \& Porte, N. (2019). \emph{Markdown: Render markdown with the c library 'sundown'}. \url{https://CRAN.R-project.org/package=markdown}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-gridExtra}{}}%
-Auguie, B. (2017). \emph{gridExtra: Miscellaneous functions for "grid" graphics}. \url{https://CRAN.R-project.org/package=gridExtra}
-
 \leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
-Aust, F., \& Barth, M. (2020). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. \url{https://github.com/crsh/papaja}
+Aust, F., \& Barth, M. (2022). \emph{{papaja}: {Prepare} reproducible {APA} journal articles with {R Markdown}}. \url{https://github.com/crsh/papaja}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-tinylabels}{}}%
 Barth, M. (2022). \emph{{tinylabels}: Lightweight variable labels}. \url{https://cran.r-project.org/package=tinylabels}
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-mirt}{}}%
-Chalmers, R. P. (2012). {mirt}: A multidimensional item response theory package for the {R} environment. \emph{Journal of Statistical Software}, \emph{48}(6), 1--29. \url{https://doi.org/10.18637/jss.v048.i06}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-descr}{}}%
-Dirk Enzmann, J. Aquino. I. R. source code and/or documentation written by, Schwartz, M., Jain, N., \& Kraft, S. (2021). \emph{Descr: Descriptive statistics}. \url{https://CRAN.R-project.org/package=descr}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_b}{}}%
-Eastman, J., Alfaro, M., Joyce, P., Hipp, A., \& Harmon, L. (2011). A novel comparative method for identifying shifts in the rate of character evolution on trees. \emph{Evolution}, \emph{65}, 3578--3589.
-
 \leavevmode\vadjust pre{\hypertarget{ref-fan1998item}{}}%
 Fan, X. (1998). Item response theory and classical test theory: An empirical comparison of their item/person statistics. \emph{Educational and Psychological Measurement}, \emph{58}(3), 357--381.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-installr}{}}%
-Galili, T. (2021). \emph{Installr: Using r to install stuff on windows OS (such as: R, 'rtools', 'RStudio', 'git', and more!)}. \url{https://CRAN.R-project.org/package=installr}
 
 \leavevmode\vadjust pre{\hypertarget{ref-hambleton1993comparison}{}}%
 Hambleton, R. K., \& Jones, R. W. (1993). Comparison of classical test theory and item response theory and their applications to test development. \emph{Educational Measurement: Issues and Practice}, \emph{12}(3), 38--47.
@@ -386,17 +365,8 @@ Hambleton, R. K., \& Jones, R. W. (1993). Comparison of classical test theory an
 \leavevmode\vadjust pre{\hypertarget{ref-hambleton1991fundamentals}{}}%
 Hambleton, R. K., Swaminathan, H., \& Rogers, H. J. (1991). \emph{Fundamentals of item response theory} (Vol. 2). Sage.
 
-\leavevmode\vadjust pre{\hypertarget{ref-han2007wingen3}{}}%
-Han, K. (2007). WinGen3: Windows software that generates IRT parameters and item responses {[}computer program{]}. \emph{Amherst, MA: Center for Educational Assessment, University of Massachusetts Amherst}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_d}{}}%
-Harmon, L., Weir, J., Brock, C., Glor, R., \& Challenger, W. (2008). GEIGER: Investigating evolutionary radiations. \emph{Bioinformatics}, \emph{24}, 129--131.
-
 \leavevmode\vadjust pre{\hypertarget{ref-kulas2017approximate}{}}%
 Kulas, J. T., Smith, J. A., \& Xu, H. (2017). Approximate functional relationship between IRT and CTT item discrimination indices: A simulation, validation, and practical extension of lord's (1980) formula. \emph{Journal of Applied Measurement}, \emph{18}(4), 393--407.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-irtplay}{}}%
-Lim, H. (2020). \emph{Irtplay: Unidimensional item response theory modeling}. \url{https://CRAN.R-project.org/package=irtplay}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lord1980applications}{}}%
 Lord, F. (1980). \emph{Applications of IRT to practical problems}. Hillsdale: Lawrence Erlbaum Associates.
@@ -413,11 +383,8 @@ Masters, G. N. (1982). A rasch model for partial credit scoring. \emph{Psychomet
 \leavevmode\vadjust pre{\hypertarget{ref-muraki1997generalized}{}}%
 Muraki, E. (1997). A generalized partial credit model. In \emph{Handbook of modern item response theory} (pp. 153--164). Springer.
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_e}{}}%
-Pennell, M., Eastman, J., Slater, G., Brown, J., Uyeda, J., Fitzjohn, R., Alfaro, M., \& Harmon, L. (2014). Geiger v2.0: An expanded suite of methods for fitting macroevolutionary models to phylogenetic trees. \emph{Bioinformatics}, \emph{30}, 2216--2218.
-
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
-R Core Team. (2020). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
+R Core Team. (2021). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-psych}{}}%
 Revelle, W. (2021). \emph{Psych: Procedures for psychological, psychometric, and personality research}. Northwestern University. \url{https://CRAN.R-project.org/package=psych}
@@ -428,38 +395,8 @@ Rupp, A. A., \& Zumbo, B. D. (2004). A note on how to quantify and report whethe
 \leavevmode\vadjust pre{\hypertarget{ref-rupp2006understanding}{}}%
 Rupp, A. A., \& Zumbo, B. D. (2006). Understanding parameter invariance in unidimensional IRT models. \emph{Educational and Psychological Measurement}, \emph{66}(1), 63--84.
 
-\leavevmode\vadjust pre{\hypertarget{ref-R-lattice}{}}%
-Sarkar, D. (2008). \emph{Lattice: Multivariate data visualization with r}. Springer. \url{http://lmdvr.r-forge.r-project.org}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-latticeExtra}{}}%
-Sarkar, D., \& Andrews, F. (2019). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_c}{}}%
-Slater, G., Harmon, L., Wegmann, D., Joyce, P., Revell, L., \& Alfaro, M. (2012). Fitting models of continuous trait evolution to incompletely sampled comparative data using approximate bayesian computation. \emph{Evolution}, \emph{66}, 752--762.
-
 \leavevmode\vadjust pre{\hypertarget{ref-R-reticulate}{}}%
 Ushey, K., Allaire, J., \& Tang, Y. (2021). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
-Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. \url{https://ggplot2.tidyverse.org}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-usethis}{}}%
-Wickham, H., Bryan, J., \& Barrett, M. (2021). \emph{Usethis: Automate package and project setup}. \url{https://CRAN.R-project.org/package=usethis}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-devtools}{}}%
-Wickham, H., Hester, J., Chang, W., \& Bryan, J. (2021). \emph{Devtools: Tools to make developing r packages easier}. \url{https://CRAN.R-project.org/package=devtools}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-knitr}{}}%
-Xie, Y. (2015). \emph{Dynamic documents with {R} and knitr} (2nd ed.). Chapman; Hall/CRC. \url{https://yihui.org/knitr/}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-tinytex}{}}%
-Xie, Y. (2019). TinyTeX: A lightweight, cross-platform, and easy-to-maintain LaTeX distribution based on TeX live. \emph{TUGboat}, \emph{1}, 30--32. \url{http://tug.org/TUGboat/Contents/contents40-1.html}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-rmarkdown_a}{}}%
-Xie, Y., Allaire, J. J., \& Grolemund, G. (2018). \emph{R markdown: The definitive guide}. Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-rmarkdown_b}{}}%
-Xie, Y., Dervieux, C., \& Riederer, E. (2020). \emph{R markdown cookbook}. Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown-cookbook}
 
 \end{CSLReferences}
 
