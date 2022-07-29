@@ -33,16 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Item Characteristic Curve estimation from common Classical Test Theory indices},
-  pdfauthor={Diego Figueiras1 \& John T. Kulas1},
-  pdflang={en-EN},
-  pdfkeywords={Classical Test Theory, Item Response Theory, item difficulty, item discrimination},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -176,6 +166,16 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Item Characteristic Curve estimation from common Classical Test Theory indices},
+  pdfauthor={Diego Figueiras1 \& John T. Kulas1},
+  pdflang={en-EN},
+  pdfkeywords={Classical Test Theory, Item Response Theory, item difficulty, item discrimination},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Item Characteristic Curve estimation from common Classical Test Theory indices}
 \author{Diego Figueiras\textsuperscript{1} \& John T. Kulas\textsuperscript{1}}
@@ -262,9 +262,6 @@ In order to estimate the relationship, we simulated items. We used 100 items and
 
 Then we computed regressions predicting the b-parameters using the standard normal deviate associated with the p-values on each simulation. The resulting regression coefficients for all simulations was approximately 2 and 0, indicating that our scaling was not sample dependent.
 
-\hypertarget{study-2}{%
-\section{Study 2}\label{study-2}}
-
 Estimating CTT-derived ICC's
 
 The purpose of study 1 is to look at the visualizations resulting from Kulas et al. (2017) formula on simulated data. We hypothesize that the relationship between the estimated IRT a-parameter and the corrected item-total correlations will be an exponential function instead of a linear relationship, and it will become stronger as the corrected item-total correlations and the p-values deviate from 0, which would mean that the item has more discrimination.
@@ -277,6 +274,9 @@ The purpose of study 1 is to look at the visualizations resulting from Kulas et 
 \end{quote}
 
 We simulated data using the WinGen program (Han, 2007). Our sample was 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0). The mean for the a-parameter for the simulated data was 2, and the standard deviation 0.8. The mean for the b-parameter was 0 and the standard deviation 0.5. The mirt package from (\textbf{R-mirt?}) was used to compute the IRT a-parameters and to plot the 2PL resulting model. As for the CTT-derived a-parameter, the modification to F. M. Lord (2012)'s formula described earlier was used, as well as the re-scaling for the p-values. We additionally changed the scale of the difficulty estimates of CTT so they were on the same scale as the IRT estimates. This was done by building a regression model using the CTT a-estimate to predict the IRT a-parameter. The resulting values from this model were used in plotting the CTT-derived ICC's.
+We tested the accuracy of this scale on six simulations of data, each with different shape and p-values. Each simulation consisted of 1,000 observations and 100 items. Simulation 1 was
+
+\includegraphics{ICC_project_files/figure-latex/unnamed-chunk-1-1.pdf} \includegraphics{ICC_project_files/figure-latex/unnamed-chunk-1-2.pdf}
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
@@ -296,7 +296,7 @@ The same simulated data as in study 1 was used. The mirt package from (\textbf{R
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
 
-We used R (Version 4.1.1; R Core Team, 2021) and the R-packages \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2022), \emph{psych} (Version 2.1.9; Revelle, 2021), \emph{reticulate} (Version 1.22; Ushey et al., 2021), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R (Version 4.1.2; R Core Team, 2021) and the R-packages \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2022), \emph{psych} (Version 2.1.9; Revelle, 2021), \emph{reticulate} (Version 1.22; Ushey et al., 2021), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35\footnote{\emph{Note}. Did the integral of the difference between the CTT and IRT functions using the ``integrate'' function in the ``stats'' package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.}. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35.
 For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure.

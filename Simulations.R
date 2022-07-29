@@ -77,7 +77,7 @@ for(j in 1:1000){
         df2<-as.data.frame(cbind(pseudob2, pvalues2,pseudoA2, irt2)) #putting pseudob from line 41, pvalues from line 42, pseudoA from line 53 and IRT parameters from line 57 together in a DF.
         colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")#renaming the headers of the above DF.
         
-        df2<-df2%>%filter(b<3)%>%filter(b>-3)
+        #df2<-df2%>%filter(b<3)%>%filter(b>-3)
 
         
         
@@ -91,9 +91,10 @@ for(j in 1:1000){
           seint=summary(reg)$coefficients[1,2],
           seslope=summary(reg)$coefficients[2,2],
           scrubbedn=nrow(df2),
-          simulation="Simulation 2"
+          simulation="Simulation 2",
+          mean_p=psych::describe(df2$pvalues))
           
-        ))
+        )
 
 }
 
@@ -104,6 +105,9 @@ df2%>%ggplot(aes(x=b, y=pseudob))+
 
 
 hist(sim2means$pvalues)
+
+hist(df2$pvalues)
+sd(df2$pvalues)
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
@@ -146,7 +150,7 @@ for(j in 1:1000){
         irt3 <- IRT_parms3$items
         df3<-as.data.frame(cbind(pseudob3, pvalues3,pseudoA3, irt3))
         colnames(df3)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
-        df3<-df3%>%filter(b<3)%>%filter(b>-3)
+        #df3<-df3%>%filter(b<3)%>%filter(b>-3)
         
         
         reg<-lm(b ~ pseudob, df3)
@@ -158,7 +162,8 @@ for(j in 1:1000){
           seint=summary(reg)$coefficients[1,2],
           seslope=summary(reg)$coefficients[2,2],
           scrubbedn=nrow(df3),
-          simulation="Simulation 3"
+          simulation="Simulation 3",
+          mean_p=psych::describe(df3$pvalues)
           
         ))
 
@@ -224,7 +229,7 @@ for(j in 1:1000){
         df4<-as.data.frame(cbind(pseudob4, pvalues4,pseudoA4, irt4))
         colnames(df4)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        df4<-df4%>%filter(b<3)%>%filter(b>-3)
+        #df4<-df4%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df4)
         summary(reg)
@@ -235,7 +240,8 @@ for(j in 1:1000){
           seint=summary(reg)$coefficients[1,2],
           seslope=summary(reg)$coefficients[2,2],
           scrubbedn=nrow(df4),
-          simulation="Simulation 4"
+          simulation="Simulation 4",
+          mean_p=psych::describe(df4$pvalues)
           
         ))
 
@@ -287,7 +293,7 @@ for(j in 1:1000){
         df5<-as.data.frame(cbind(pseudob5, pvalues5,pseudoA5, irt5))
         colnames(df5)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        df5<-df5%>%filter(b<3)%>%filter(b>-3)
+        #df5<-df5%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df5)
         summary(reg)
         coef(reg)
@@ -297,7 +303,8 @@ for(j in 1:1000){
           seint=summary(reg)$coefficients[1,2],
           seslope=summary(reg)$coefficients[2,2],
           scrubbedn=nrow(df5),
-          simulation="Simulation 5"
+          simulation="Simulation 5",
+          mean_p=psych::describe(df5$pvalues)
           
         ))
         
@@ -352,7 +359,7 @@ for(j in 1:1000){
         df6<-as.data.frame(cbind(pseudob6, pvalues6,pseudoA6, irt6))
         colnames(df6)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        df6<-df6%>%filter(b<3)%>%filter(b>-3)
+        #df6<-df6%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df6)
         summary(reg)
@@ -363,9 +370,10 @@ for(j in 1:1000){
           seint=summary(reg)$coefficients[1,2],
           seslope=summary(reg)$coefficients[2,2],
           scrubbedn=nrow(df6),
-          simulation="Simulation 6"
+          simulation="Simulation 6",
+          mean_p=psych::describe(df6$pvalues))
           
-        ))
+        )
         
         
 }  
@@ -379,5 +387,40 @@ df6%>%ggplot(aes(x=b, y=pseudob))+
 hist(sim6means$pvalues)
 
 
-write.csv(coeficients, "pvalue_to_b_estimates.csv")
+#write.csv(coeficients, "pvalue_to_b_estimates.csv")
+write.csv(coeficients, "pvalue_to_b_estimates2.csv")
+coeficients<-read.csv("../CTTvisual/pvalue_to_b_estimates_2.csv")
+library(ggplot2)
+ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coeficients, aes(x = mean_p.kurtosis)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coeficients, aes(x = mean_p.skew)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
 
+
+simulation4<-coeficients%>%filter(simulation=="Simulation 4")
+hist(simulation4$slope, breaks=100)
+axis(side=1, at=seq(-3.5,-1.5, .01), labels=seq(-3.5,-1.5,.01))
+bump1<-simulation4%>%filter(slope< -1.89)
+bump2<-simulation4%>%filter(slope> -1.89 & slope< -1.76)
+bump3<-simulation4%>%filter(slope> -1.76 & slope< -1.68)
+bump4<-simulation4%>%filter(slope> -1.68 & slope< -1.54)
+bump5<-simulation4%>%filter(slope> -1.54)
+
+bump1$bump<- "bump1"
+bump2$bump<- "bump2"
+bump3$bump<- "bump3"
+bump4$bump<- "bump4"
+bump5$bump<- "bump5"
+
+temp<-rbind(bump1, bump2, bump3, bump4, bump5)
+ggplot(data = temp, aes(x = intercept)) + geom_histogram() + facet_grid(bump~.) #looks consistent
+
+ggplot(data = temp, aes(x = seint)) + geom_histogram() + facet_grid(bump~.)
+
+ggplot(data = temp, aes(x = seslope)) + geom_histogram() + facet_grid(bump~.)
+
+ggplot(data = temp, aes(x = scrubbedn)) + geom_histogram() + facet_grid(bump~.)
+
+#Look at kurtosis and skeweness per bump of simulation4. Excluded cases might be what is driving the difference. Run simulations without excluding cases.
+# Add slope graph from 5000 to the paper
+# Tweak regression model based on average kurtosis of pvalues. Tweak also pseudob using kurtosis. 
