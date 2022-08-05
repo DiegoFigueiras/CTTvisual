@@ -111,7 +111,7 @@ sd(df2$pvalues)
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
-
+random<-sample(10000, 20)
 
 for(j in 1:1000){
 
@@ -122,7 +122,14 @@ for(j in 1:1000){
         
         for(i in 1:100){
           sim3[,i]<-sample(0:1, 10000, prob=c(abs(y[i,]), abs(y[i,]-1)), replace=TRUE) #using the sample() function to simulate the binary data and put it in sim3. Each iteration uses the values in y as the probabilities.
+          if(sum(sim3[,i])==0){#lines 168-172 are just to scatter 1s into columns that have all 0s and to scatter 0s to columns that have all 1s.
+            sim3[,i][random]<-1
+          }
+          if(sum(sim3[,i])==10000){
+            sim3[,i][random]<-0
+          }
         }
+        
         
         sim3<-data.frame(apply(sim3, 2, sort, decreasing=F))
         sim3means<-data.frame(colMeans(sim3))
@@ -424,3 +431,4 @@ ggplot(data = temp, aes(x = scrubbedn)) + geom_histogram() + facet_grid(bump~.)
 #Look at kurtosis and skeweness per bump of simulation4. Excluded cases might be what is driving the difference. Run simulations without excluding cases.
 # Add slope graph from 5000 to the paper
 # Tweak regression model based on average kurtosis of pvalues. Tweak also pseudob using kurtosis. 
+#Check area between curves of each simulation
