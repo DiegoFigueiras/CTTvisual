@@ -112,7 +112,7 @@ sd(df2$pvalues)
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
 random<-sample(10000, 20)
-
+all_sims<-NULL
 for(j in 1:1000){
 
 
@@ -149,6 +149,7 @@ for(j in 1:1000){
         
         
         df3<-as.data.frame(cbind(pseudob3, pvalues3,pseudoA3)) #putting pseudob from line 41, pvalues from line 42, pseudoA from line 53 and IRT parameters from line 57 together in a DF.
+
         colnames(df3)<-c("pseudob", "pvalues","PseudoA")#renaming the headers of the above DF.
         df3<-df3%>%filter(pvalues<.9)%>%filter(pvalues>.1)
         
@@ -157,9 +158,12 @@ for(j in 1:1000){
         irt3 <- IRT_parms3$items
         df3<-as.data.frame(cbind(pseudob3, pvalues3,pseudoA3, irt3))
         colnames(df3)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
-        #df3<-df3%>%filter(b<3)%>%filter(b>-3)
+
         
-        
+        df3$skew<-as.numeric(psych::describe(df3$pvalues)[11])
+        df3$kurtosis<-as.numeric(psych::describe(df3$pvalues)[12])
+        all_sims<-all_sims%>%rbind(df3)#putting all 1,000 simulations at the item level into one dataframe
+        df3<-df3%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df3)
         summary(reg)
         coef(reg)
@@ -176,12 +180,16 @@ for(j in 1:1000){
 
 }
 
+model<-lm(b~pseudob+skew+kurtosis, all_sims)
+summary(model)
+
 sim3means<-round(sim3means, 2)
 df3%>%ggplot(aes(x=b, y=pseudob))+
   geom_point()+
   geom_text(aes(label=pseudob))
 
 hist(sim3means$pvalues)
+write.csv(coeficients, "pvalue_to_b_estimates_sim3.csv")
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 
@@ -236,7 +244,7 @@ for(j in 1:1000){
         df4<-as.data.frame(cbind(pseudob4, pvalues4,pseudoA4, irt4))
         colnames(df4)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        #df4<-df4%>%filter(b<3)%>%filter(b>-3)
+        df4<-df4%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df4)
         summary(reg)
@@ -300,7 +308,7 @@ for(j in 1:1000){
         df5<-as.data.frame(cbind(pseudob5, pvalues5,pseudoA5, irt5))
         colnames(df5)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        #df5<-df5%>%filter(b<3)%>%filter(b>-3)
+        df5<-df5%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df5)
         summary(reg)
         coef(reg)
@@ -366,7 +374,7 @@ for(j in 1:1000){
         df6<-as.data.frame(cbind(pseudob6, pvalues6,pseudoA6, irt6))
         colnames(df6)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
         
-        #df6<-df6%>%filter(b<3)%>%filter(b>-3)
+        df6<-df6%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df6)
         summary(reg)
@@ -396,7 +404,7 @@ hist(sim6means$pvalues)
 
 #write.csv(coeficients, "pvalue_to_b_estimates.csv")
 write.csv(coeficients, "pvalue_to_b_estimates2.csv")
-coeficients<-read.csv("../CTTvisual/pvalue_to_b_estimates_2.csv")
+coeficients<-read.csv("pvalue_to_b_estimates_original.csv")
 library(ggplot2)
 ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
 ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
@@ -432,3 +440,23 @@ ggplot(data = temp, aes(x = scrubbedn)) + geom_histogram() + facet_grid(bump~.)
 # Add slope graph from 5000 to the paper
 # Tweak regression model based on average kurtosis of pvalues. Tweak also pseudob using kurtosis. 
 #Check area between curves of each simulation
+#
+
+write.csv(all_sims, "all_sims3.csv")
+
+
+
+
+
+
+plot(all_sims$b[1:100], all_sims$pseudob[1:100])
+par(new=TRUE)
+plot(all_sims$b[101:200], all_sims$pseudob[101:200], col="red")
+par(new=TRUE)
+plot(all_sims$b[201:300], all_sims$pseudob[201:300], col="blue")
+par(new=TRUE)
+plot(all_sims$b[301:400], all_sims$pseudob[301:400], col="green")
+par(new=TRUE)
+plot(all_sims$b[401:500], all_sims$pseudob[401:500], col="yellow")
+model<-lm(b~pseudob+skew+kurtosis, all_sims)
+summary(model)
