@@ -20,7 +20,7 @@ library(faux)
 ###################### SIMULATION 2: UNIFORM DISTRIBUTION ##############################
 
 coeficients<-NULL#declare the dataframe were coefficients for all 10,000 simulations will be stored
-
+all_sims2<-NULL
 for(j in 1:1000){
 
 
@@ -76,8 +76,11 @@ for(j in 1:1000){
         irt2 <- IRT_parms2$items
         df2<-as.data.frame(cbind(pseudob2, pvalues2,pseudoA2, irt2)) #putting pseudob from line 41, pvalues from line 42, pseudoA from line 53 and IRT parameters from line 57 together in a DF.
         colnames(df2)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")#renaming the headers of the above DF.
+        df2$skew<-as.numeric(psych::describe(df2$pvalues)[11])
+        df2$kurtosis<-as.numeric(psych::describe(df2$pvalues)[12])
+        all_sims2<-all_sims2%>%rbind(df2)#putting all 1,000 simulations at the item level into one dataframe
         
-        #df2<-df2%>%filter(b<3)%>%filter(b>-3)
+        df2<-df2%>%filter(b<3)%>%filter(b>-3)
 
         
         
@@ -108,6 +111,9 @@ hist(sim2means$pvalues)
 
 hist(df2$pvalues)
 sd(df2$pvalues)
+all_sims2$Simulations<-rep(1:1000, each=100)
+
+write.csv(all_sims2, "Simulation 2/all_sims2.csv")
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
@@ -190,9 +196,13 @@ df3%>%ggplot(aes(x=b, y=pseudob))+
 
 hist(sim3means$pvalues)
 write.csv(coeficients, "pvalue_to_b_estimates_sim3.csv")
+write.csv(all_sims, "Simulation 3/all_sims3.csv")
+
+all_sims3<-read.csv("Simulation 3/all_sims3.csv")
+all_sims3$Simulations<-rep(1:1000, each=100)
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
-
+all_sims4<-NULL
 for(j in 1:1000){
 
 
@@ -243,6 +253,9 @@ for(j in 1:1000){
         irt4 <- IRT_parms4$items
         df4<-as.data.frame(cbind(pseudob4, pvalues4,pseudoA4, irt4))
         colnames(df4)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
+        df4$skew<-as.numeric(psych::describe(df4$pvalues)[11])
+        df4$kurtosis<-as.numeric(psych::describe(df4$pvalues)[12])
+        all_sims4<-all_sims4%>%rbind(df4)#putting all 1,000 simulations at the item level into one dataframe
         
         df4<-df4%>%filter(b<3)%>%filter(b>-3)
         
@@ -269,10 +282,11 @@ df4%>%ggplot(aes(x=b, y=pseudob))+
   geom_text(aes(label=pseudob))
 
 hist(sim4means$pvalues)
+write.csv(all_sims4, "Simulation 4/all_sims4.csv")
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
-
+all_sims<-NULL
 for(j in 1:1000){
 
         x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
@@ -337,7 +351,7 @@ df5%>%ggplot(aes(x=b, y=pseudob))+
 hist(sim5means$pvalues)
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
-
+all_sims<-NULL
 for(j in 1:1000){
 
 
@@ -476,3 +490,8 @@ for (i in seq(from=1, to=100000, by=100)){
   hist(all_sims$pseudob[i:(i+100)], col=sample(colors,1))
   par(new=TRUE)
 }
+
+all_sims2<-read.csv('Simulation 2/all_sims2.csv')
+all_sims3<-read.csv('Simulation 3/all_sims3.csv')
+all_sims4<-read.csv('Simulation 4/all_sims4.csv')
+all_sims5<-read.csv('Simulation 5/all_sims5.csv')
