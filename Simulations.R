@@ -477,7 +477,7 @@ summary(model)
 
 colors<-rep(c("Red", "blue","yellow","orange","purple","brown","green","pink","black", "white"), 1000)
 for (i in seq(from=1, to=100000, by=100)){
-  plot(all_sims$b[i:(i+100)], all_sims$pseudob[i:(i+100)], col=sample(colors,1))
+  plot(all_sims2$b[i:(i+100)], all_sims2$pseudob[i:(i+100)], col=sample(colors,1))
   par(new=TRUE)
 }
 
