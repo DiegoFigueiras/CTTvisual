@@ -4,6 +4,8 @@ library(psych)
 library(mirt)
 library(ggplot2)
 library(faux)
+library(fGarch)
+library(catIrt)
 ## to visualize p-value distributions
 
 ###################### SIMULATION 1: ALL 0.5 ##############################
@@ -117,27 +119,18 @@ write.csv(all_sims2, "Simulation 2/all_sims2.csv")
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
-random<-sample(10000, 20)
+#random<-sample(10000, 20)
 all_sims<-NULL
 for(j in 1:1000){
-
-
-        y<-data.frame(matrix(rnorm(100,.5,.2))) #creates a normal distribution that will be used later for creating the simulated binary data
-        y<-data.frame(apply(y, 2, sort, decreasing=F))#creates a normal distribution that will be used later for creating the simulated binary data
-        sim3<-matrix(ncol=100, nrow=10000) #declaring the dataframe where the simulated responses will be stored.
+          
+        skew<-rsnorm(100,0,1,xi=1) # xi=1 is the normal distribution specification
+        b.params <- cbind(a = rnorm(100, 1.5, .5), b = skew, c = 0)
+        theta<-rnorm(10000, 0, 1)
+        b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
+        sim3<-data.frame(b.mod$resp)
+        g<-psych::describe(sim3)
+        hist(g$mean)
         
-        for(i in 1:100){
-          sim3[,i]<-sample(0:1, 10000, prob=c(abs(y[i,]), abs(y[i,]-1)), replace=TRUE) #using the sample() function to simulate the binary data and put it in sim3. Each iteration uses the values in y as the probabilities.
-          if(sum(sim3[,i])==0){#lines 168-172 are just to scatter 1s into columns that have all 0s and to scatter 0s to columns that have all 1s.
-            sim3[,i][random]<-1
-          }
-          if(sum(sim3[,i])==10000){
-            sim3[,i][random]<-0
-          }
-        }
-        
-        
-        sim3<-data.frame(apply(sim3, 2, sort, decreasing=F))
         sim3means<-data.frame(colMeans(sim3))
         colnames(sim3means)[1]<-"pvalues"
         pseudob3<-data.frame(qnorm(sim3means$pvalues))
@@ -195,40 +188,36 @@ df3%>%ggplot(aes(x=b, y=pseudob))+
   geom_text(aes(label=pseudob))
 
 hist(sim3means$pvalues)
-write.csv(coeficients, "pvalue_to_b_estimates_sim3.csv")
-write.csv(all_sims, "Simulation 3/all_sims3.csv")
+write.csv(coeficients, "Simulation 3/new_coeficientsSim3.csv")
+write.csv(all_sims, "Simulation 3/all_sims3_NEW.csv")
 
 all_sims3<-read.csv("Simulation 3/all_sims3.csv")
 all_sims3$Simulations<-rep(1:1000, each=100)
+
+
+new_coefficients<-read.csv("Simulation 3/new_coeficientsSim3.csv")
+hist(new_coefficients$slope)
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 all_sims4<-NULL
 for(j in 1:1000){
 
-
-        x<-data.frame(matrix(rbeta(10000, 5, 2), ncol=50, nrow=10000))#creating a matrix of skewed data that will be used later for simulating the binary distribution
-        sim4.1<-matrix(ncol=50, nrow=10000)
-        for(i in 1:ncol(x)){
-          
-          sim4.1[,i]<-ifelse(x[,i]<(0.02*i), 0,1)#if each number in x is less than 0.02*index, it outputs a 0, otherwise a 1. 
-          if(sum(sim4.1[,i])==0){#lines 168-172 are just to scatter 1s into columns that have all 0s and to scatter 0s to columns that have all 1s.
-            sim4.1[,i][random]<-1
-          }
-          if(sum(sim4.1[,i])==10000){
-            sim4.1[,i][random]<-0
-          }
-        }
-        sim4.2<-matrix(ncol=50, nrow=10000)#same process as the previos simulation, but changing the inequality sign in the ifelse so it is skewed in the opposite direction
-        for(i in 1:ncol(x)){
-          
-          sim4.2[,i]<-ifelse(x[,i]>(0.02*i), 0,1)
-          if(sum(sim4.2[,i])==0){
-            sim4.2[,i][random]<-1
-          }
-          if(sum(sim4.2[,i])==10000){
-            sim4.2[,i][random]<-0
-          }
-        }
+      
+  skew<-rsnorm(50,0,1,xi=-50)
+  b.params <- cbind(a = rnorm(50, 1.5, .5), b = skew, c = 0)
+  theta<-rnorm(10000, 0, 1)
+  b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
+  sim5.1<-data.frame(b.mod$resp)
+  
+  skew<-rsnorm(50,0,1,xi=50)
+  b.params <- cbind(a = rnorm(50, 1.5, .5), b = skew, c = 0)
+  theta<-rnorm(10000, 0, 1)
+  b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
+  sim5.2<-data.frame(b.mod$resp)
+  sim5<-cbind(sim5.1, sim5.2)
+  g<-psych::describe(sim5)
+  hist(g$mean)
+  
         
         
         sim4<-cbind(sim4.1, sim4.2)#merging the two skewed distributions so we get that U-shaped distribution. 
@@ -286,21 +275,19 @@ write.csv(all_sims4, "Simulation 4/all_sims4.csv")
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
+
+library(fGarch)
+
 all_sims<-NULL
 for(j in 1:1000){
-
-        x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
-        sim5<-matrix(ncol=100, nrow=10000)
-        for(i in 1:ncol(x)){
-          
-          sim5[,i]<-ifelse(x[,i]<(0.01*i), 0,1)
-          if(sum(sim5[,i])==0){
-            sim5[,i][i]<-1
-          }
-          if(sum(sim5[,i])==10000){
-            sim5[,i][i]<-0
-          }
-        }
+        skew<-rsnorm(100,0,1,xi=-3)
+        b.params <- cbind(a = rnorm(100, 1.5, .5), b = skew, c = 0)
+        theta<-rnorm(10000, 0, 1)
+        b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
+        sim5<-data.frame(b.mod$resp)
+        g<-psych::describe(sim5)
+        hist(g$mean)
+  
         sim5means<-as.data.frame(colMeans(sim5))
         colnames(sim5means)[1] <- "pvalues"
         pseudob5<-data.frame(qnorm(sim5means$pvalues))
@@ -355,18 +342,13 @@ all_sims<-NULL
 for(j in 1:1000){
 
 
-        x<-data.frame(matrix((rbeta(10000,2,1)), ncol=100, nrow=10000))
-        sim6<-matrix(ncol=100, nrow=10000)
-        for(i in 1:ncol(x)){
-          
-          sim6[,i]<-ifelse(x[,i]>(0.01*i), 0,1)
-          if(sum(sim6[,i])==0){
-            sim6[,i][i]<-1
-          }
-          if(sum(sim6[,i])==10000){
-            sim6[,i][i]<-0
-          }
-        }
+        skew<-rsnorm(100,0,1,xi=4)
+        b.params <- cbind(a = rnorm(100, 1.5, .5), b = skew, c = 0)
+        theta<-rnorm(10000, 0, 1)
+        b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
+        sim6<-data.frame(b.mod$resp)
+        g<-psych::describe(sim6)
+        hist(g$mean)
         sim6means<-as.data.frame(colMeans(sim6))
         colnames(sim6means)[1] <- "pvalues"
         pseudob6<-data.frame(qnorm(sim6means$pvalues))
@@ -417,13 +399,18 @@ hist(sim6means$pvalues)
 
 
 #write.csv(coeficients, "pvalue_to_b_estimates.csv")
+new_coefficients<-read.csv("Simulation 3/new_coeficientsSim3.csv")
 write.csv(coeficients, "pvalue_to_b_estimates2.csv")
 coeficients<-read.csv("pvalue_to_b_estimates_original.csv")
+coeficients<-coeficients%>%filter(simulation!="Simulation 3")%>%filter(simulation!="Simulation 4")
+simulation3<-new_coefficients%>%select(1:7)
+coefficients2<-rbind(coeficients, simulation3)
+write.csv(coefficients2, "SIOP/temp_siop.csv")
 library(ggplot2)
-ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
-ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
-ggplot(data = coeficients, aes(x = mean_p.kurtosis)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
-ggplot(data = coeficients, aes(x = mean_p.skew)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coefficients2, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coefficients2, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coefficients2, aes(x = mean_p.kurtosis)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
+ggplot(data = coefficients2, aes(x = mean_p.skew)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
 
 
 simulation4<-coeficients%>%filter(simulation=="Simulation 4")
