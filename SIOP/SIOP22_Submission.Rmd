@@ -1,0 +1,457 @@
+---
+title             : "Estimating pseudo-B parameter for creating ICCs using CTT statistics: A Simulation Study"
+shorttitle        : "CTT ICCs"
+author: 
+  - name          : "Diego Figueiras"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Dickson Hall 287"
+    email         : "figueirasd1@montclair.edu"
+  - name          : "John T. Kulas"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "Montclair State University"
+  - id            : "2"
+    institution   : "eRg"
+
+
+authornote: 
+
+abstract: |
+  Item characteristic curves (ICC's) are visual representations of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to generate empirically-derived linking coefficients between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The DIF was .... An `R` package, `ctticc`, performs the ICC calculations presented in the current paper and provides assessment specialists with visual representations of CTT-derived item characteristics.
+  
+keywords          : "Classical Test Theory, Item Response Theory, item difficulty, item discrimination"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib", "articles.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+
+csl               : "apa7.csl"
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library(psych)
+library(reticulate)
+library(mirt)
+library(latticeExtra)
+library(ggplot2)
+library(scales)
+r_refs("r-references.bib", append=FALSE)         ## append=FALSE auto-updates package version 
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed, echo=FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r example, include=TRUE, fig.cap="Item characteristic curves reflecting differences in difficulty and discrimination.", echo=FALSE, warning=FALSE, message=FALSE, out.width = "100%", out.height="80%"}
+
+
+data<-read.csv("simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+pseudob<-abs(qnorm(.5))
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(2.71828)^-x)/(2.71828-(2.71828)^x)
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(.3)
+c <- 0
+#change pseudob in this line for a scale that allows negative numbers
+
+pseudob  <-       qnorm(.02)   ## note these "p-values" operate in reverse
+pseudoa  <-        ahat(.3)
+
+pseudob2  <-  abs(qnorm(.5))
+pseudoa2  <-       ahat(.7)
+
+pseudob3  <-      qnorm(.99)
+pseudoa3  <-       ahat(.7)
+
+pseudob4  <-  abs(qnorm(.5))
+pseudoa4  <-       ahat(.1)
+
+colors<-c("Moderate Discrimination & Low Difficulty"="#aeb0af", 
+          "High Discrimination & Moderate Difficulty"="#7c807d", 
+          "High Discrimination & High Difficulty"="#1c1c1c", 
+          "Low Discrimination & Moderate Difficulty"="#dfe0e0")
+
+p <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+p2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
+p3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
+p4<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
+
+library(ggplot2)
+library(scales)
+base <-
+  ggplot()
+
+
+base+
+  xlim(-3,3)+
+  geom_function(fun=p, size=1.5, linetype="twodash", aes(color="Moderate Discrimination & Low Difficulty"))+
+  geom_function(fun=p2, size=2, aes(color="High Discrimination & Moderate Difficulty"))+
+  geom_function(fun=p3, size=2, aes(color="High Discrimination & High Difficulty"))+
+  geom_function(fun=p4, size=1.5, linetype="twodash", aes(color="Low Discrimination & Moderate Difficulty"))+
+  labs(x="Theta",
+       y="p(1)",
+       color="Legend")+
+  scale_color_manual(values=colors)+
+  theme(legend.position="bottom")+
+  guides(colour = guide_legend(nrow = 2))
+
+```
+
+Item characteristic curves are frequently consulted by psychometricians as visual indicators of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Within these visual presentations the x-axis ranges along "trait" levels (by convention typically denoted with the greek $\theta$), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary[^bock], and the y-axis probability reflects the likelihood of a "correct" response[^binary]. From this visualization, the observer extracts the relationship between a respondent's trait level and the expectation of answering the item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., "left" on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated in the parlance of IRT or Rasch traditions, it does not take much $\theta$ to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. Through the lens of IRT, if discrimination is modeled and the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination (see Figure \@ref(fig:example)).  
+
+[^bock]: With exception [see, for example, @masters1982rasch; @muraki1997generalized]
+
+[^binary]: Because the historical convention in test response is to code a correct response as "1" and an incorrect response as "0", the y-axis is commonly denoted as "*p(1)*" or "*p(1.0)*".
+
+Assessment specialists who consult ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. These frameworks estimate the parameters necessary to plot the ogive functions. Rasch models only estimate difficulty, and assume that differences in discrimination represent flaws in measurement. The IRT 2 parameter logistic model (2PL), however, estimates item discrimination in addition to item difficulty. Item difficulty (the *b*-parameter) is scaled as the trait level associated with a 50% likelihood of correct response (e.g., it is scaled to $\theta$). Item discrimination (*a*-parameter) is the degree to which an item differentiates across individuals who are characterized as being relatively lower or higher on the trait.  From a Classical Test Theory (CTT) orientation, item  difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p-value*). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted index is the corrected item-total correlation. 
+
+Assessment specialists who calculate these CTT item indices don’t typically (to our limited knowledge!) attempt to represent them visually, as is common in IRT and Rasch applications. However, ICC's based on CTT indices could possibly provide snapshot psychometric information as valuable as those gained from IRT- or Rasch-derived item parameters. The largest obstacle to psychometricians deeming CTT-derived visuals to be of value is likely tied to the concept of invariance, which refers to IRT parameter independence across item and person estimates. However, this property is often overstated, as invariance is only attained with perfect model-data fit (which never occurs), and is also only true after being subjected to linear transformation - commonly across samples [@rupp2006understanding]. Additionally, several comparative investigations have noted commonality between IRT and CTT difficulty and discrimination estimates as well as relative stability of CTT estimates when samples are large and/or judisciously constructed [@fan1998item]. Fan in fact summarizes that the IRT and CTT frameworks “...produce very similar item and person statistics” (p.379). @hambleton1993comparison state that "no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences". 
+
+## Nature of Relationship between IRT and CTT Indices
+
+@lord1980applications described a function that approximates the nonlinear relationship between the IRT *a*-parameter and the CTT discrimination index[^Lord]:
+
+[^Lord]: @lord1980applications's CTT discrimination index is actually the item-test biserial correlation as opposed to the contemporarily more popular *corrected* item-total *point-biserial* correlation. 
+
+$$a_i\cong \frac{r_i}{\sqrt{1-r_i^2}}$$
+
+This formula wasn't intended for practical purposes but rather was specified in an attempt to help assessment specialists who were more familiar with CTT procedures to better understand the relationship to the IRT discrimination parameter. In an effort to move from the conceptual to a practical application, @kulas2017approximate proposed a modification that minimized the average residual (either $a_i$ or $r_i$, where $r_i$ is the *corrected* item-total *point-biserial* correlation). 
+
+An adjustment to @lord2012applications's formula giving the functional relationship between the "non-invariant" CTT and "invariant" IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by @kulas2017approximate, noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT "invariance". 
+
+The @kulas2017approximate investigations (both simulated and utilizing real-world test data) identified systematic predictive differences across items with differing item difficulty values, so their recommended formula included a specification for item difficulty (this formulaic specification is also retained in the current presentation):
+
+$$\hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r-e^{-r}}{e-e^r}]$$
+
+Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "p-value" of .5). $z_g$ is the standard normal deviate associated with $g$. This transformation of the standard p-value was recommended in order to scale this index along an interval-level metric more directly analogous to the IRT *b*-parameter. Figure 2 visualizes the re-specifications of Lord's formula at p-values (difficulty) of .5, .3 (or .7), and .1 (or .9) and highlights the nonlinear nature of this relationship - especially noticeable at high(er) levels of discrimination.
+
+```{r acorrected, fig.cap="Empricially-derived functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
+g<-abs(qnorm(.5))
+g<-0
+r2<-.3
+ahat<-function(r2){
+  r<-(((2.71828)^r2)-(2.71828)^-r2)/(2.71828-(2.71828)^r2)
+  ((0.51+(0.02*g)+(0.301*g^2))*r)
+ 
+}
+
+curve(ahat, from=0, to=1, ylim=c(0, 8), xname="Corrected Item-Total Correlation", ylab="IRT a-parameter")
+g<-abs(qnorm(.7))
+r2<-.7
+curve(ahat, lty="longdash",add=TRUE )
+g<-abs(qnorm(.1))
+r2<-.1
+curve(ahat, lty="dotted", add=TRUE)
+
+```
+
+As we can see, the higher the corrected item-total correlations, the higher the estimated IRT a-parameter (discrimination). Also, as the p-values (difficulty) deviates from 0, the relationship between the estimated IRT a-parameter and the corrected item-total correlations becomes stronger. 
+
+Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics. This study intends to show evidence of the overlapping nature of CTT and IRT parameters when it comes to plotting ICCs. 
+
+
+# Study 1 
+
+Establishing relationship between the IRT and CTT difficulty indices.
+
+## Method
+
+Although the ogives could be specified directly from the CTT-derived statistics, we made a procedural decision to retain the IRT 2PL as our function specification: 
+
+$$P(\Theta)=\frac{1}{1+e^{-1.7a(\Theta-b)}}$$
+Our procedure therefore required the estimation of "pseudo" IRT parameters from the CTT indices. The *a* parameter was estimated via the formula specified in  @kulas2017approximate, while the *b* parameter was estimated via linking parameters identified via simulation.
+
+In order to estimate the relationship, we simulated items. We used 100 items and generated 6 different distributions of the p-values of the items. The first distribution was uniform, with all p-values set roughly at 0.5. The second distribution was also uniform, but with the p-values all being different, ranging from 0.1 to 0.99. The third distribution was a normal distribution of p-values, centered around 0.5. The fourth distribution was an inverted normal distribution also centered around 0.5. The fifth distribution was a left skewed distribution of p-values, and the sixth was right skewed. 
+
+Then we computed regressions predicting the b-parameters using the standard normal deviate associated with the p-values on each simulation. 
+
+## Procedure and methods
+
+According to @Figueiras2022item, simulated data was used to test the overlapping nature of CTT statistics and IRT parameters when plotting ICCs. They used the WinGen program [@han2007wingen3] and got a sample of 10,000 observations, with a mean of 0 and a standard deviation of 1. The number of items were 100, with response categories of either correct or incorrect (1 and 0). The mean for the a-parameter for the simulated data was 2, and the standard deviation 0.8. The mean for the b-parameter was 0 and the standard deviation 0.5. The mirt package from @R-mirt was used to compute the IRT a-parameters and to plot the 2PL resulting model. As for the CTT-derived a-parameter, the modification to @lord2012applications's formula described earlier was used, as well as the re-scaling for the p-values. They additionally changed the scale of the difficulty estimates of CTT so they were on the same scale as the IRT estimates. This was done by building a regression model using the CTT a-estimate to predict the IRT a-parameter. The resulting values from this model were used in plotting the CTT-derived ICC's. 
+To test the accuracy of this scale, we built six additional simulations of data using R, each with different shapes and p-values, as can be seen in figure 1. Our goal was to see if CTT statistics and IRT parameters would produce similar ICCs when simulated data of varying distributions are used. Each simulation consisted of 10,000 observations and 100 items. Simulation 1 was unidimensional, centered around a p-value of 0.5. Simulation 2 was uniform, with p-values ranging from 0 to 1. Simultion 3 was a normal distribution with p-values centered around 0.5. Simulation 4 was an inverted U-shaped distribution, with p-values ranging from 0 to 1. Simulation 5 was a left skewed distribution with p-values centered around 0.5, and simulation 6 was a right skewed distribution with p-values centered around 0.5.All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5.  
+
+```{r}
+
+dparabola <- function(x){ifelse(x < 1 | x > 5, 0, (3/16)*(x-3)^2)}
+library(ggplot2)
+g1<-ggplot()+xlim(1,5)+geom_function(fun=dparabola, size=1.5)+theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank())+
+  xlab("P-values")+
+  ggtitle("Inverted Normal Distribution")
+g2<-ggplot()+xlim(-3,3)+geom_function(fun=dnorm, size=1.5)+theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank())+
+  xlab("P-values")+
+  ggtitle("Normal Distribution")
+g3<-ggplot()+xlim(-3,4)+geom_function(fun=dnorm, size=1.5, args = list(mean = 2, sd = .5))+theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank())+
+  xlab("P-values")+
+  ggtitle("Left Skewed Distribution")
+g4<-ggplot()+xlim(-4,3)+geom_function(fun=dnorm, size=1.5, args = list(mean = -2, sd = .5))+theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank())+
+  xlab("P-values")+
+  ggtitle("Right Skewed Distribution")
+g5<-ggplot()+xlim(-0.1,1.1)+geom_function(fun=dunif, size=1.5)+theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank())+
+  xlab("P-values")+
+  ggtitle("Uniform Distribution")
+
+require(gridExtra)
+grid.arrange(g1,g2,g3,g4,g5, nrow=2, ncol=3)
+
+
+
+```
+
+
+
+## Results
+As shown by Figure 2, our plot looks very similar to that of [@kulas2017approximate, p.8]. This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications; @kulas2017approximate]. Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters.
+The resulting regression coefficients for all simulations was approximately 2 and 0, indicating that our scaling was not sample dependent. 
+
+# Study 2 - Evaluating the Comparability of IRT and CTT ICC's 
+
+The purpose of study 2 is to simulate test data and generate ICC's based on the IRT model. Then we compare that to our CTT estimates and look at the differences. We hypothesize that on average there won't be a big difference between the curves plotted with either methodology. 
+
+## Procedure and materials  
+
+The same simulated data as in study 1 was used. The mirt package from @R-mirt was used to compute and plot the IRT statistics. As we can see on Figure 3, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas and estimating pseudo-B using the regression model from the 5 simulations). To quantify the degree of difference between the two curves, the Area Between Curves was computed using R. This procedure was done for all 100 items. 
+
+
+## Results
+
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35[^method]. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35. 
+For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure. 
+
+[^method]: *Note*. Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.
+
+```{r plotting, results="hide", fig.cap="Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF." }
+data<-read.csv("simulated_data.csv", header=FALSE)
+#data$v30<-abs(data$v30-1)
+library(mirt)
+library(latticeExtra)
+library(irtplay)
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+mod<-mirt(data, 1, itemtype="2PL")
+# plot(mod, type="trace")
+# 
+alphas<-psych::alpha(data)
+citcs<-data.frame(alphas$item.stats$r.drop)
+pseudoA<-data.frame(ahat(citcs))
+pseudoB<-data.frame(qnorm(colMeans(data)))
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
+colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
+# plot(df$PseudoA, df$a)
+# plot(df$b, df$PseudoB)
+lm.reg<-lm(b ~PseudoB, data=df)
+coef(lm.reg)
+b<-0.01479-(-1.33142*pseudoB) 
+dat<-data.frame(b, alphas$item.stats$r.drop)
+colnames(dat)<-c("b", "corrected item totals")
+par(cex.axis=1, cex.lab=1, cex.main=2, cex.sub=0.1)
+###############################################################
+pseudob<-dat$b[47]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+pseudoa<-ahat(dat$`corrected item totals`[47])
+c <- 0
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
+p1<-plot(mod, which.items=c(47), main=FALSE, sub="Moderate DIF \n(area between curves = 0.36 )", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq, col="red"))
+################################################################
+pseudob2<-dat$b[1]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
+  
+}
+pseudoa2<-ahat(dat$`corrected item totals`[1])
+c <- 0
+eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
+p2<-plot(mod, which.items=c(1),main=FALSE, sub="Small DIF \n(area between curves = 0.03)", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq2, col="red"))
+#####################################################################
+pseudob3<-dat$b[54]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob3)+(0.301*pseudob3^2))*r)+((0.57-(0.009*pseudob3)+(0.19*pseudob3^2))*r)
+  
+}
+pseudoa3<-ahat(dat$`corrected item totals`[54])
+c <- 0
+eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
+p3<-plot(mod, which.items=c(54), main=FALSE, sub="Small DIF \n(area between curves  = 0.09)", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq3, col="red"))
+###############################################################################
+pseudob4<- dat$b[25]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob4)+(0.301*pseudob4^2))*r)+((0.57-(0.009*pseudob4)+(0.19*pseudob4^2))*r)
+  
+}
+pseudoa4<-ahat(dat$`corrected item totals`[25])
+c <- 0
+eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
+p4<-plot(mod, which.items=c(25), main=FALSE, sub="Large DIF \n(area between curves = 0.81)", cex.main=5, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq4, col="red", cex.sub=1))
+###############################################################################
+require(gridExtra)
+grid.arrange(p2,p1,p3,p4, nrow=2, ncol=2)
+##############################################################################
+```
+
+```{r histrogram, results="hide", fig.cap="Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters."}
+#Area between curves
+#Preparing data
+library(geiger)
+citcs<-data.frame(alphas$item.stats$r.drop)
+pseudoA<-data.frame(ahat(citcs))
+pseudoB<-b
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)
+irt <- IRT_parms$items
+df<-as.data.frame(cbind(citcs, pseudoA, pseudoB, irt))
+colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
+
+#calculating AUC
+theta <- matrix(seq(-6,6, by=.1))
+# eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[25]*(x-df$PseudoB[25]))))))}
+# cttB<-eq4(seq(-6,6, by=.1))
+# eq4_irt<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[25]*(x-df$b[25]))))))}
+# irtB<-eq4_irt(seq(-6,6, by=.1))
+# geiger:::.area.between.curves(theta, cttB, irtB)
+# x is the vector of x-axis values
+# f1 the y-axis values for the first line
+# f2 the y-axis values for the second line
+
+#Looping
+auc<-rep(NA, nrow(df))
+
+for (i in 1:nrow(df)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[i]*(x-df$PseudoB[i]))))))}
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  f1 <- approxfun(theta, cttB-irtB)     # piecewise linear function
+  f2 <- function(x) abs(f1(x))                 # take the positive value
+  auc[i]<-integrate(f2, -6,6)
+}
+auc<-unlist(auc)
+h<-hist(auc, col="red", xlab="Areas Between Curves")
+h
+xfit<-seq(min(auc),max(auc),length=40)
+yfit<-dnorm(xfit,mean=mean(auc),sd=sd(auc))
+yfit <- yfit*diff(h$mids[1:2])*length(auc)
+lines(xfit, yfit, col="blue", lwd=2)
+
+```
+
+
+```{r cttcurves, results="hide",fig.cap="ICCs derived from only CTT parameters (with two noteworthy ICCs annotated)."}
+p_ctt<-0
+p_irt<-0
+colors<-rep(c("Red", "blue","yellow","orange","purple","brown","green","pink","black", "white"), 10)
+eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[1]*(x-df$PseudoB[1]))))))}
+p_ctt<-curve(eq_CTT, xlim=c(-4,4), xlab="Level of Trait", ylab="p(1.0)")
+for (i in 1:nrow(df)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[i]*(x-df$PseudoB[i]))))))}
+  p_ctt[i]<-curve(eq_CTT, col=colors[i], xlim=c(-4,4), add=TRUE)
+  
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  auc[i]<-abs(geiger:::.area.between.curves(theta, cttB, irtB, xrange=c(-6,6)))
+}
+p_ctt
+arrows(3.2,0.85,2.2,0.85,col="purple")
+text(3.7,0.85, "Item 4",col="purple")
+arrows(2,0.4,1.5,0.4,col="black")
+text(2.7,0.4, "Item 24",col="black")
+
+```
+
+
+```{r irtcurves, results="hide",fig.cap="Typical ICCs derived from IRT parameters (same noteworthy items annotated)."}
+eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[1]*(x-df$b[1]))))))}
+p_irt<-curve(eq_IRT, xlim=c(-4,4), xlab="Level of Trait", ylab="p(1.0)")
+
+for (i in 1:nrow(df)){
+    eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+    p_irt[i]<-curve(eq_IRT, col=colors[i], xlim=c(-4,4), add=TRUE, xlab="Level of Trait", ylab="p(x)")
+}
+
+p_irt
+arrows(3,0.8,2,0.8,col="purple")
+text(3.7,0.8, "Item 4",col="purple")
+arrows(2,0.4,1.5,0.4,col="black")
+text(2.7,0.4, "Item 24",col="black")
+
+```
+
+
+
+# Discussion
+
+Important psychometric information can be gathered from ICC's, which are visual indicators typically of difficulty and discrimination. Psychometricians and other assessment specialists usually examine ICC's under the lenses of IRT and Rasch models. From a CTT orientation, item difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a p-value). Item discrimination can be conveyed via a few CTT indices, but the most commonly calculated and consulted index is the corrected item-total correlation. Assessment specialists who consult these CTT parameters don’t typically attempt to represent them visually, as is common in IRT and Rasch applications. However, there is perhaps little reason for them not to do so, as ICC's based on CTT parameters could provide snapshot psychometric information as valuable as those gained from IRT- or Rasch-derived ICC's. Here we first propose an application of ICC's with CTT indices, then we simulated data and quantified similarities and discrepancies between the IRT- and CTT-generated ICC's. Our hypothesis was that the Area Between Curves of these different ICC's would be small. Area between curves for 100 items was 0.35 on average. This result indicates that curves plotted with either IRT or CTT parameters show little difference. The nature of both models is mostly overlapping when it comes to plotting visual representations such as ICC's. Practitioners and researchers that don’t use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics.
+
+Of course there is always an intractability between the CTT item-difficulty index and respondent sample ability. The findings of previous comparison studies, however, point to the CTT estimates exhibiting some degree of invariance across respondent samples. 
+
+If this general idea is well-received (SIOP members would seem to represent a great barometer!) we would like to stress the CTT ICC's via further and more extensive conditions. That is, are there patterns that help explain CTT ICCs that diverge from their IRT counterparts? Although our simulations did generate a range of item difficulties and discriminations, we have not yet fully explored systematic patterns of extremely difficult/easy items as well as very poorly discriminating items. If patterns emerge, we would like to model predicted discrepancies via incorporating error bars within our visualizations. 
+
+represent some promise regarding plotted ICC's using IRT and CTT parameters. Our hypothesis was that the Area Between Curves of these different ICCs would be small. Area between curves for 100 items was 0.35 on average. This result indicates that curves plotted with either IRT or CTT parameters show little difference. The nature of both models is overlapping when it comes to plotting visual representations such as ICC's. Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics.
+
+Additionally, if there is interest in this general idea we would likely publish our function as a small `R` package, perhaps to supplement the `psych` package's "alpha" function, which produces corrected item-total correlations as well as p-values within the same output table (e.g., the "input" data is already available in tabular format).
+
+\newpage
+
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
