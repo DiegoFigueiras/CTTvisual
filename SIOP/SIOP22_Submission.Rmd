@@ -1,5 +1,5 @@
 ---
-title             : "Estimating pseudo-B parameter for creating ICCs using CTT statistics: A Simulation Study"
+title             : "Classical Test Theory Item Characteristic Curve Estimation: p-value to b-parameter Scaling"
 shorttitle        : "CTT ICCs"
 author: 
   - name          : "Diego Figueiras"
