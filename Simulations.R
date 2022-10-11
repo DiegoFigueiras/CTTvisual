@@ -186,7 +186,7 @@ for(j in 1:1000){
 }
 
 
-write.csv("Simulation 3/all_sims3.csv")
+write.csv(all_sims3,"Simulation 3/all_sims3.csv")
 
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
@@ -393,6 +393,7 @@ coeficients<-coeficients%>%filter(simulation!="Simulation 3")%>%filter(simulatio
 simulation3<-new_coefficients%>%select(1:7)
 coefficients2<-rbind(coeficients, simulation3)
 write.csv(coeficients, "SIOP/temp_siop.csv")
+coeficients<-read.csv("coefficients.csv")
 library(ggplot2)
 ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
 ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
@@ -487,6 +488,19 @@ write.csv(coeficients, "coefficients.csv")
 # 
 # cHANGE PSEUDO B FROM WHAT IT CURRENTLY IS BY APPLYING THE CURRENT REGRESSION WE ARE GETTING FROM THESE SIMULATIONS (BIG all_sims df)
 # then redo the diff analysis
+# 
 
-lm(b~pseud)
-# INclude empirical data 
+
+simulation2<-read.csv("Simulation 2/all_sims2.csv")
+simulation2$Simulation<-"Simulation 2"
+simulation3<-read.csv("Simulation 3/all_sims3.csv")
+simulation3$Simulation<-"Simulation 3"
+simulation4<-read.csv("Simulation 4/all_sims4.csv")
+simulation4$Simulation<-"Simulation 4"
+simulation5<-read.csv("Simulation 5/all_sims5.csv")
+simulation5$Simulation<-"Simulation 5"
+simulation6<-read.csv("Simulation 6/all_sims6.csv")
+simulation6$Simulation<-"Simulation 6"
+
+all_simulations<-rbind(simulation2, simulation3, simulation4, simulation5, simulation6)
+write.csv(all_simulations, "SIOP/ALL_simulations.csv")

@@ -1,0 +1,40 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\includegraphics[width=1\linewidth,height=0.8\textheight]{SIOP22_Submission_files/figure-latex/example-1} \caption{Item characteristic curves reflecting differences in difficulty and discrimination.}\label{fig:example}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{SIOP22_Submission_files/figure-latex/acorrected-1.pdf}
+\caption{\label{fig:acorrected}Empricially-derived functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{SIOP22_Submission_files/figure-latex/simulatedgraphs-1.pdf}
+\caption{\label{fig:simulatedgraphs}Shape of simulated distributions.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{SIOP22_Submission_files/figure-latex/slopes-1.pdf}
+\caption{\label{fig:slopes}Distribution of slopes for 1,000 simulation ran by condition}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{SIOP22_Submission_files/figure-latex/plotting-1.pdf}
+\caption{\label{fig:plotting}Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF.}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{SIOP22_Submission_files/figure-latex/histrogram-1.pdf}
+\caption{\label{fig:histrogram}Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters. The graph to the left is plotted without scaling Zg using the regression coefficients specifications from simulated data. The graph to the right is plotted by scaling Zg with these specifications.}
+\end{figure*}
