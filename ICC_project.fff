@@ -1,14 +1,21 @@
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
-\includegraphics[width=1\linewidth,height=0.8\textheight]{ICC_project_files/figure-latex/example-1} \caption{Item characteristic curves reflecting differences in difficulty and discrimination.}\label{fig:example}
+\includegraphics[width=1\linewidth,height=0.8\textheight]{ICC_project_files/figure-latex/example-1} \caption{Item characteristic curves demonstrating differences in item difficulty and discrimination.}\label{fig:example}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{ICC_project_files/figure-latex/acorrected-1.pdf}
-\caption{\label{fig:acorrected}Empricially-derived functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
+\caption{\label{fig:acorrected}Kulas et al. (2017) functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (p-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
+\end{figure*}
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{ICC_project_files/figure-latex/simulatedgraphs-1.pdf}
+\caption{\label{fig:simulatedgraphs}Shape of prescribed distributions of p-values across Study 1 conditions.}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
