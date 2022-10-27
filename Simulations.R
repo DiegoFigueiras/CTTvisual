@@ -504,3 +504,8 @@ simulation6$Simulation<-"Simulation 6"
 
 all_simulations<-rbind(simulation2, simulation3, simulation4, simulation5, simulation6)
 write.csv(all_simulations, "SIOP/ALL_simulations.csv")
+
+df<-df%>%filter(b<3)%>%filter(b>-3) #we need to report how many cases we kicked out. 
+hist(df$skew, col="green")
+par(new=TRUE)
+hist(df$kurtosis, col="blue")

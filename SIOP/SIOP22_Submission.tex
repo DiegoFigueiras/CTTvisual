@@ -272,7 +272,7 @@ We built six simulations of IRT data using Nydick (2022), each with different sh
 \subsection{Results}\label{results}}
 
 As shown by figure \ref{fig:acorrected}, our plot looks very similar to that of (Kulas et al., 2017, p. 8). This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in (Kulas et al., 2017; F. M. Lord, 2012).
-The resulting regression coefficients for all 5 simulations was an intercept of approximately 0 and a slope of -1.53, indicating that our scaling was not sample dependent, as can be seen in figure \ref{fig:slopes}. In this graph we report the distribution of slopes for all 1,000 simulations per simulation condition. They are all center are about -1.53, with very little deviance in terms of shape, kurtosis, or spread. There were 3,383 cases removed from the overall 500,000 simulated items due to extreme b-estimates.
+The resulting regression coefficients for all 5 simulations was an intercept of approximately 0 and a slope of -1.53, indicating that our scaling was not sample dependent, as can be seen in figure \ref{fig:slopes}. In this graph we report the distribution of slopes for all 1,000 simulations per simulation condition. They are all center are about -1.53, with very little deviance in terms of shape, kurtosis, or spread. There were 3383 cases removed from the overall 500000 simulated items due to extreme b-estimates.
 
 \begin{figure}
 \centering
@@ -305,7 +305,7 @@ The same simulated data as in study 1 was used. The mirt package from Chalmers (
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
 
-We used R (Version 4.2.1; R Core Team, 2022) and the R-packages \emph{catIrt} (Version 0.5.1; Nydick, 2022), \emph{descr} (Version 1.1.5; Dirk Enzmann et al., 2021), \emph{dplyr} (Version 1.0.9; Wickham, François, et al., 2022), \emph{faux} (Version 1.1.0; DeBruine, 2021), \emph{fGarch} (Version 4021.88; Wuertz et al., 2022), \emph{forcats} (Version 0.5.1; Wickham, 2021), \emph{ggplot2} (Version 3.3.6; Wickham, 2016), \emph{lattice} (Version 0.20.45; Sarkar, 2008; Sarkar \& Andrews, 2022), \emph{latticeExtra} (Version 0.6.30; Sarkar \& Andrews, 2022), \emph{mirt} (Version 1.36.1; Chalmers, 2012), \emph{numDeriv} (Version 2016.8.1.1; Gilbert \& Varadhan, 2019), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2022), \emph{psych} (Version 2.2.5; Revelle, 2022), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020), \emph{readr} (Version 2.1.2; Wickham, Hester, et al., 2022), \emph{reticulate} (Version 1.25; Ushey et al., 2022), \emph{scales} (Version 1.2.0; Wickham \& Seidel, 2022), \emph{stringr} (Version 1.4.0; Wickham, 2019), \emph{tibble} (Version 3.1.8; Müller \& Wickham, 2022), \emph{tidyr} (Version 1.2.0; Wickham \& Girlich, 2022), \emph{tidyverse} (Version 1.3.2; Wickham et al., 2019), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R (Version 4.1.1; R Core Team, 2021) and the R-packages \emph{catIrt} (Version 0.5.1; Nydick, 2022), \emph{descr} (Version 1.1.5; Dirk Enzmann et al., 2021), \emph{dplyr} (Version 1.0.9; Wickham, François, et al., 2022), \emph{faux} (Version 1.1.0; DeBruine, 2021), \emph{fGarch} (Version 4021.87; Wuertz et al., 2022), \emph{forcats} (Version 0.5.1; Wickham, 2021), \emph{ggplot2} (Version 3.3.6; Wickham, 2016), \emph{lattice} (Version 0.20.44; Sarkar, 2008; Sarkar \& Andrews, 2019), \emph{latticeExtra} (Version 0.6.29; Sarkar \& Andrews, 2019), \emph{mirt} (Version 1.35.1; Chalmers, 2012), \emph{numDeriv} (Version 2016.8.1.1; Gilbert \& Varadhan, 2019), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2022), \emph{psych} (Version 2.2.9; Revelle, 2022), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020), \emph{readr} (Version 2.1.3; Wickham, Hester, et al., 2022), \emph{reticulate} (Version 1.22; Ushey et al., 2021), \emph{scales} (Version 1.2.0; Wickham \& Seidel, 2022), \emph{stringr} (Version 1.4.0; Wickham, 2019), \emph{tibble} (Version 3.1.7; Müller \& Wickham, 2022), \emph{tidyr} (Version 1.2.0; Wickham \& Girlich, 2022), \emph{tidyverse} (Version 1.3.2; Wickham et al., 2019), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.21\footnote{\emph{Note}. Did the integral of the difference between the CTT and IRT functions using the ``integrate'' function in the ``stats'' package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.}. As we can see in figure \ref{fig:histogram}, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.21. This diff was computed after scaling our Zg using the coefficients estimated with our simulations.Without the regression coefficient modifier the average area under the curves were 0.80. We ran a test of significance between these two means. Our results are \(t(99) = 11.72\), \(p < .001\).\\
 Four random items were selected and plotted in figure \ref{fig:plotting} using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters.
@@ -387,7 +387,7 @@ Muraki, E. (1997). A generalized partial credit model. In \emph{Handbook of mode
 Nydick, S. (2022). \emph{catIrt: Simulate IRT-based computerized adaptive tests}. \url{https://CRAN.R-project.org/package=catIrt}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
-R Core Team. (2022). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
+R Core Team. (2021). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-psych}{}}%
 Revelle, W. (2022). \emph{Psych: Procedures for psychological, psychometric, and personality research}. Northwestern University. \url{https://CRAN.R-project.org/package=psych}
@@ -399,10 +399,10 @@ Rupp, A. A., \& Zumbo, B. D. (2006). Understanding parameter invariance in unidi
 Sarkar, D. (2008). \emph{Lattice: Multivariate data visualization with r}. Springer. \url{http://lmdvr.r-forge.r-project.org}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-latticeExtra}{}}%
-Sarkar, D., \& Andrews, F. (2022). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
+Sarkar, D., \& Andrews, F. (2019). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-reticulate}{}}%
-Ushey, K., Allaire, J., \& Tang, Y. (2022). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
+Ushey, K., Allaire, J., \& Tang, Y. (2021). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
 Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. \url{https://ggplot2.tidyverse.org}

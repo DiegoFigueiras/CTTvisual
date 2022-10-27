@@ -244,12 +244,23 @@ grid.arrange(g1,g2,g3,g4,g5, nrow=2, ncol=3)
 
 ## Procedure and methods
 
-We built six simulations of IRT data using @R-catIrt, each with different shapes and p-values, as can be seen in figure \@ref(fig:simulatedgraphs). Our goal was to see if CTT statistics and IRT parameters would produce similar ICCs when simulated data of varying distributions are used. Each simulation consisted of 10,000 observations and 100 items. Simulation 1 was uniform, with p-values ranging from 0 to 1. Simultion 2 was a normal distribution with p-values centered around 0.5. Simulation 3 was an inverted U-shaped distribution, with p-values ranging from 0 to 1. Simulation 4 was a left skewed distribution with p-values centered around 0.5, and simulation 5 was a right skewed distribution with p-values centered around 0.5.All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. We ran each simulation 1,000 times, each with 100 items and 10,000 cases.
+
+```{r}
+
+ALL_simulations <- read.csv("ALL_simulations.csv")
+df<-ALL_simulations
+df<-df%>%filter(b<3)%>%filter(b>-3)
+
+
+```
+
+
+We built six simulations of IRT data using @R-catIrt, each with different shapes and p-values, as can be seen in figure \@ref(fig:simulatedgraphs). Our goal was to see if CTT statistics and IRT parameters would produce similar ICCs when simulated data of varying distributions are used. Each simulation consisted of 10,000 observations and 100 items. Simulation 1 was uniform, with p-values ranging from 0 to 1. Simultion 2 was a normal distribution with p-values centered around 0.5. Simulation 3 was an inverted U-shaped distribution, with p-values ranging from 0 to 1. Simulation 4 was a left skewed distribution with p-values centered around 0.5, and simulation 5 was a right skewed distribution with p-values centered around 0.5.All simulated distributions had an average a-estimate of `r `mean(df$a)` 1.42 and average b-estimate of `r mean(df$b`. We ran each simulation 1,000 times, each with 100 items and 10,000 cases.
 
 
 ## Results
 As shown by figure \@ref(fig:acorrected), our plot looks very similar to that of [@kulas2017approximate, p.8]. This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications; @kulas2017approximate].
-The resulting regression coefficients for all 5 simulations was an intercept of approximately 0 and a slope of -1.53, indicating that our scaling was not sample dependent, as can be seen in figure \@ref(fig:slopes). In this graph we report the distribution of slopes for all 1,000 simulations per simulation condition. They are all center are about -1.53, with very little deviance in terms of shape, kurtosis, or spread. There were 3,383 cases removed from the overall 500,000 simulated items due to extreme b-estimates.
+The resulting regression coefficients for all 5 simulations was an intercept of approximately 0 and a slope of -1.53, indicating that our scaling was not sample dependent, as can be seen in figure \@ref(fig:slopes). In this graph we report the distribution of slopes for all 1,000 simulations per simulation condition. They are all center ar about -1.53, with very little deviance in terms of shape, kurtosis, or spread. There were `r nrow(ALL_simulations)-nrow(df)` cases removed from the overall `r nrow(ALL_simulations)`  simulated items due to extreme b-estimates.
 
 
 ```{r slopes, results='hide', fig.cap="Distribution of slopes for 1,000 simulation ran by condition"}
@@ -455,6 +466,8 @@ Of course there is always an intractability between the CTT item-difficulty inde
 If this general idea is well-received (SIOP members would seem to represent a great barometer!) we would like to stress the CTT ICC's via further and more extensive conditions. That is, are there patterns that help explain CTT ICCs that diverge from their IRT counterparts? Although our simulations did generate a range of item difficulties and discriminations, we have not yet fully explored systematic patterns of extremely difficult/easy items as well as very poorly discriminating items. If patterns emerge, we would like to model predicted discrepancies via incorporating error bars within our visualizations. 
 
 Additionally, if there is interest in this general idea we would likely publish our function as a small `R` package, perhaps to supplement the `psych` package's "alpha" function, which produces corrected item-total correlations as well as p-values within the same output table (e.g., the "input" data is already available in tabular format).
+
+
 
 \newpage
 
