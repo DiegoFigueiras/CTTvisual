@@ -23,7 +23,7 @@ library(catIrt)
 
 coeficients<-NULL#declare the dataframe were coefficients for all 10,000 simulations will be stored
 all_sims2<-NULL
-for(j in 1:1000){
+for(j in 1:10000){
 
 
         # x<-data.frame(matrix(runif(10000, 0, 1), ncol=100, nrow=10000)) #creating a matrix of random numbers
@@ -127,7 +127,7 @@ write.csv(all_sims2, "Simulation 2/all_sims2.csv")
 
 #random<-sample(10000, 20)
 all_sims3<-NULL
-for(j in 1:1000){
+for(j in 1:10000){
           
         skew<-rsnorm(100,0,1,xi=1) # xi=1 is the normal distribution specification
         b.params <- cbind(a = rnorm(100, 1.5, .5), b = skew, c = 0)
@@ -191,7 +191,7 @@ write.csv(all_sims3,"Simulation 3/all_sims3.csv")
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 all_sims4<-NULL
-for(j in 1:1000){
+for(j in 1:10000){
 
       
  skew<-runif(100,-3,3)
@@ -258,7 +258,7 @@ write.csv(all_sims4, "Simulation 4/all_sims4.csv")
 library(fGarch)
 random<-sample(10000, 20)
 all_sims5<-NULL
-for(j in 1:1000){
+for(j in 1:10000){
         skew<-rsnorm(100,0,1,xi=-3)
         b.params <- cbind(a = rnorm(100, 1.5, .5), b = skew, c = 0)
         theta<-rnorm(10000, 0, 1)
@@ -321,7 +321,7 @@ write.csv(all_sims5, "Simulation 5/all_sims5.csv")
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
 all_sims6<-NULL
-for(j in 1:1000){
+for(j in 1:10000){
 
 
         skew<-rsnorm(100,0,1,xi=4)
