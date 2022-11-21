@@ -297,7 +297,7 @@ for(j in 1:10000){
         df5$kurtosis<-as.numeric(psych::describe(df5$pvalues)[12])
         all_sims5<-all_sims5%>%rbind(df5)#putting all 1,000 simulations at the item level into one dataframe
         
-        df5<-df5%>%filter(b<3)%>%filter(b>-3)
+        #df5<-df5%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df5)
         summary(reg)
         coef(reg)
