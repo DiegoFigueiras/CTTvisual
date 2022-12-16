@@ -270,7 +270,120 @@ ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_
 
 ```
 
+
+```{r}
+library(tidyverse)
+all_sims2<-read.csv("Simulation 2/all_sims2.csv")
+all_sims3<-read.csv("Simulation 3/all_sims3.csv")
+all_sims4<-read.csv("Simulation 4/all_sims4.csv")
+all_sims5<-read.csv("Simulation 5/all_sims5.csv")
+all_sims6<-read.csv("Simulation 6/all_sims6.csv")
+
+all_sims2$condition<-'Simulation 2'
+all_sims3$condition<-'Simulation 3'
+all_sims4$condition<-'Simulation 4'
+all_sims5$condition<-'Simulation 5'
+all_sims6$condition<-'Simulation 6'
+all_sims<-rbind(all_sims2, all_sims3, all_sims4, all_sims5, all_sims6)
+all_sims<-all_sims%>%filter(b<3)%>%filter(b>-3)
+
+reg<-lm(b~pseudob*condition, data=all_sims)
+summary(reg)
+
+ggplot(all_sims, aes(pseudob, b, color = factor(condition))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+
+sds<-coeficients%>%group_by(simulation)%>%summarise(sd_intercept=sd(intercept),
+                                                    means_intercept=mean(intercept),
+                                                    sd_slope=sd(slope),
+                                                    means_slope=mean(slope))
+reg2<-lm(b~pseudob, data=all_sims)
+summary(reg2)
+slope<-reg2$coefficients[[2]]
+intercept<-reg2$coefficients[[1]]
+
+```
+
+```{r sendtoETS}
+### Cross-validating with wingen simulation 
+# 12/8/2022 our p-value to b-parameter simulations converged
+# our CTTICC formula is now ready to share with others
+# This chunk presents the information necessary to estimate CTT-ICCs and also evaluate
+#their similarity to IRT generated ICCs
+
+data<-read.csv("simulated_data.csv", header=FALSE) #reading wingen simulation
+
+pseudob<-qnorm(colMeans(data))#calculating our Zg
+
+c=0 #since we're using the 3PL specification, we set c to 0
+
+library(mirt)
+library(psych)
+library(latticeExtra)
+
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}#Formula taken from Kulas' 2017
+
+mod<-mirt(data, 1, itemtype="2PL") #estimating the IRT-parameter from the wingen simulated data
+
+alphas<-psych::alpha(data)#using the psych package to run alpha
+
+citcs<-data.frame(alphas$item.stats$r.drop)#getting the corrected-item total correlations
+
+pseudoA<-data.frame(ahat(citcs))#Applying Kula's 2017 formula to our corrected-item totals
+
+## Getting all the parameters into one dataframe
+IRT_parms <- coef(mod, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT parameters from the mod object
+
+irt <- IRT_parms$items
+
+df<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
+
+colnames(df)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
+
+df$PseudoB<-0.000006957584+(-1.52731*df$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
+theta <- matrix(seq(-6,6, by=.1))
+auc<-rep(NA, nrow(df))
+
+for (i in 1:nrow(df)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[i]*(x-df$PseudoB[i]))))))}
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  f1 <- approxfun(theta, cttB-irtB)
+  f2 <- function(x) abs(f1(x))          
+  auc[i]<-integrate(f2, -6,6)
+}
+auc<-unlist(auc)
+hist(auc)
+
+## Plotting item 35, which has the worst DIF
+pseudob<-df$b[35]
+ahat<-function(x){
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+  
+  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  
+}
+
+eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[35]*(x-df$PseudoB[35]))))))}
+p1<-plot(mod, which.items=c(35), main=FALSE, sub="Moderate DIF \n(area between curves = 0.36 )", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq, col="red"))
+p1
+
+
+```
+
+
 ## Results
+Overall, the average slope was `r slope` and the average intercept `r intercept`.
+#put in moderated regression results as well and r-square change. Make sure this formula is in study 2
 As shown by Figure 2, our plot looks very similar to that of [@kulas2017approximate, p.8]. This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications; @kulas2017approximate]. Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters. 
 
 # Study 2 - Evaluating the Comparability of IRT and CTT ICC's 
@@ -506,3 +619,13 @@ Additionally, if there is interest in this general idea we would likely publish 
 There have also been suggestions that the invariance property be conceptualized as a graded continuum instead of a categorical (invariant or non-invariant) population property [@hambleton1991fundamentals;@rupp2004note]. Estimates of IRT parameters across different calibration runs can be looked at for evidence of a possible lack of invariance. This doesn't happen with CTT item parameters, since they will always be sample-dependent. This dependency, however, is greatly influenced by the sampling strategy. Large scale data, truly random sampling, and large range items could give comparable CTT item and person statistics across testing populations and occasions [@kulas2017approximate]. Additionally, there are several empirical investigations that note high levels of "invariance" of CTT estimates, in some cases surpassing IRT item estimates in their capacity to have cross-sample stability [@macdonald2002monte; @fan1998item]. 
 
 An adjustment to @lord2012applications's formula giving the functional relationship between the "non-invariant" CTT and "invariant" IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by @kulas2017approximate, noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT "invariance". 
+
+```{r}
+
+
+
+
+```
+
+
+
