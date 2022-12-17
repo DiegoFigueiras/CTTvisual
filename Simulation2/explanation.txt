@@ -1,1 +1,0 @@
-The simulation files (all_sims2.csv through all_sims6.csv) were too large to upload to GitHub, so they were: 1) split into smaller files, 2) uploaded, and 3) recombined via script
