@@ -17,31 +17,3 @@
 \includegraphics{ICC_project_files/figure-latex/simulatedgraphs-1.pdf}
 \caption{\label{fig:simulatedgraphs}Shape of prescribed distributions of p-values across Study 1 conditions.}
 \end{figure*}
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{ICC_project_files/figure-latex/plotting-1.pdf}
-\caption{\label{fig:plotting}Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF.}
-\end{figure*}
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{ICC_project_files/figure-latex/histrogram-1.pdf}
-\caption{\label{fig:histrogram}Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters.}
-\end{figure*}
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{ICC_project_files/figure-latex/cttcurves-1.pdf}
-\caption{\label{fig:cttcurves}ICCs derived from only CTT parameters (with two noteworthy ICCs annotated).}
-\end{figure*}
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{ICC_project_files/figure-latex/irtcurves-1.pdf}
-\caption{\label{fig:irtcurves}Typical ICCs derived from IRT parameters (same noteworthy items annotated).}
-\end{figure*}

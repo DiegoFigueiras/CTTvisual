@@ -269,7 +269,7 @@ ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 library(tidyverse)
 all_sims2<-read.csv("Simulation 2/all_sims2.csv")
 all_sims3<-read.csv("Simulation 3/all_sims3.csv")
@@ -380,7 +380,7 @@ p1
 
 
 ## Results
-Overall, the average slope was `r slope` and the average intercept `r intercept`.
+Overall, the average slope was *r slope* and the average intercept *r intercept*.
 #put in moderated regression results as well and r-square change. Make sure this formula is in study 2
 
 $$
@@ -625,12 +625,9 @@ There have also been suggestions that the invariance property be conceptualized 
 
 An adjustment to @lord2012applications's formula giving the functional relationship between the "non-invariant" CTT and "invariant" IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by @kulas2017approximate, noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT "invariance". 
 
-```{r}
+##NOTES
+##Bias might suggest that rescaled a parameters are systematically larger than z under certain simulations (or not) Variance estimates might suggest that the standard error of rescaled values is larger than those values estimated directly (or not). If differences do exist, one could then go on to articulate the conditions under which they exist (i.e., high difficulty, low difficulty, non-normal distributions of the underlying trait), etc....
 
-
-
-
-```
 
 
 
