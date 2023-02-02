@@ -37,7 +37,7 @@ draft             : no
 csl               : "apa7.csl"
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_word
 ---
 
 ```{r setup, include = FALSE}
@@ -256,26 +256,16 @@ Then we computed regressions predicting the b-parameters using the standard norm
 
 We built six simulations of IRT data using @Nydick, each with different shapes and p-values, as can be seen in figure 3. Our goal was to see if CTT statistics and IRT parameters would produce similar ICCs when simulated data of varying distributions are used. Each simulation consisted of 10,000 observations and 100 items. Simulation 1 was uniform, with p-values ranging from 0 to 1. Simultion 2 was a normal distribution with p-values centered around 0.5. Simulation 3 was an inverted U-shaped distribution, with p-values ranging from 0 to 1. Simulation 4 was a left skewed distribution with p-values centered around 0.5, and simulation 5 was a right skewed distribution with p-values centered around 0.5.All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. We ran each simulation 1,000 times, each with 100 items and 10,000 cases. 
 
-```{r}
-
-## Need to grab new simulations (post SIOP) from Bixter's lab computer - 10/13/22
-
-coeficients<-read.csv("pvalue_to_b_estimates_original.csv")
-library(ggplot2)
-ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
-ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)
-
-
-```
+#Note: add stacked histograms with newest simulation intercepts and slopes. 
 
 
 ```{r, eval=FALSE}
 library(tidyverse)
-all_sims2<-read.csv("Simulation 2/all_sims2.csv")
-all_sims3<-read.csv("Simulation 3/all_sims3.csv")
-all_sims4<-read.csv("Simulation 4/all_sims4.csv")
-all_sims5<-read.csv("Simulation 5/all_sims5.csv")
-all_sims6<-read.csv("Simulation 6/all_sims6.csv")
+all_sims2<-read.csv("all_sims2.csv")
+all_sims3<-read.csv("all_sims3.csv")
+all_sims4<-read.csv("all_sims4.csv")
+all_sims5<-read.csv("all_sims5.csv")
+all_sims6<-read.csv("all_sims6.csv")
 
 all_sims2$condition<-'Simulation 2'
 all_sims3$condition<-'Simulation 3'
@@ -383,10 +373,6 @@ p1
 Overall, the average slope was *r slope* and the average intercept *r intercept*.
 #put in moderated regression results as well and r-square change. Make sure this formula is in study 2
 
-$$
-\hat{b}\cong 0.000006957584-(1.52731\cdot{Zg})
-
-$$
 
 
 As shown by Figure 2, our plot looks very similar to that of [@kulas2017approximate, p.8]. This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications; @kulas2017approximate]. Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters. 
@@ -504,6 +490,33 @@ require(gridExtra)
 grid.arrange(p2,p1,p3,p4, nrow=2, ncol=2)
 ##############################################################################
 ```
+
+
+```{r stackedplotIntercept, results="hide", fig.cap="Individual intercept grouped by study 2 simulation." }
+coeficients<-read.csv("coefficients.csv")
+coeficients$simulation[coeficients$simulation=='Simulation 2']<-'Uniform'
+coeficients$simulation[coeficients$simulation=='Simulation 3']<-'Normal'
+coeficients$simulation[coeficients$simulation=='Simulation 4']<-'Inverted'
+coeficients$simulation[coeficients$simulation=='Simulation 5']<-'Negative S'
+coeficients$simulation[coeficients$simulation=='Simulation 6']<-'Positive S'
+coeficients$simulation <- factor(coeficients$simulation, levels = c('Uniform', 'Normal', 'Inverted', 'Negative S', 'Positive S'))
+
+library(ggplot2)
+ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)+xlim(-.25,.25)
+
+
+
+```
+
+
+```{r stackeplotSlope, results="hide", fig.cap="Individual slopes grouped by study 2 simulation." }
+
+ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)+xlim(-2,-1)
+
+```
+
+
+
 
 ```{r histrogram, results="hide", fig.cap="Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters."}
 #Area between curves
