@@ -650,4 +650,7 @@ An adjustment to @lord2012applications's formula giving the functional relations
 
 >*Note*. Maybe do a different linking via machine learning. Try to find the linking parameters (including p-value distributional shape and location) that minimize DIF across CTT and IRT ICCs (5/27/22 after unsuccessful Friday brainstorming especially regarding simulation 3 [the normally distributed p-values])
 
-
+2/9/2023 Notes: Check if the a parameter is estimated at the 0.5 location of the function. 
+Be more specific about the simulations. Write what we did when p-values were 0 and 1 for a column. 
+Check the average a and b per simulation in line 255
+For graph 7 update it by stacking the results we got from our simulations with the real data from ETS
