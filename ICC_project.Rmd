@@ -366,6 +366,9 @@ p1
 ```
 
 ## Results
+
+>Should probably do paired-samples t-tests between CTT and IRT estimates (2/16/23)
+
 Overall, the average slope was *r slope* and the average intercept *r intercept*.
 
 put in moderated regression results as well as $\Delta$$\chi^2$. Make sure this formula is in study 2
