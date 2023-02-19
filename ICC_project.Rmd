@@ -128,7 +128,7 @@ When interpreting an ICC, the observer extracts the relationship between a respo
 
 [^binary]: Because the historical convention in test response is to code a correct response as "1" and an incorrect response as "0", the y-axis is commonly denoted as "*p*(1)" or "*p*(1.0)".
 
-Item difficulty (the IRT *b*-parameter) is scaled to the trait level associated with a 50% likelihood of correct response (e.g., it is scaled to $\theta$). Item discrimination (the *a*-parameter) reflects the degree to which an item differentiates across individuals who are located relatively lower or higher on the trait and is scaled to the slope of the ICC function at the same 50% likelihood of correct response location[^another].  From a Classical Test Theory (CTT) orientation, item  difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p*-value). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted contemporary index is the corrected item-total correlation. 
+Item difficulty (the IRT *b*-parameter) is quantified as the trait level associated with a 50% likelihood of correct response (e.g., it is scaled to $\theta$). Item discrimination (the *a*-parameter) reflects the degree to which an item differentiates across individuals who are located relatively lower or higher on the trait and is scaled to the slope of the ICC function at the same 50% likelihood of correct response location[^another].  From a Classical Test Theory (CTT) orientation, item  difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p*-value). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted contemporary index is the corrected item-total correlation. 
 
 [^another]: Within the 2PL. If more item characteristics are modeled, the *a*-parameter may be estimated at a different function location. $\leftarrow$ Diego check this (look into *a*-paramter scaling for the 3PL; should be halfway between lower and upper asymptotes but I'm not 100% sure).
 
@@ -250,7 +250,7 @@ grid.arrange(g5,g2,g1,g3,g4, nrow=2, ncol=3)
 
 ## Procedure and methods
 
-We simulated datasets consisting of binary item responses. The simulated data primarily differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) [NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN] at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of the distributional forms that were prescribed across our simulations. 
+We simulated datasets consisting of binary item responses. The simulated data presriptively differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) [NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN] at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of the distributional forms that were prescribed across our simulations. 
 
 All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
 
@@ -371,7 +371,7 @@ p1
 
 Overall, the average slope was *r slope* and the average intercept *r intercept*.
 
-put in moderated regression results as well as $\Delta$$\chi^2$. Make sure this formula is in study 2
+put in moderated regression results as well as $\Delta$$R^2$. Make sure this formula is in study 2
 
 As shown by Figure 2, our plot looks very similar to that of [@kulas2017approximate, p.8]. This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications; @kulas2017approximate]. Four random items were selected and plotted in Figure 3 using IRT and CTT-derived statistics. The blue curves were plotted using a IRT 2PL model, while the red curves were plotted with CTT-derived parameters. 
 
