@@ -346,7 +346,7 @@ The same simulated data as in study 1 was used. The mirt package from Chalmers (
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
 
-We used R (Version 4.2.2; R Core Team, 2022) and the R-packages \emph{ape} (Version 5.6.2; Paradis \& Schliep, 2019), \emph{geiger} (Version 2.0.10; Alfaro et al., 2009; Eastman et al., 2011; Harmon et al., 2008; Pennell et al., 2014; Slater et al., 2012), \emph{ggplot2} (Version 3.4.0; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017), \emph{irtplay} (Version 1.6.4; Lim, 2022), \emph{lattice} (Version 0.20.45; Sarkar, 2008; Sarkar \& Andrews, 2022), \emph{latticeExtra} (Version 0.6.30; Sarkar \& Andrews, 2022), \emph{mirt} (Version 1.37.1; Chalmers, 2012), \emph{papaja} (Version 0.1.1.9001; Aust \& Barth, 2022), \emph{psych} (Version 2.2.9; Revelle, 2022), \emph{reticulate} (Version 1.27; Ushey et al., 2023), \emph{scales} (Version 1.2.1; Wickham \& Seidel, 2022), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R (Version 4.1.1; R Core Team, 2021) and the R-packages \emph{ape} (Version 5.6.1; Paradis \& Schliep, 2019), \emph{geiger} (Version 2.0.7; Alfaro et al., 2009; Eastman et al., 2011; Harmon et al., 2008; Pennell et al., 2014; Slater et al., 2012), \emph{ggplot2} (Version 3.3.6; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017), \emph{irtplay} (Version 1.6.3; Lim, 2021), \emph{lattice} (Version 0.20.44; Sarkar, 2008; Sarkar \& Andrews, 2019), \emph{latticeExtra} (Version 0.6.29; Sarkar \& Andrews, 2019), \emph{mirt} (Version 1.35.1; Chalmers, 2012), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2022), \emph{psych} (Version 2.2.9; Revelle, 2022), \emph{reticulate} (Version 1.22; Ushey et al., 2021), \emph{scales} (Version 1.2.0; Wickham \& Seidel, 2022), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35\footnote{\emph{Note}. Did the integral of the difference between the CTT and IRT functions using the ``integrate'' function in the ``stats'' package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.}. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35.
 For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure.
@@ -457,7 +457,7 @@ Harmon, L., Weir, J., Brock, C., Glor, R., \& Challenger, W. (2008). GEIGER: Inv
 Kulas, J. T., Smith, J. A., \& Xu, H. (2017). Approximate functional relationship between IRT and CTT item discrimination indices: A simulation, validation, and practical extension of {Lord's} (1980) formula. \emph{Journal of Applied Measurement}, \emph{18}(4), 393--407.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-irtplay}{}}%
-Lim, H. (2022). \emph{Irtplay: Unidimensional item response theory modeling}. \url{https://CRAN.R-project.org/package=irtplay}
+Lim, H. (2021). \emph{Irtplay: Unidimensional item response theory modeling}. \url{https://CRAN.R-project.org/package=irtplay}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lord1980applications}{}}%
 Lord, F. M. (1980). \emph{Applications of IRT to practical problems}. Hillsdale: Lawrence Erlbaum Associates.
@@ -481,7 +481,7 @@ Paradis, E., \& Schliep, K. (2019). Ape 5.0: An environment for modern phylogene
 Pennell, M., Eastman, J., Slater, G., Brown, J., Uyeda, J., Fitzjohn, R., Alfaro, M., \& Harmon, L. (2014). Geiger v2.0: An expanded suite of methods for fitting macroevolutionary models to phylogenetic trees. \emph{Bioinformatics}, \emph{30}, 2216--2218.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
-R Core Team. (2022). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
+R Core Team. (2021). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-psych}{}}%
 Revelle, W. (2022). \emph{Psych: Procedures for psychological, psychometric, and personality research}. Northwestern University. \url{https://CRAN.R-project.org/package=psych}
@@ -496,13 +496,13 @@ Rupp, A. A., \& Zumbo, B. D. (2006). Understanding parameter invariance in unidi
 Sarkar, D. (2008). \emph{Lattice: Multivariate data visualization with r}. Springer. \url{http://lmdvr.r-forge.r-project.org}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-latticeExtra}{}}%
-Sarkar, D., \& Andrews, F. (2022). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
+Sarkar, D., \& Andrews, F. (2019). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-geiger_c}{}}%
 Slater, G., Harmon, L., Wegmann, D., Joyce, P., Revell, L., \& Alfaro, M. (2012). Fitting models of continuous trait evolution to incompletely sampled comparative data using approximate bayesian computation. \emph{Evolution}, \emph{66}, 752--762.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-reticulate}{}}%
-Ushey, K., Allaire, J., \& Tang, Y. (2023). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
+Ushey, K., Allaire, J., \& Tang, Y. (2021). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
 Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. \url{https://ggplot2.tidyverse.org}
