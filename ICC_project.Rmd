@@ -1,5 +1,5 @@
 ---
-title             : "Item Characteristic Curve estimation from common Classical Test Theory indices"
+title             : "Item Characteristic Curve specification from Classical Test Theory descriptive indices"
 shorttitle        : "CTT ICCs"
 author: 
   - name          : "Diego Figueiras"
@@ -254,7 +254,7 @@ We simulated datasets consisting of binary item responses. The simulated data pr
 
 All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
 
-For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and extracted the *a* and *b* parameter estimates. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic.
+For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameterw were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic.
 
 ```{r, eval=FALSE}
 library(tidyverse)
