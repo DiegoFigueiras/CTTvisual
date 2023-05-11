@@ -256,7 +256,19 @@ The ultimate goal of the current project is to generate CTT-derived ICCs. As a c
 P(\Theta)=\frac{1}{1+e^{-1.7a(\Theta-b)}}
 \end{equation}
 
-Kulas et al. (2017) provided a scaling of the CTT corrected item-total correlation to the metric of the IRT \emph{a}-parameter. Fan (1998) demonstrated strong associations between the CTT \emph{p}-value and IRT \emph{b}-parameter, but did not attempt a scaling linkage. Study 1 is therefore focused on the development of a linking equation such that the CTT \emph{p}-value may be positioned on the IRT \emph{b}-parameter metric.
+Kulas et al. (2017) provided a scaling of the CTT corrected item-total correlation to the metric of the IRT \emph{a}-parameter. Fan (1998) demonstrated strong associations between the CTT \emph{p}-value and IRT \emph{b}-parameter, but did not attempt a scaling linkage. Study 1 is therefore focused on the development of a linking equation such that the CTT \emph{p}-value may be approximated along the IRT \emph{b}-parameter metric.
+
+\hypertarget{method}{%
+\section{Method}\label{method}}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/simulatedgraphs-1.pdf}
+\caption{\label{fig:simulatedgraphs}Shape of prescribed distributions of \emph{p}-values across Study 1 conditions.}
+\end{figure}
+
+\hypertarget{procedure-and-methods}{%
+\subsection{Procedure and methods}\label{procedure-and-methods}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -275,32 +287,13 @@ Kulas et al. (2017) provided a scaling of the CTT corrected item-total correlati
   Tada! {[} {]}
 \end{enumerate}
 
-\hypertarget{method}{%
-\section{Method}\label{method}}
-
-\begin{figure}
-\centering
-\includegraphics{ICC_project_files/figure-latex/simulatedgraphs-1.pdf}
-\caption{\label{fig:simulatedgraphs}Shape of prescribed distributions of \emph{p}-values across Study 1 conditions.}
-\end{figure}
-
-\hypertarget{procedure-and-methods}{%
-\subsection{Procedure and methods}\label{procedure-and-methods}}
-
-We simulated datasets consisting of binary item responses. The simulated data primarily differed in distributions of item difficulty while keeping the numbers of items (\emph{k}=100) and ``respondents'' (\emph{n}=10,000) equivalent. The first distributional form was uniform, with \emph{p}-values ranging from low (approaching 0) to high (approaching 1) {[}NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN{]} at roughly equal levels of frequency. The second distribution was effectively normal with \emph{p}-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of \emph{p}-values, and the fifth was positively skewed. Figure \ref{fig:simulatedgraphs} provides a visual representation of the distributional forms that were prescribed across our simulations.
-
-All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. \(\leftarrow\) Diego where did these numbers come from? Was this our first SIOP data?
-
-For each simulation, we estimated CTT \emph{p}-values and corrected item-total correlations via the \texttt{psych} package (William Revelle, 2023). The 2PL was also applied via the \texttt{mirt} package (Chalmers, 2012), and extracted the \emph{a} and \emph{b} parameter estimates. Separate and overall regressions were applied to predict the IRT \emph{b} parameter from the \emph{p}-value derived \(z_g\) statistic.
-
-\begin{verbatim}
-## Iteration: 1, Log-Lik: -489362.995, Max-Change: 1.17377Iteration: 2, Log-Lik: -469816.208, Max-Change: 0.37602Iteration: 3, Log-Lik: -468662.103, Max-Change: 0.20397Iteration: 4, Log-Lik: -467901.656, Max-Change: 0.16497Iteration: 5, Log-Lik: -467342.579, Max-Change: 0.15176Iteration: 6, Log-Lik: -466910.958, Max-Change: 0.17229Iteration: 7, Log-Lik: -466565.585, Max-Change: 0.15752Iteration: 8, Log-Lik: -466279.774, Max-Change: 0.22541Iteration: 9, Log-Lik: -466063.603, Max-Change: 0.17168Iteration: 10, Log-Lik: -465864.796, Max-Change: 0.13969Iteration: 11, Log-Lik: -465713.615, Max-Change: 0.18214Iteration: 12, Log-Lik: -465589.881, Max-Change: 0.15612Iteration: 13, Log-Lik: -465466.736, Max-Change: 0.18925Iteration: 14, Log-Lik: -465375.909, Max-Change: 0.16027Iteration: 15, Log-Lik: -465289.942, Max-Change: 0.20241Iteration: 16, Log-Lik: -465220.225, Max-Change: 0.18329Iteration: 17, Log-Lik: -465147.340, Max-Change: 0.19638Iteration: 18, Log-Lik: -465072.554, Max-Change: 0.14362Iteration: 19, Log-Lik: -465017.744, Max-Change: 0.10809Iteration: 20, Log-Lik: -464970.321, Max-Change: 0.21340Iteration: 21, Log-Lik: -464928.013, Max-Change: 0.11951Iteration: 22, Log-Lik: -464888.568, Max-Change: 0.17852Iteration: 23, Log-Lik: -464854.880, Max-Change: 0.10687Iteration: 24, Log-Lik: -464825.231, Max-Change: 0.16279Iteration: 25, Log-Lik: -464799.952, Max-Change: 0.09370Iteration: 26, Log-Lik: -464777.081, Max-Change: 0.14415Iteration: 27, Log-Lik: -464757.783, Max-Change: 0.07988Iteration: 28, Log-Lik: -464739.975, Max-Change: 0.12588Iteration: 29, Log-Lik: -464725.220, Max-Change: 0.07344Iteration: 30, Log-Lik: -464711.408, Max-Change: 0.11568Iteration: 31, Log-Lik: -464700.012, Max-Change: 0.06674Iteration: 32, Log-Lik: -464687.733, Max-Change: 0.11044Iteration: 33, Log-Lik: -464677.734, Max-Change: 0.05213Iteration: 34, Log-Lik: -464669.050, Max-Change: 0.08773Iteration: 35, Log-Lik: -464662.307, Max-Change: 0.05086Iteration: 36, Log-Lik: -464654.889, Max-Change: 0.08538Iteration: 37, Log-Lik: -464649.093, Max-Change: 0.01621Iteration: 38, Log-Lik: -464642.256, Max-Change: 0.01600Iteration: 39, Log-Lik: -464637.095, Max-Change: 0.01728Iteration: 40, Log-Lik: -464632.656, Max-Change: 0.01658Iteration: 41, Log-Lik: -464628.831, Max-Change: 0.01494Iteration: 42, Log-Lik: -464625.511, Max-Change: 0.01441Iteration: 43, Log-Lik: -464611.536, Max-Change: 0.00891Iteration: 44, Log-Lik: -464610.526, Max-Change: 0.00830Iteration: 45, Log-Lik: -464609.655, Max-Change: 0.00644Iteration: 46, Log-Lik: -464606.004, Max-Change: 0.00962Iteration: 47, Log-Lik: -464605.706, Max-Change: 0.00411Iteration: 48, Log-Lik: -464605.458, Max-Change: 0.00411Iteration: 49, Log-Lik: -464604.768, Max-Change: 0.00370Iteration: 50, Log-Lik: -464604.575, Max-Change: 0.00415Iteration: 51, Log-Lik: -464604.440, Max-Change: 0.00242Iteration: 52, Log-Lik: -464604.308, Max-Change: 0.00262Iteration: 53, Log-Lik: -464604.242, Max-Change: 0.00137Iteration: 54, Log-Lik: -464604.178, Max-Change: 0.00154Iteration: 55, Log-Lik: -464603.990, Max-Change: 0.00308Iteration: 56, Log-Lik: -464603.922, Max-Change: 0.00121Iteration: 57, Log-Lik: -464603.880, Max-Change: 0.00135Iteration: 58, Log-Lik: -464603.752, Max-Change: 0.00123Iteration: 59, Log-Lik: -464603.712, Max-Change: 0.00124Iteration: 60, Log-Lik: -464603.675, Max-Change: 0.00113Iteration: 61, Log-Lik: -464603.494, Max-Change: 0.00090Iteration: 62, Log-Lik: -464603.471, Max-Change: 0.00068Iteration: 63, Log-Lik: -464603.451, Max-Change: 0.00071Iteration: 64, Log-Lik: -464603.345, Max-Change: 0.00052Iteration: 65, Log-Lik: -464603.339, Max-Change: 0.00020Iteration: 66, Log-Lik: -464603.335, Max-Change: 0.00019Iteration: 67, Log-Lik: -464603.309, Max-Change: 0.00132Iteration: 68, Log-Lik: -464603.291, Max-Change: 0.00031Iteration: 69, Log-Lik: -464603.287, Max-Change: 0.00017Iteration: 70, Log-Lik: -464603.276, Max-Change: 0.00096Iteration: 71, Log-Lik: -464603.260, Max-Change: 0.00028Iteration: 72, Log-Lik: -464603.257, Max-Change: 0.00018Iteration: 73, Log-Lik: -464603.247, Max-Change: 0.00091Iteration: 74, Log-Lik: -464603.233, Max-Change: 0.00029Iteration: 75, Log-Lik: -464603.230, Max-Change: 0.00086Iteration: 76, Log-Lik: -464603.214, Max-Change: 0.00023Iteration: 77, Log-Lik: -464603.211, Max-Change: 0.00084Iteration: 78, Log-Lik: -464603.200, Max-Change: 0.00018Iteration: 79, Log-Lik: -464603.199, Max-Change: 0.00016Iteration: 80, Log-Lik: -464603.197, Max-Change: 0.00080Iteration: 81, Log-Lik: -464603.186, Max-Change: 0.00078Iteration: 82, Log-Lik: -464603.162, Max-Change: 0.00100Iteration: 83, Log-Lik: -464603.150, Max-Change: 0.00036Iteration: 84, Log-Lik: -464603.148, Max-Change: 0.00010
-\end{verbatim}
-
-\includegraphics{ICC_project_files/figure-latex/sendtoETS-1.pdf} \includegraphics{ICC_project_files/figure-latex/sendtoETS-2.pdf}
+We simulated datasets comprised of binary item responses. The 10,000 individual simulated datasets primarily differed in \emph{distributions of item difficulty} while keeping the numbers of items (\emph{k}=100) and ``respondents'' (\emph{n}=10,000) equivalent. The first controlled distributional form was uniform, with \emph{p}-values ranging from low (approaching 0) to high (approaching 1) {[}NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN{]} at roughly equal levels of frequency. The second distribution was effectively normal with \emph{p}-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of \emph{p}-values, and the fifth was positively skewed. Figure \ref{fig:simulatedgraphs} provides a visual representation of the \emph{p}-value distributional forms that were prescribed across our simulations.
+For each simulation, we estimated CTT \emph{p}-values and corrected item-total correlations via the \texttt{psych} package (William Revelle, 2023). The 2PL was also applied via the \texttt{mirt} package (Chalmers, 2012), and \emph{a} and \emph{b} parameters were estimated. Separate and overall regressions were applied to predict the IRT \emph{b} parameter from the \emph{p}-value derived \(z_g\) statistic.
 
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
+
+Across all five conditions, simulated distributions exhibited an average empirical \emph{a}-estimate of 1.42 (sd = ??) and average empirical \emph{b}-estimate of 0.5 (sd = ??). \(\leftarrow\) Diego where did these numbers come from? Was this our first SIOP data?
 
 Overall, the average slope was \emph{r slope} and the average intercept \emph{r intercept}.
 

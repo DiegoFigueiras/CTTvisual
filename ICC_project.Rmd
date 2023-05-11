@@ -192,14 +192,7 @@ The ultimate goal of the current project is to generate CTT-derived ICCs. As a c
 P(\Theta)=\frac{1}{1+e^{-1.7a(\Theta-b)}}
 \end{equation}
 
-@kulas2017approximate provided a scaling of the CTT corrected item-total correlation to the metric of the IRT *a*-parameter. @fan1998item demonstrated strong associations between the CTT *p*-value and IRT *b*-parameter, but did not attempt a scaling linkage. Study 1 is therefore focused on the development of a linking equation such that the CTT *p*-value may be positioned on the IRT *b*-parameter metric.  
-
-1. Purpose: Getting a p-value $\rightarrow$ b-parameter linking equation            [$\checkmark$]
-2. Five different distributions of p-values (simulated data)                        [$\checkmark$]
-3. 10,000 runs each simulation (100 items, 10,000 "people" each)                    [$\checkmark$]  
-4. Scrub extreme values (p-values essentially 0 and 1 need to be deleted)           [$\checkmark$]
-5. Moderated regression to look for differences across p-value distribution         [ ]
-6. Tada!                                                                            [ ]  
+@kulas2017approximate provided a scaling of the CTT corrected item-total correlation to the metric of the IRT *a*-parameter. @fan1998item demonstrated strong associations between the CTT *p*-value and IRT *b*-parameter, but did not attempt a scaling linkage. Study 1 is therefore focused on the development of a linking equation such that the CTT *p*-value may be approximated along the IRT *b*-parameter metric.  
 
 # Method
 
@@ -250,11 +243,15 @@ grid.arrange(g5,g2,g1,g3,g4, nrow=2, ncol=3)
 
 ## Procedure and methods
 
-We simulated datasets consisting of binary item responses. The simulated data primarily differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) [NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN] at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of the distributional forms that were prescribed across our simulations. 
+1. Purpose: Getting a p-value $\rightarrow$ b-parameter linking equation            [$\checkmark$]
+2. Five different distributions of p-values (simulated data)                        [$\checkmark$]
+3. 10,000 runs each simulation (100 items, 10,000 "people" each)                    [$\checkmark$]  
+4. Scrub extreme values (p-values essentially 0 and 1 need to be deleted)           [$\checkmark$]
+5. Moderated regression to look for differences across p-value distribution         [ ]
+6. Tada!                                                                            [ ]
 
-All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
-
-For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameterw were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic.
+We simulated datasets comprised of binary item responses. The 10,000 individual simulated datasets primarily differed in *distributions of item difficulty* while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first controlled distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) [NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN] at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of the *p*-value distributional forms that were prescribed across our simulations. 
+For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic.
 
 ```{r, eval=FALSE}
 library(tidyverse)
@@ -290,7 +287,7 @@ intercept<-reg2$coefficients[[1]]
 
 ```
 
-```{r sendtoETS}
+```{r sendtoETS, eval=FALSE}
 ### Cross-validating with wingen simulation 
 # 12/8/2022 our p-value to b-parameter simulations converged
 # our CTTICC formula is now ready to share with others
@@ -366,6 +363,9 @@ p1
 ```
 
 ## Results
+
+Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of 1.42 (sd = ??) and average empirical *b*-estimate of 0.5 (sd = ??). $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
+
 Overall, the average slope was *r slope* and the average intercept *r intercept*.
 
 put in moderated regression results as well as $\Delta$$\chi^2$. Make sure this formula is in study 2
