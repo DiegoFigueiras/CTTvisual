@@ -339,7 +339,7 @@ The same simulated data as in study 1 was used. The mirt package from Chalmers (
 \hypertarget{results-1}{%
 \subsection{Results}\label{results-1}}
 
-We used R (Version 4.2.2; R Core Team, 2022) and the R-packages \emph{ape} (Version 5.7.1; Paradis \& Schliep, 2019), \emph{geiger} (Version 2.0.11; Alfaro et al., 2009; Eastman et al., 2011; Harmon et al., 2008; Pennell et al., 2014; Slater et al., 2012), \emph{ggplot2} (Version 3.4.2; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017), \emph{irtplay} (Version 1.6.4; Lim, 2022), \emph{lattice} (Version 0.20.45; Sarkar, 2008; Sarkar \& Andrews, 2022), \emph{latticeExtra} (Version 0.6.30; Sarkar \& Andrews, 2022), \emph{maps} (Version 3.4.1; Richard A. Becker et al., 2022), \emph{mirt} (Version 1.38.1; Chalmers, 2012), \emph{papaja} (Version 0.1.1.9001; Aust \& Barth, 2022), \emph{phytools} (Version 1.5.1; Revell, 2012), \emph{psych} (Version 2.3.3; William Revelle, 2023), \emph{reticulate} (Version 1.28; Ushey et al., 2023), \emph{scales} (Version 1.2.1; Wickham \& Seidel, 2022), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+We used R (Version 4.2.3; R Core Team, 2023) and the R-packages \emph{ape} (Version 5.7.1; Paradis \& Schliep, 2019), \emph{geiger} (Version 2.0.10; Alfaro et al., 2009; Eastman et al., 2011; Harmon et al., 2008; Pennell et al., 2014; Slater et al., 2012), \emph{ggplot2} (Version 3.4.2; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017), \emph{irtplay} (\textbf{R-irtplay?}), \emph{lattice} (Version 0.20.45; Sarkar, 2008; Sarkar \& Andrews, 2022), \emph{latticeExtra} (Version 0.6.30; Sarkar \& Andrews, 2022), \emph{maps} (Version 3.4.1; \textbf{R-maps?}), \emph{mirt} (Version 1.38.1; Chalmers, 2012), \emph{papaja} (Version 0.1.1; Aust \& Barth, 2022), \emph{phytools} (Version 1.5.1; \textbf{R-phytools?}), \emph{psych} (Version 2.3.3; William Revelle, 2023), \emph{reticulate} (Version 1.28; Ushey et al., 2023), \emph{scales} (Version 1.2.1; Wickham \& Seidel, 2022), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
 
 The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.35\footnote{\emph{Note}. Did the integral of the difference between the CTT and IRT functions using the ``integrate'' function in the ``stats'' package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.}. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.35.
 For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure.
@@ -417,7 +417,7 @@ Additionally, if there is interest in this general idea we would likely publish 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-R-geiger_a}{}}%
-Alfaro, M. E., Santini, F., Brock, C., Alamillo, H., Dornburg, A., Rabosky, D. L., Carnevale, G., \& Harmon, L. J. (2009). Nine exceptional radiations plus high turnover explain species diversity in jawed vertebrates. \emph{PNAS}, \emph{106}, 13410--13414. \url{https://doi.org/10.1073/pnas.0811087106}
+Alfaro, M., Santini, F., Brock, C., Alamillo, H., Dornburg, A., Rabosky, D., Carnevale, G., \& Harmon, L. (2009). Nine exceptional radiations plus high turnover explain species diversity in jawed vertebrates. \emph{Proceedings of the National Academy of Sciences of the United States of America}, \emph{106}, 13410--13414.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-gridExtra}{}}%
 Auguie, B. (2017). \emph{gridExtra: Miscellaneous functions for "grid" graphics}. \url{https://CRAN.R-project.org/package=gridExtra}
@@ -432,7 +432,7 @@ Barth, M. (2022). \emph{{tinylabels}: Lightweight variable labels}. \url{https:/
 Chalmers, R. P. (2012). {mirt}: A multidimensional item response theory package for the {R} environment. \emph{Journal of Statistical Software}, \emph{48}(6), 1--29. \url{https://doi.org/10.18637/jss.v048.i06}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-geiger_b}{}}%
-Eastman, J. M., Alfaro, M. E., Joyce, P., Hipp, A. L., \& Harmon, L. J. (2011). A novel comparative method for identifying shifts in the rate of character evolution on trees. \emph{Evolution}, \emph{65}, 3578--3589. \url{https://doi.org/10.1111/j.1558-5646.2011.01401.x}
+Eastman, J., Alfaro, M., Joyce, P., Hipp, A., \& Harmon, L. (2011). A novel comparative method for identifying shifts in the rate of character evolution on trees. \emph{Evolution}, \emph{65}, 3578--3589.
 
 \leavevmode\vadjust pre{\hypertarget{ref-fan1998item}{}}%
 Fan, X. (1998). Item response theory and classical test theory: An empirical comparison of their item/person statistics. \emph{Educational and Psychological Measurement}, \emph{58}(3), 357--381.
@@ -444,13 +444,10 @@ Hambleton, R. K., \& Jones, R. W. (1993). Comparison of classical test theory an
 Hambleton, R. K., Swaminathan, H., \& Rogers, H. J. (1991). \emph{Fundamentals of item response theory} (Vol. 2). Sage.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-geiger_d}{}}%
-Harmon, L. J., Weir, J. T., Brock, C. D., Glor, R. E., \& Challenger, W. (2008). GEIGER: Investigating evolutionary radiations. \emph{Bioinformatics}, \emph{24}, 129--131. \url{https://doi.org/10.1093/bioinformatics/btm538}
+Harmon, L., Weir, J., Brock, C., Glor, R., \& Challenger, W. (2008). GEIGER: Investigating evolutionary radiations. \emph{Bioinformatics}, \emph{24}, 129--131.
 
 \leavevmode\vadjust pre{\hypertarget{ref-kulas2017approximate}{}}%
 Kulas, J. T., Smith, J. A., \& Xu, H. (2017). Approximate functional relationship between IRT and CTT item discrimination indices: A simulation, validation, and practical extension of {Lord's} (1980) formula. \emph{Journal of Applied Measurement}, \emph{18}(4), 393--407.
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-irtplay}{}}%
-Lim, H. (2022). \emph{Irtplay: Unidimensional item response theory modeling}. \url{https://CRAN.R-project.org/package=irtplay}
 
 \leavevmode\vadjust pre{\hypertarget{ref-lord1980applications}{}}%
 Lord, F. M. (1980). \emph{Applications of IRT to practical problems}. Hillsdale: Lawrence Erlbaum Associates.
@@ -471,16 +468,10 @@ Muraki, E. (1997). A generalized partial credit model. In \emph{Handbook of mode
 Paradis, E., \& Schliep, K. (2019). Ape 5.0: An environment for modern phylogenetics and evolutionary analyses in {R}. \emph{Bioinformatics}, \emph{35}, 526--528. \url{https://doi.org/10.1093/bioinformatics/bty633}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-geiger_e}{}}%
-Pennell, M. W., Eastman, J. M., Slater, G. J., Brown, J. W., Uyeda, J. C., Fitzjohn, R. G., Alfaro, M. E., \& Harmon, L. J. (2014). Geiger v2.0: An expanded suite of methods for fitting macroevolutionary models to phylogenetic trees. \emph{Bioinformatics}, \emph{30}, 2216--2218. \url{https://doi.org/10.1093/bioinformatics/btu181}
+Pennell, M., Eastman, J., Slater, G., Brown, J., Uyeda, J., Fitzjohn, R., Alfaro, M., \& Harmon, L. (2014). Geiger v2.0: An expanded suite of methods for fitting macroevolutionary models to phylogenetic trees. \emph{Bioinformatics}, \emph{30}, 2216--2218.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
-R Core Team. (2022). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-phytools}{}}%
-Revell, L. J. (2012). Phytools: An {R} package for phylogenetic comparative biology (and other things). \emph{Methods in Ecology and Evolution}, \emph{3}, 217--223. \url{https://doi.org/10.1111/j.2041-210X.2011.00169.x}
-
-\leavevmode\vadjust pre{\hypertarget{ref-R-maps}{}}%
-Richard A. Becker, O. S. code by, Ray Brownrigg. Enhancements by Thomas P Minka, A. R. Wilks. R. version by, \& Deckmyn., A. (2022). \emph{Maps: Draw geographical maps}. \url{https://CRAN.R-project.org/package=maps}
+R Core Team. (2023). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-rupp2004note}{}}%
 Rupp, A. A., \& Zumbo, B. D. (2004). A note on how to quantify and report whether IRT parameter invariance holds: When pearson correlations are not enough. \emph{Educational and Psychological Measurement}, \emph{64}(4), 588--599.
@@ -495,7 +486,7 @@ Sarkar, D. (2008). \emph{Lattice: Multivariate data visualization with r}. Sprin
 Sarkar, D., \& Andrews, F. (2022). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-geiger_c}{}}%
-Slater, G. J., Harmon, L. J., Wegmann, D., Joyce, P., Revell, L. J., \& Alfaro, M. E. (2012). Fitting models of continuous trait evolution to incompletely sampled comparative data using approximate bayesian computation. \emph{Evolution}, \emph{66}, 752--762. \url{https://doi.org/10.1111/j.1558-5646.2011.01474.x}
+Slater, G., Harmon, L., Wegmann, D., Joyce, P., Revell, L., \& Alfaro, M. (2012). Fitting models of continuous trait evolution to incompletely sampled comparative data using approximate bayesian computation. \emph{Evolution}, \emph{66}, 752--762.
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-reticulate}{}}%
 Ushey, K., Allaire, J., \& Tang, Y. (2023). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
