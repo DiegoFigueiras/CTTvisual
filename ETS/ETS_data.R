@@ -13,8 +13,13 @@ df_ETS[2:141] <- mutate_all(df_ETS[2:141], function(x) as.numeric(as.character(x
 df_ETS$LC1<-as.numeric(df_ETS$LC1)
 df_ETS$check<-rowSums(!is.na(df_ETS[2:141]))
 set1<-df_ETS%>%select(LC1:LC5, LC7:LC11, LC13:LC17, LC19:LC23, LC25:LC29, LC31:LC41, LC47:LC50)
-
+set2<-df_ETS%>%select(starts_with(c("SW")))
+set2<-set2%>%select(-SW7, -SW15, -SW21, -SW28, -SW35)
+set3<-df_ETS%>%select(starts_with(c("RD")))
+set3<-set3%>%select(RD1:RD29, RD41:RD50)
 psych::alpha(set1)
+
+df1<-cbind(set1, set2, set3)
 
 irt_model<-mirt(set1, 1, itemtype="2PL")
 IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT parameters from the mod object
@@ -57,3 +62,13 @@ for (i in 1:nrow(df)){
 auc<-unlist(auc)
 hist(auc)
 
+library(psych)
+efa<-fa(set1, nfactors=1, rotate="varimax")
+fa.parallel(set1)
+fa.parallel(set2)
+fa.parallel(set3)
+
+library(mirt)
+irt_model<-mirt(set1, 1, itemtype="2PL")
+itemplot(irt_model, type="trace", which.items=1:2, facet_items=FALSE)
+plot(irt_model, type='trace',face_items=FALSE)
