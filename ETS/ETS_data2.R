@@ -36,7 +36,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -65,7 +65,7 @@ for (i in 1:nrow(df0)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc0<-unlist(auc)
-hist(auc0)
+hist0<-hist(auc0)
 
 
 
@@ -89,7 +89,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -118,7 +118,7 @@ for (i in 1:nrow(df1)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc1<-unlist(auc)
-hist(auc1)
+hist1<-hist(auc1)
 
 
 ########################################################################
@@ -133,7 +133,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -162,7 +162,7 @@ for (i in 1:nrow(df2)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc2<-unlist(auc)
-hist(auc2)
+hist2<-hist(auc2)
 
 
 
@@ -180,7 +180,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -209,7 +209,7 @@ for (i in 1:nrow(df3)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc3<-unlist(auc)
-hist(auc3)
+hist3<-hist(auc3)
 
 #######################################################################################################################################################
 
@@ -224,7 +224,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -253,7 +253,7 @@ for (i in 1:nrow(df4)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc4<-unlist(auc)
-hist(auc4)
+hist4<-hist(auc4)
 
 
 ####################################################################################################################################################################
@@ -267,9 +267,9 @@ summary(irt_model)
 pseudob<-qnorm(colMeans(set5, na.rm=TRUE))#calculating our Zg
 c<-0
 ahat<-function(x){
-  r<- (((2.71828)^x)-((2.71828)^(-x)))/(2.71828-((2.71828)^x))
+  r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -298,7 +298,7 @@ for (i in 1:nrow(df5)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc5<-unlist(auc)
-hist(auc5)
+hist5<-hist(auc5)
 
 
 ############################################################################################################################################################################
@@ -315,7 +315,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*x)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
+  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -344,50 +344,56 @@ for (i in 1:nrow(df6)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc6<-unlist(auc)
-hist(auc6)
+hist6<-hist(auc6)
 
-df0<-data.frame(
+data0<-data.frame(
   diff=auc0,
   set="wingen_sim(k=100)"
 )
 
 
-df1<-data.frame(
+data1<-data.frame(
   diff=auc1,
   set="TOEFL1-LC(k=40)"
 )
-df2<-data.frame(
+data2<-data.frame(
   diff=auc2,
   set="TOEFL1-SW(k=35)"
 )
 
-df3<-data.frame(
+data3<-data.frame(
   diff=auc3,
   set="TOEFL1-RD(k=39)"
 )
 
 
-df4<-data.frame(
+data4<-data.frame(
   diff=auc4,
   set="TOEFL2-LC(k=40)"
 )
-df5<-data.frame(
+data5<-data.frame(
   diff=auc5,
   set="TOEFL2-SW(k=35)"
 )
 
-df6<-data.frame(
+data6<-data.frame(
   diff=auc6,
   set="TOEFL2-RD(k=38)"
 )
 
 
 
-df_plot<-rbind(df0,df1, df2, df3, df4, df5, df6)
+df_plot<-rbind(data0,data1, data2, data3, data4, data5, data6)
 df_plot2<-rbind(df0,df1, df2, df3, df4, df5, df6)
+df_plot2$r<-(((2.71828)^df_plot2$CITC)-(1/(2.71828)^df_plot2$CITC))/(2.71828-(2.71828)^df_plot2$CITC)
 
-ggplot(df_plot2, aes(x=a, y=PseudoA))+
+df_plot2$eq<-((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r)
+
+
+
+ggplot(df_plot2, aes(x=a, y=eq))+
   ylim(0,4)+
+  xlim(0,4)+
   geom_point()
 
 ggplot(df, aes(x=diff))+
@@ -402,3 +408,47 @@ tble<-df%>%group_by(set)%>%summarise(mean=mean(diff),
 ggplot(df5, aes(x=a, y=PseudoA))+
   ylim(0,4)+
   geom_point()
+
+ggplot(df_plot2, aes(x=PseudoA, y=eq))+
+  ylim(0,4)+
+  geom_point()
+
+reg<-lm(PseudoA~a, data=df_plot2)
+summary(reg)
+
+df_plot2$temp[df_plot2$a>0.9 & df_plot2$a<=1.1]<-"1"
+df_plot2$temp[df_plot2$a>1.9 & df_plot2$a<=2.1]<-"2"
+df_plot2$temp[df_plot2$a>2.9 & df_plot2$a<=3.1]<-"3"
+df_plot2$temp[df_plot2$a>3.9 & df_plot2$a<=4.1]<-"4"
+avg_pseudoa<- df_plot2%>% group_by(temp)%>%summarise(PseudoA=mean(PseudoA))
+
+df_plot2$r<-(((2.71828)^(df_plot2$CITC))-(1/(2.71828)^(df_plot2$CITC)))/(2.71828-(2.71828)^(df_plot2$CITC))
+
+df_plot2$eq<-((((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r))*1.71633)
+
+ggplot(df_plot2, aes(x=b, y=PseudoB))+
+  ylim(0,4)+
+  xlim(0,2)+
+  geom_point()
+reg<-lm(a~eq, data=df_plot2)
+summary(reg)
+
+
+###################### ############################################################################
+
+par(mfrow=c(2,4))
+plot(hist0)
+plot(hist1)
+plot(hist2)
+plot(hist3)
+plot(hist4)
+plot(hist5)
+plot(hist6)
+
+tbl<-data.frame(
+  auc=c("dif0","dif1","dif2","dif3","dif4","dif5","dif6"),
+  mean=c(mean(auc0),mean(auc1),mean(auc2),mean(auc3),mean(auc4),mean(auc5),mean(auc6)),
+  sd=c(sd(auc0),sd(auc1),sd(auc2),sd(auc3),sd(auc4),sd(auc5),sd(auc6))
+)
+
+
