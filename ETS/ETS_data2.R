@@ -4,6 +4,25 @@ library(descr)
 library(psych)
 library(mirt)
 library(ggplot2)
+
+df_ETS1 <- read_excel("ETS/ITP_Public Use Dataset_4LTN02A.xlsx")
+df_ETS1[2:141][df_ETS1[2:141]=='M']<-NA
+df_ETS1[2:141][df_ETS1[2:141]=='X']<-NA
+df_ETS1[2:141][df_ETS1[2:141]=='N']<-NA
+
+df_ETS1[2:141] <- mutate_all(df_ETS1[2:141], function(x) as.numeric(as.character(x)))
+
+df_ETS1$LC1<-as.numeric(df_ETS1$LC1)
+df_ETS1$check<-rowSums(!is.na(df_ETS1[2:141]))
+set1<-df_ETS1%>%select(LC1:LC5, LC7:LC11, LC13:LC17, LC19:LC23, LC25:LC29, LC31:LC41, LC47:LC50)
+set2<-df_ETS1%>%select(starts_with(c("SW")))
+set2<-set2%>%select(-SW7, -SW15, -SW21, -SW28, -SW35)
+set3<-df_ETS1%>%select(starts_with(c("RD")))
+set3<-set3%>%select(RD1:RD29, RD41:RD50)
+
+
+
+
 df_ETS <- read_excel("ETS/ITP_Public Use Dataset_4LTN06A.xlsx")
 df_ETS[2:141][df_ETS[2:141]=='M']<-NA
 df_ETS[2:141][df_ETS[2:141]=='X']<-NA
@@ -36,7 +55,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -89,7 +108,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -133,7 +152,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -180,7 +199,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -224,7 +243,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -269,7 +288,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -315,7 +334,7 @@ c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
-  (((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r)*1.71633)
+  ((((0.51+(0.02*abs(pseudob))+(0.301*pseudob^2))*x)+((0.57-(0.009*abs(pseudob))+(0.19*pseudob^2))*r))*1.71633)
   
 }#Formula taken from Kulas' 2017
 
@@ -396,14 +415,6 @@ ggplot(df_plot2, aes(x=a, y=eq))+
   xlim(0,4)+
   geom_point()
 
-ggplot(df, aes(x=diff))+
-  geom_histogram(bins=100)+
-  geom_density()+
-  facet_grid(set~.)
-
-tble<-df%>%group_by(set)%>%summarise(mean=mean(diff),
-                                     sd=sd(diff)
-                                     )
 
 ggplot(df5, aes(x=a, y=PseudoA))+
   ylim(0,4)+
@@ -426,10 +437,14 @@ df_plot2$r<-(((2.71828)^(df_plot2$CITC))-(1/(2.71828)^(df_plot2$CITC)))/(2.71828
 
 df_plot2$eq<-((((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r))*1.71633)
 
+
+
+
 ggplot(df_plot2, aes(x=b, y=PseudoB))+
-  ylim(0,4)+
+  ylim(0,2)+
   xlim(0,2)+
-  geom_point()
+  geom_point()+
+  geom_abline()
 reg<-lm(a~eq, data=df_plot2)
 summary(reg)
 
@@ -451,4 +466,28 @@ tbl<-data.frame(
   sd=c(sd(auc0),sd(auc1),sd(auc2),sd(auc3),sd(auc4),sd(auc5),sd(auc6))
 )
 
+library(ctticc)
+pack_est<-ctticc(set0)
+
+irt_model<-mirt(set0, 1, itemtype="2PL")
+IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT parameters from the mod object
+irt <- IRT_parms$items
+
+df0<-data.frame(cbind(pack_est, irt))
+colnames(df0)<-c("PseudoB","PseudoA", "a","b","g","u")
+
+theta <- matrix(seq(-6,6, by=.1))
+auc<-rep(NA, ncol(set0))
+
+for (i in 1:nrow(df0)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df0$PseudoA[i]*(x-df0$PseudoB[i]))))))}
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df0$a[i]*(x-df0$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  f1 <- approxfun(theta, cttB-irtB)
+  f2 <- function(x) abs(f1(x))          
+  auc[i]<-integrate(f2, -6,6)
+}
+auc0<-unlist(auc)
+hist0<-hist(auc0)
 

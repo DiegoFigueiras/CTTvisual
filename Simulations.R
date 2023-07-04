@@ -65,15 +65,15 @@ for(j in 1:10000){
         
         sim2means<-data.frame(colMeans(sim2)) #calculating the mean of each column simulated in the above loop
         colnames(sim2means)[1]<-"pvalues" #renaming the header "pvalues"
-        pseudob2<-data.frame((qnorm(sim2means$pvalues))) #getting Zg
+        pseudob2<-data.frame(qnorm(abs(sim2means$pvalues-0.5)))
         pvalues2<-data.frame(sim2means$pvalues) #getting simple pvalues (not really needed)
         
         ahat<-function(x){
           r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
           
-          ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
+          ((((0.51+(0.02*abs(pseudob2))+(0.301*pseudob2^2))*x)+((0.57-(0.009*abs(pseudob2))+(0.19*pseudob2^2))*r))*1.71633)
           
-        }
+        } #NOTE: come back to this and check the absolute values when we plot
 
         alphas<-psych::alpha(sim2)
         pseudoA2<-data.frame(ahat(alphas$item.stats$r.drop)) #getting pseudoA
@@ -139,15 +139,15 @@ for(j in 1:10000){
         
         sim3means<-data.frame(colMeans(sim3))
         colnames(sim3means)[1]<-"pvalues"
-        pseudob3<-data.frame(qnorm(sim3means$pvalues))
+        pseudob3<-data.frame(qnorm(abs(sim3means$pvalues-0.5)))
         pvalues3<-data.frame(sim3means$pvalues)
         
         ahat<-function(x){
           r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
           
-          ((0.51+(0.02*pseudob3)+(0.301*pseudob3^2))*r)+((0.57-(0.009*pseudob3)+(0.19*pseudob3^2))*r)
+          ((((0.51+(0.02*abs(pseudob3))+(0.301*pseudob3^2))*x)+((0.57-(0.009*abs(pseudob3))+(0.19*pseudob3^2))*r))*1.71633)
           
-        }
+        } #NOTE: come back to this and check the absolute values when we plot
         
         alphas<-psych::alpha(sim3)
         pseudoA3<-data.frame(ahat(alphas$item.stats$r.drop))
@@ -208,15 +208,15 @@ for(j in 1:10000){
         #sim4<-data.frame(apply(sim4, 2, sort, decreasing=F))
         sim4means<-as.data.frame(colMeans(sim4))
         colnames(sim4means)[1] <- "pvalues"
-        pseudob4<-data.frame(qnorm(sim4means$pvalues))
+        pseudob4<-data.frame(qnorm(abs(sim4means$pvalues-0.5)))
         pvalues4<-data.frame(sim4means$pvalues)
         
         ahat<-function(x){
           r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
           
-          ((0.51+(0.02*pseudob4)+(0.301*pseudob4^2))*r)+((0.57-(0.009*pseudob4)+(0.19*pseudob4^2))*r)
+          ((((0.51+(0.02*abs(pseudob4))+(0.301*pseudob4^2))*x)+((0.57-(0.009*abs(pseudob4))+(0.19*pseudob4^2))*r))*1.71633)
           
-        }
+        } #NOTE: come back to this and check the absolute values when we plot
         
         alphas<-psych::alpha(sim4)
         pseudoA4<-data.frame(ahat(alphas$item.stats$r.drop))
@@ -275,15 +275,15 @@ for(j in 1:10000){
   
         sim5means<-as.data.frame(colMeans(sim5))
         colnames(sim5means)[1] <- "pvalues"
-        pseudob5<-data.frame(qnorm(sim5means$pvalues))
+        pseudob5<-data.frame(qnorm(abs(sim5means$pvalues-0.5)))
         pvalues5<-data.frame(sim5means$pvalues)
         
         ahat<-function(x){
           r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
           
-          ((0.51+(0.02*pseudob5)+(0.301*pseudob5^2))*r)+((0.57-(0.009*pseudob5)+(0.19*pseudob5^2))*r)
+          ((((0.51+(0.02*abs(pseudob5))+(0.301*pseudob5^2))*x)+((0.57-(0.009*abs(pseudob5))+(0.19*pseudob5^2))*r))*1.71633)
           
-        }
+        } #NOTE: come back to this and check the absolute values when we plot
         
         alphas<-psych::alpha(sim5)
         pseudoA5<-data.frame(ahat(alphas$item.stats$r.drop))
@@ -316,12 +316,17 @@ for(j in 1:10000){
 
 }
 
+
+ggplot(df5, aes(x=b, y=pseudob))+
+  geom_point()+
+  xlim(0,5)
+
 write.csv(all_sims5, "Simulation 5/all_sims5.csv")
 
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
 all_sims6<-NULL
-for(j in 1:10000){
+for(j in 1){
 
 
         skew<-rsnorm(100,0,1,xi=4)
@@ -339,15 +344,15 @@ for(j in 1:10000){
         }
         sim6means<-as.data.frame(colMeans(sim6))
         colnames(sim6means)[1] <- "pvalues"
-        pseudob6<-data.frame(qnorm(sim6means$pvalues))
+        pseudob6<-data.frame(qnorm(abs(sim6means$pvalues-0.5)))
         pvalues6<-data.frame(sim6means$pvalues)
         
         ahat<-function(x){
           r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
           
-          ((0.51+(0.02*pseudob6)+(0.301*pseudob6^2))*r)+((0.57-(0.009*pseudob6)+(0.19*pseudob6^2))*r)
+          ((((0.51+(0.02*abs(pseudob6))+(0.301*pseudob6^2))*x)+((0.57-(0.009*abs(pseudob6))+(0.19*pseudob6^2))*r))*1.71633)
           
-        }
+        } #NOTE: come back to this and check the absolute values when we plot
         
         alphas<-psych::alpha(sim6)
         pseudoA6<-data.frame(ahat(alphas$item.stats$r.drop))
@@ -379,10 +384,84 @@ for(j in 1:10000){
         
         
 }  
+ggplot(df6, aes(x=a, y=PseudoA))+
+  geom_point()+
+  xlim(0,5)
 
-
+reg<-lm(a~PseudoA, data=df6)
+summary(reg)
 write.csv(all_sims6, "Simulation 6/all_sims6.csv")
 write.csv(coeficients, "coefficients.csv")
+
+
+########################## Simulation 7: ####################################################################################################
+
+
+all_sims7<-NULL
+for(j in 1:10000){
+  
+  
+  skew<-rsnorm(100,0,1,xi=4)
+  b.params <- cbind(a = rnorm(100, 1.5, .5), b = skew, c = 0)
+  theta<-rnorm(10000, 0, 1)
+  b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
+  sim7<-data.frame(b.mod$resp)
+  for (i in 1:100){
+    if(sum(sim7[,i])==10000){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+      sim7[,i][random]<-0 
+    }
+    if(sum(sim7[,i])==0){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+      sim7[,i][random]<-1 
+    }
+  }
+  sim7means<-as.data.frame(colMeans(sim7))
+  colnames(sim7means)[1] <- "pvalues"
+  pseudob7<-data.frame(qnorm(abs(sim7means$pvalues-0.5)))
+  pvalues7<-data.frame(sim7means$pvalues)
+  
+  ahat<-function(x){
+    r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
+    
+    ((((0.51+(0.02*abs(pseudob7))+(0.301*pseudob7^2))*x)+((0.57-(0.009*abs(pseudob7))+(0.19*pseudob7^2))*r)))
+    
+  } #NOTE: come back to this and check the absolute values when we plot
+  
+  alphas<-psych::alpha(sim7)
+  pseudoA7<-data.frame(ahat(alphas$item.stats$r.drop))
+  
+  mod7<-mirt(data.frame(sim7), 1, itemtype="2PL", technical = list(NCYCLES = 1000))
+  IRT_parms7 <- coef(mod7, IRTpars = TRUE, simplify = TRUE)
+  irt7 <- IRT_parms7$items
+  df7<-as.data.frame(cbind(pseudob7, pvalues7,pseudoA7, irt7))
+  colnames(df7)<-c("pseudob", "pvalues","PseudoA", "a", "b", "g", "u")
+  df7$skew<-as.numeric(psych::describe(df7$pvalues)[11])
+  df7$kurtosis<-as.numeric(psych::describe(df7$pvalues)[12])
+  all_sims7<-all_sims7%>%rbind(df7)#putting all 1,000 simulations at the item level into one dataframe
+  
+  #df7<-df7%>%filter(b<3)%>%filter(b>-3)
+  
+  reg<-lm(b ~ pseudob, df7)
+  summary(reg)
+  coef(reg)
+  coeficients<-coeficients%>%rbind(data.frame(
+    intercept=summary(reg)$coefficients[1,1],
+    slope=summary(reg)$coefficients[2,1],
+    seint=summary(reg)$coefficients[1,2],
+    seslope=summary(reg)$coefficients[2,2],
+    scrubbedn=nrow(df7),
+    simulation="Simulation 7",
+    mean_p=psych::describe(df7$pvalues))
+    
+  )
+  
+  
+}  
+
+ggplot(df7, aes(x=a, y=PseudoA))+
+  geom_point()+
+  xlim(0,5)
+
+##############################################################################################################################
 
 
 #write.csv(coeficients, "pvalue_to_b_estimates.csv")
@@ -509,3 +588,11 @@ df<-df%>%filter(b<3)%>%filter(b>-3) #we need to report how many cases we kicked 
 hist(df$skew, col="green")
 par(new=TRUE)
 hist(df$kurtosis, col="blue")
+
+
+data<-read.csv("SIOP/ALL_simulations.csv")
+ggplot(data, aes(x=a, y=PseudoA))+
+  ylim(0,2)+
+  xlim(0,2)+
+  geom_point()+
+  geom_abline()
