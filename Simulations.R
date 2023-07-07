@@ -23,6 +23,7 @@ library(catIrt)
 
 coeficients<-NULL#declare the dataframe were coefficients for all 10,000 simulations will be stored
 all_sims2<-NULL
+random<-sample(10000, 200)
 for(j in 1:10000){
 
 
@@ -63,9 +64,18 @@ for(j in 1:10000){
         g<-psych::describe(sim2)
         hist(g$mean)
         
+        for (i in 1:100){
+          if(sum(sim2[,i])>=9800){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+            sim2[,i][random]<-0 
+          }
+          if(sum(sim2[,i])<=200){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 1. 
+            sim2[,i][random]<-1 
+          }
+        }
+        
         sim2means<-data.frame(colMeans(sim2)) #calculating the mean of each column simulated in the above loop
         colnames(sim2means)[1]<-"pvalues" #renaming the header "pvalues"
-        pseudob2<-data.frame(qnorm(abs(sim2means$pvalues-0.5)))
+        pseudob2<-data.frame(qnorm(sim2means$pvalues)*-1)
         pvalues2<-data.frame(sim2means$pvalues) #getting simple pvalues (not really needed)
         
         ahat<-function(x){
@@ -88,7 +98,7 @@ for(j in 1:10000){
         df2$kurtosis<-as.numeric(psych::describe(df2$pvalues)[12])
         all_sims2<-all_sims2%>%rbind(df2)#putting all 1,000 simulations at the item level into one dataframe
         
-        #df2<-df2%>%filter(b<3)%>%filter(b>-3)
+        df2<-df2%>%filter(b<3)%>%filter(b>-3)
 
         
         
@@ -121,12 +131,13 @@ for(j in 1:10000){
 # sd(df2$pvalues)
 # all_sims2$Simulations<-rep(1:1000, each=100)
 
-write.csv(all_sims2, "Simulation 2/all_sims2.csv")
+#write.csv(all_sims2, "Simulation 2/all_sims2.csv")
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
 #random<-sample(10000, 20)
 all_sims3<-NULL
+random<-sample(10000, 200)
 for(j in 1:10000){
           
         skew<-rsnorm(100,0,1,xi=1) # xi=1 is the normal distribution specification
@@ -137,9 +148,18 @@ for(j in 1:10000){
         g<-psych::describe(sim3)
         hist(g$mean)
         
+        for (i in 1:100){
+          if(sum(sim3[,i])>=9800){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+            sim3[,i][random]<-0 
+          }
+          if(sum(sim3[,i])<=200){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 1. 
+            sim3[,i][random]<-1 
+          }
+        }
+        
         sim3means<-data.frame(colMeans(sim3))
         colnames(sim3means)[1]<-"pvalues"
-        pseudob3<-data.frame(qnorm(abs(sim3means$pvalues-0.5)))
+        pseudob3<-data.frame(qnorm(sim3means$pvalues)*-1)
         pvalues3<-data.frame(sim3means$pvalues)
         
         ahat<-function(x){
@@ -168,7 +188,7 @@ for(j in 1:10000){
         df3$skew<-as.numeric(psych::describe(df3$pvalues)[11])
         df3$kurtosis<-as.numeric(psych::describe(df3$pvalues)[12])
         all_sims3<-all_sims3%>%rbind(df3)#putting all 1,000 simulations at the item level into one dataframe
-        #df3<-df3%>%filter(b<3)%>%filter(b>-3)
+        df3<-df3%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df3)
         summary(reg)
         coef(reg)
@@ -186,11 +206,12 @@ for(j in 1:10000){
 }
 
 
-write.csv(all_sims3,"Simulation 3/all_sims3.csv")
+#write.csv(all_sims3,"Simulation 3/all_sims3.csv")
 
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
 all_sims4<-NULL
+random<-sample(10000, 200)
 for(j in 1:10000){
 
       
@@ -203,12 +224,19 @@ for(j in 1:10000){
   hist(g$mean) 
   
         
-        
+  for (i in 1:100){
+    if(sum(sim4[,i])>=9800){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+      sim4[,i][random]<-0 
+    }
+    if(sum(sim4[,i])<=200){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 1. 
+      sim4[,i][random]<-1 
+    }
+  }
         #sim4<-cbind(sim4.1, sim4.2)#merging the two skewed distributions so we get that U-shaped distribution. 
         #sim4<-data.frame(apply(sim4, 2, sort, decreasing=F))
         sim4means<-as.data.frame(colMeans(sim4))
         colnames(sim4means)[1] <- "pvalues"
-        pseudob4<-data.frame(qnorm(abs(sim4means$pvalues-0.5)))
+        pseudob4<-data.frame(qnorm(sim4means$pvalues)*-1)
         pvalues4<-data.frame(sim4means$pvalues)
         
         ahat<-function(x){
@@ -230,7 +258,7 @@ for(j in 1:10000){
         df4$kurtosis<-as.numeric(psych::describe(df4$pvalues)[12])
         all_sims4<-all_sims4%>%rbind(df4)#putting all 1,000 simulations at the item level into one dataframe
         
-        #df4<-df4%>%filter(b<3)%>%filter(b>-3)
+        df4<-df4%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df4)
         summary(reg)
@@ -250,7 +278,7 @@ for(j in 1:10000){
 }
 
 
-write.csv(all_sims4, "Simulation 4/all_sims4.csv")
+#write.csv(all_sims4, "Simulation 4/all_sims4.csv")
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
@@ -275,7 +303,7 @@ for(j in 1:10000){
   
         sim5means<-as.data.frame(colMeans(sim5))
         colnames(sim5means)[1] <- "pvalues"
-        pseudob5<-data.frame(qnorm(abs(sim5means$pvalues-0.5)))
+        pseudob5<-data.frame(qnorm(sim5means$pvalues)*-1)
         pvalues5<-data.frame(sim5means$pvalues)
         
         ahat<-function(x){
@@ -297,7 +325,7 @@ for(j in 1:10000){
         df5$kurtosis<-as.numeric(psych::describe(df5$pvalues)[12])
         all_sims5<-all_sims5%>%rbind(df5)#putting all 1,000 simulations at the item level into one dataframe
         
-        #df5<-df5%>%filter(b<3)%>%filter(b>-3)
+        df5<-df5%>%filter(b<3)%>%filter(b>-3)
         reg<-lm(b ~ pseudob, df5)
         summary(reg)
         coef(reg)
@@ -321,12 +349,13 @@ ggplot(df5, aes(x=b, y=pseudob))+
   geom_point()+
   xlim(0,5)
 
-write.csv(all_sims5, "Simulation 5/all_sims5.csv")
+#write.csv(all_sims5, "Simulation 5/all_sims5.csv")
 
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
 all_sims6<-NULL
-for(j in 1){
+random<-sample(10000, 200)
+for(j in 1:10000){
 
 
         skew<-rsnorm(100,0,1,xi=4)
@@ -344,7 +373,7 @@ for(j in 1){
         }
         sim6means<-as.data.frame(colMeans(sim6))
         colnames(sim6means)[1] <- "pvalues"
-        pseudob6<-data.frame(qnorm(abs(sim6means$pvalues-0.5)))
+        pseudob6<-data.frame(qnorm(sim6means$pvalues)*-1)
         pvalues6<-data.frame(sim6means$pvalues)
         
         ahat<-function(x){
@@ -366,7 +395,7 @@ for(j in 1){
         df6$kurtosis<-as.numeric(psych::describe(df6$pvalues)[12])
         all_sims6<-all_sims6%>%rbind(df6)#putting all 1,000 simulations at the item level into one dataframe
         
-        #df6<-df6%>%filter(b<3)%>%filter(b>-3)
+        df6<-df6%>%filter(b<3)%>%filter(b>-3)
         
         reg<-lm(b ~ pseudob, df6)
         summary(reg)
@@ -390,7 +419,7 @@ ggplot(df6, aes(x=a, y=PseudoA))+
 
 reg<-lm(a~PseudoA, data=df6)
 summary(reg)
-write.csv(all_sims6, "Simulation 6/all_sims6.csv")
+#write.csv(all_sims6, "Simulation 6/all_sims6.csv")
 write.csv(coeficients, "coefficients.csv")
 
 
@@ -398,6 +427,7 @@ write.csv(coeficients, "coefficients.csv")
 
 
 all_sims7<-NULL
+random<-sample(10000, 200)
 for(j in 1:10000){
   
   
@@ -416,7 +446,7 @@ for(j in 1:10000){
   }
   sim7means<-as.data.frame(colMeans(sim7))
   colnames(sim7means)[1] <- "pvalues"
-  pseudob7<-data.frame(qnorm(abs(sim7means$pvalues-0.5)))
+  pseudob7<-data.frame(qnorm(sim7means$pvalues)*-1)
   pvalues7<-data.frame(sim7means$pvalues)
   
   ahat<-function(x){
@@ -438,7 +468,7 @@ for(j in 1:10000){
   df7$kurtosis<-as.numeric(psych::describe(df7$pvalues)[12])
   all_sims7<-all_sims7%>%rbind(df7)#putting all 1,000 simulations at the item level into one dataframe
   
-  #df7<-df7%>%filter(b<3)%>%filter(b>-3)
+  df7<-df7%>%filter(b<3)%>%filter(b>-3)
   
   reg<-lm(b ~ pseudob, df7)
   summary(reg)
@@ -457,9 +487,22 @@ for(j in 1:10000){
   
 }  
 
-ggplot(df7, aes(x=a, y=PseudoA))+
+
+all_sims2$simulation<-"Simulation 2"
+all_sims3$simulation<-"Simulation 3"
+all_sims4$simulation<-"Simulation 4"
+all_sims5$simulation<-"Simulation 5"
+all_sims6$simulation<-"Simulation 6"
+all_sims7$simulation<-"Simulation 7"
+
+all_sims<-rbind(all_sims2, all_sims3, all_sims4, all_sims5, all_sims6, all_sims7)
+
+
+ggplot(all_sims, aes(x=b, y=-1*pseudob))+
   geom_point()+
-  xlim(0,5)
+  xlim(-5,5)+
+  ylim(-5,5)+
+  geom_abline()
 
 ##############################################################################################################################
 
