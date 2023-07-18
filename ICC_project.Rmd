@@ -19,7 +19,7 @@ affiliation:
 authornote: 
 
 abstract: |
-  Item characteristic curves (ICC's) are graphical representations of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to generate empirically-derived linking coefficients between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low (.2 on our 9x1 dimensional plotting space). Applying the CTT-derived ICCs to an applied sample of XXX real life test takers resulted in a mean DIF estimate of XXX. An `R` package, `ctticc`, performs the ICC calculations presented in the current paper and provides test specialists with visual representations of CTT-derived item characteristics.
+  Item characteristic curves (ICC's) are graphical representations of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to generate empirically-derived linking coefficients between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low (.2 on our 9x1 dimensional plotting space). Applying the CTT-derived ICCs to an applied sample of 10000 real life test takers resulted in a mean DIF estimate of XXX. An `R` package, `ctticc`, performs the ICC calculations presented in the current paper and provides test specialists with visual representations of CTT-derived item characteristics.
   
 keywords          : "Classical Test Theory, Item Response Theory, item difficulty, item discrimination"
 wordcount         : "X"
@@ -156,15 +156,15 @@ a_i\cong \frac{r_i}{\sqrt{1-r_i^2}}
 
 This formula wasn't intended for practical purposes but rather was presented as an attempt to help assessment specialists who were more familiar with CTT procedures to better understand the IRT discrimination parameter. In an effort to move from the conceptual to a more practical application, @kulas2017approximate proposed a modification focused on minimizing predicted residuals (either $a_i$ or $r_i$, with $r_i$ being the *corrected* item-total *point-biserial* correlation). 
 
-The @kulas2017approximate investigations identified systematicly predictive differences in the relationship between $a_i$ and $r_i$ across items with differing item difficulty values, so their alteration to @lord1980applications's formula included a moderating effect for item difficulty (this formulaic specification is also retained in the current presentation):
+The @kulas2017approximate investigations identified systematically predictive differences in the relationship between $a_i$ and $r_i$ across items with differing item difficulty values, so their alteration to @lord1980applications's formula included a moderating effect for item difficulty (this formulaic specification is also retained in the current presentation):
 
 \begin{equation}
 \hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r-e^{-r}}{e-e^r}]
 \end{equation}
 
-Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "*p*-value" of .5). $z_g$ is the standard normal deviate associated with $g$. This transformation of the common *p*-value was recommended by @kulas2017approximate in order to scale the CTT index along a (closer to) interval-level metric more directly analogous to the IRT *b*-parameter. Figure \@ref(fig:acorrected) visualizes the re-specifications of Lord's formula at *p*-values of .5, .3 (or .7), and .1 (or .9) and highlights the nonlinear nature of this relationship - especially noticeable at high(er) levels of discrimination.
+Where $g$ is the absolute deviation from 50% responding an item correctly and 50% responding incorrectly (e.g., a "*p*-value" of .5). $z_g$ is the standard normal deviate associated with $g$. This transformation of the common *p*-value was recommended by @kulas2017approximate in order to scale the CTT index along a (closer to) interval-level metric more directly analogous to the IRT *b*-parameter.
 
-```{r acorrected, fig.cap="@kulas2017approximate's proposed functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (*p*-value; solid = .5, dashed = .3/.7, dotted = .1/.9)."}
+```{r acorrected, fig.cap="@kulas2017approximate's proposed functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (*p*-value; solid = .5, dashed = .3/.7, dotted = .1/.9).", eval=FALSE}
 g<-abs(qnorm(.5))
 g<-0
 r2<-.5          ## changed from .3 - 10/13/22
@@ -185,6 +185,9 @@ curve(ahat, lty="dotted", add=TRUE)
 ```
 
 # Study 1 
+
+
+
 
 The ultimate goal of the current project is to generate CTT-derived ICCs. As a comparative standard, however, we would also like to compare these newer CTT-derived ICCs against the IRT-derived ICC standards. These comparisons are only feasible if the CTT statistic can be reasonably expressed on the IRT parameter metric (or vice versa). Although ogives could be specified directly from the CTT-derived statistics, we made a procedural decision to retain the IRT 2PL as our functional definition for both IRT and CTT ogive specification: 
 
@@ -366,7 +369,7 @@ p1
 
 ## Results
 
-Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of 1.42 (sd = ??) and average empirical *b*-estimate of 0.5 (sd = ??). $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
+Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of ?? (sd = ??) and average empirical *b*-estimate of ?? (sd = ??).
 
 Overall, the average slope was *r slope* and the average intercept *r intercept*. $\leftarrow$ Make sure this formula is in study 2
 
@@ -377,21 +380,19 @@ put in moderated regression results as well as $\Delta R^2$ across hierarchical 
 The purpose of study 2 is to simulate test data and generate ICC's based on the IRT model. Then we compare that to our CTT estimates and look at the differences. We hypothesize that on average there won't be a big difference between the curves plotted with either methodology. 
 
 1. Use regression equation from Study 1
-2. Many simulations 
+2. Winsteps and ETS data
 3. Compute DIF and report results
-4. IF POSSIBLE, get real-world data and apply DIF algorithm (for example, reach out to ETS and ask for testing data)
-5. Publish package (at least get to GitHub)
-6. Tada!
 
-## Simulated data
+### Procedure and materials  
+
+We used a simulated dataset and two real-world datasets. The real-world dataset represented responses from 10,000 TOEFL iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking  (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
+
+
+The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using @R-geiger_a's package. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas). 
 
 ### Plotting space
 
 We need a figure with three different ICCs: 1) small DIF, 2) moderate DIF, and 3) large DIF. For each simulated scenario, compute and report our DIF index so the reader understand what the number refers to (e.g., area as defined by plotting space).
-
-### Procedure and materials  
-
-The same simulated data as in study 1 was used. $\leftarrow$ Was it??? The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using @R-geiger_a's package. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas). 
 
 
 ## Results
