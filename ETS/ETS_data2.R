@@ -50,7 +50,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set0, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set0, na.rm=TRUE)*-1)#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -68,7 +68,7 @@ df0<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df0)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df0$PseudoB<-0.000006957584+(-1.52731*df0$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df0$PseudoB<--0.000002895614 +(1.535589*df0$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -103,7 +103,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set1, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set1, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -121,7 +121,11 @@ df1<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df1)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df1$PseudoB<-0.000006957584+(-1.52731*df1$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df1$PseudoB<--0.000002895614 +(1.535589*df1$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+ggplot(df1, aes(x=b, y=PseudoB))+
+  geom_point()+
+  geom_abline()
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -147,7 +151,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set2, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set2, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -165,7 +169,11 @@ df2<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df2)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df2$PseudoB<-0.000006957584+(-1.52731*df2$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df2$PseudoB<--0.000002895614 +(1.535589*df2$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+ggplot(df2, aes(x=b, y=PseudoB))+
+  geom_point()+
+  geom_abline()
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -194,7 +202,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set3, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set3, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -212,7 +220,11 @@ df3<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df3)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df3$PseudoB<-0.000006957584+(-1.52731*df3$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df3$PseudoB<--0.000002895614 +(1.535589*df3$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+ggplot(df3, aes(x=b, y=PseudoB))+
+  geom_point()+
+  geom_abline()
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -238,7 +250,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set4, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set4, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -256,7 +268,11 @@ df4<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df4)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df4$PseudoB<-0.000006957584+(-1.52731*df4$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df4$PseudoB<--0.000002895614 +(1.535589*df4$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+ggplot(df4, aes(x=b, y=PseudoB))+
+  geom_point()+
+  geom_abline()
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -283,7 +299,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set5, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set5, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -301,7 +317,11 @@ df5<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df5)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df5$PseudoB<-0.000006957584+(-1.52731*df5$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df5$PseudoB<--0.000002895614 +(1.535589*df5$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+ggplot(df5, aes(x=b, y=PseudoB))+
+  geom_point()+
+  geom_abline()
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -329,7 +349,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set6, na.rm=TRUE))#calculating our Zg
+pseudob<-qnorm(colMeans(set6, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -347,7 +367,13 @@ df6<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df6)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
-df6$PseudoB<-0.000006957584+(-1.52731*df6$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+df6$PseudoB<--0.000002895614 +(1.535589*df6$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+ggplot(df6, aes(x=b, y=PseudoB))+
+  geom_point()+
+  geom_abline()+
+  ylim(-5,5)+
+  xlim(-5,5)
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
