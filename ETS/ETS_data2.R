@@ -433,9 +433,9 @@ data6<-data.frame(
 )
 
 
-df_plot2<-rbind(df0,df1, df2, df3, df4, df5, df6)
+df_plot2<-rbind(df1, df2, df3, df4, df5, df6)
 df_plot<-cbind(
-  rbind(data0,data1, data2, data3, data4, data5, data6),
+  rbind(data1, data2, data3, data4, data5, data6),
   ITEM_ID=rownames(df_plot2))
 
 # df_plot2$r<-(((2.71828)^df_plot2$CITC)-(1/(2.71828)^df_plot2$CITC))/(2.71828-(2.71828)^df_plot2$CITC)
