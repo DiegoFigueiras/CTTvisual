@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.24)  1 AUG 2023 14:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.24)  1 AUG 2023 14:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -716,114 +716,48 @@ Package pdftex.def Info: ICC_project_files/figure-latex/simulatedgraphs-1.pdf  u
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 312.
 
-
-Overfull \hbox (28954.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -489327.130, Max-Change: 1.17416Iteration: 2, Log-Lik: -469788.775, Max-Change: 0.37620Iteration: 3, Log-Lik: -468634.883, Max-Change: 0.20397Iteration: 4, Log-Lik: -467874.535, Max-Change: 0.17494Iteration: 5, Log-Lik: -467193.953, Max-Change: 0.14652Iteration: 6, Log-Lik: -466779.316, Max-Change: 0.18203Iteration: 7, Log-Lik: -466457.865, Max-Change: 0.12679Iteration: 8, Log-Lik: -466185.053, Max-Change: 0.21246Iteration: 9, Log-Lik: -465979.616, Max-Change: 0.12874Iteration: 10, Log-Lik: -465781.416, Max-Change: 0.16724Iteration: 11, Log-Lik: -465638.502, Max-Change: 0.17554Iteration: 12, Log-Lik: -465518.271, Max-Change: 0.16207Iteration: 13, Log-Lik: -465417.134, Max-Change: 0.15501Iteration: 14, Log-Lik: -465328.505, Max-Change: 0.20965Iteration: 15, Log-Lik: -465241.958, Max-Change: 0.21315Iteration: 16, Log-Lik: -465146.021, Max-Change: 0.14391Iteration: 17, Log-Lik: -465077.478, Max-Change: 0.15163Iteration: 18, Log-Lik: -465023.895, Max-Change: 0.14181Iteration: 19, Log-Lik: -464976.919, Max-Change: 0.13242Iteration: 20, Log-Lik: -464936.454, Max-Change: 0.11597Iteration: 21, Log-Lik: -464899.856, Max-Change: 0.12111Iteration: 22, Log-Lik: -464868.518, Max-Change: 0.08595Iteration: 23, Log-Lik: -464839.042, Max-Change: 0.14069Iteration: 24, Log-Lik: -464814.698, Max-Change: 0.10092Iteration: 25, Log-Lik: -464790.048, Max-Change: 0.16151Iteration: 26, Log-Lik: -464770.315, Max-Change: 0.10485Iteration: 27, Log-Lik: -464747.307, Max-Change: 0.16839Iteration: 28, Log-Lik: -464726.958, Max-Change: 0.07979Iteration: 29, Log-Lik: -464709.290, Max-Change: 0.12572Iteration: 30, Log-Lik: -464694.857, Max-Change: 0.07725Iteration: 31, Log-Lik: -464679.665, Max-Change: 0.12508Iteration: 32, Log-Lik: -464667.254, Max-Change: 0.05857Iteration: 33, Log-Lik: -464656.652, Max-Change: 0.09708Iteration: 34, Log-Lik: -464648.280, Max-Change: 0.05723Iteration: 35, Log-Lik: -464639.185, Max-Change: 0.09532Iteration: 36, Log-Lik: -464631.961, Max-Change: 0.01845Iteration: 37, Log-Lik: -464623.509, Max-Change: 0.05459Iteration: 38, Log-Lik: -464618.882, Max-Change: 0.04734Iteration: 39, Log-Lik: -464614.333, Max-Change: 0.06414Iteration: 40, Log-Lik: -464610.914, Max-Change: 0.01408Iteration: 41, Log-Lik: -464605.874, Max-Change: 0.01440Iteration: 42, Log-Lik: -464602.042, Max-Change: 0.01456Iteration: 43, Log-Lik: -464585.903, Max-Change: 0.01272Iteration: 44, Log-Lik: -464584.728, Max-Change: 0.00939Iteration: 45, Log-Lik: -464583.720, Max-Change: 0.00854Iteration: 46, Log-Lik: -464579.421, Max-Change: 0.00306Iteration: 47, Log-Lik: -464579.117, Max-Change: 0.00424Iteration: 48, Log-Lik: -464578.855, Max-Change: 0.00372Iteration: 49, Log-Lik: -464578.002, Max-Change: 0.00373Iteration: 50, Log-Lik: -464577.832, Max-Change: 0.00259Iteration: 51, Log-Lik: -464577.678, Max-Change: 0.00358Iteration: 52, Log-Lik: -464577.499, Max-Change: 0.00147Iteration: 53, Log-Lik: -464577.426, Max-Change: 0.00162Iteration: 54, Log-Lik: -464577.374, Max-Change: 0.00129Iteration: 55, Log-Lik: -464577.237, Max-Change: 0.00253Iteration: 56, Log-Lik: -464577.173, Max-Change: 0.00118Iteration: 57, Log-Lik: -464577.126, Max-Change: 0.00135Iteration: 58, Log-Lik: -464576.972, Max-Change: 0.00128Iteration: 59, Log-Lik: -464576.925, Max-Change: 0.00130Iteration: 60, Log-Lik: -464576.887, Max-Change: 0.00115Iteration: 61, Log-Lik: -464576.697, Max-Change: 0.00108Iteration: 62, Log-Lik: -464576.675, Max-Change: 0.00068Iteration: 63, Log-Lik: -464576.654, Max-Change: 0.00074Iteration: 64, Log-Lik: -464576.546, Max-Change: 0.00060Iteration: 65, Log-Lik: -464576.539, Max-Change: 0.00020Iteration: 66, Log-Lik: -464576.534, Max-Change: 0.00019Iteration: 67, Log-Lik: -464576.509, Max-Change: 0.00142Iteration: 68, Log-Lik: -464576.490, Max-Change: 0.00035Iteration: 69, Log-Lik: -464576.486, Max-Change: 0.00017Iteration: 70, Log-Lik: -464576.476, Max-Change: 0.00096Iteration: 71, Log-Lik: -464576.460, Max-Change: 0.00025Iteration: 72, Log-Lik: -464576.457, Max-Change: 0.00019Iteration: 73, Log-Lik: -464576.445, Max-Change: 0.00091Iteration: 74, Log-Lik: -464576.431, Max-Change: 0.00032Iteration: 75, Log-Lik: -464576.428, Max-Change: 0.00017Iteration: 76, Log-Lik: -464576.420, Max-Change: 0.00086Iteration: 77, Log-Lik: -464576.408, Max-Change: 0.00025Iteration: 78, Log-Lik: -464576.405, Max-Change: 0.00082Iteration: 79, Log-Lik: -464576.391, Max-Change: 0.00020Iteration: 80, Log-Lik: -464576.388, Max-Change: 0.00079Iteration: 81, Log-Lik: -464576.378, Max-Change: 0.00016Iteration: 82, Log-Lik: -464576.378, Max-Change: 0.00015Iteration: 83, Log-Lik: -464576.375, Max-Change: 0.00076Iteration: 84, Log-Lik: -464576.366, Max-Change: 0.00074Iteration: 85, Log-Lik: -464576.340, Max-Change: 0.00106Iteration: 86, Log-Lik: -464576.329, Max-Change: 0.00033Iteration: 87, Log-Lik: -464576.327, Max-Change: 0.00009[] 
- []
-
 [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (5098.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -238406.482, Max-Change: 0.54194Iteration: 2, Log-Lik: -235675.950, Max-Change: 0.18596Iteration: 3, Log-Lik: -235441.786, Max-Change: 0.06380Iteration: 4, Log-Lik: -235388.758, Max-Change: 0.04394Iteration: 5, Log-Lik: -235359.998, Max-Change: 0.03578Iteration: 6, Log-Lik: -235342.774, Max-Change: 0.02368Iteration: 7, Log-Lik: -235333.784, Max-Change: 0.01702Iteration: 8, Log-Lik: -235328.707, Max-Change: 0.01278Iteration: 9, Log-Lik: -235325.781, Max-Change: 0.01013Iteration: 10, Log-Lik: -235321.499, Max-Change: 0.00246Iteration: 11, Log-Lik: -235321.448, Max-Change: 0.00138Iteration: 12, Log-Lik: -235321.433, Max-Change: 0.00083Iteration: 13, Log-Lik: -235321.418, Max-Change: 0.00028Iteration: 14, Log-Lik: -235321.416, Max-Change: 0.00012Iteration: 15, Log-Lik: -235321.415, Max-Change: 0.00011Iteration: 16, Log-Lik: -235321.412, Max-Change: 0.00009[] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[5]
-Overfull \hbox (7786.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -206119.950, Max-Change: 0.45550Iteration: 2, Log-Lik: -204703.235, Max-Change: 0.17689Iteration: 3, Log-Lik: -204543.730, Max-Change: 0.07766Iteration: 4, Log-Lik: -204488.227, Max-Change: 0.04568Iteration: 5, Log-Lik: -204462.138, Max-Change: 0.02917Iteration: 6, Log-Lik: -204449.368, Max-Change: 0.02094Iteration: 7, Log-Lik: -204442.263, Max-Change: 0.01543Iteration: 8, Log-Lik: -204438.269, Max-Change: 0.01169Iteration: 9, Log-Lik: -204435.897, Max-Change: 0.00876Iteration: 10, Log-Lik: -204432.888, Max-Change: 0.00368Iteration: 11, Log-Lik: -204432.576, Max-Change: 0.00266Iteration: 12, Log-Lik: -204432.386, Max-Change: 0.00138Iteration: 13, Log-Lik: -204432.183, Max-Change: 0.00124Iteration: 14, Log-Lik: -204432.109, Max-Change: 0.00109Iteration: 15, Log-Lik: -204432.052, Max-Change: 0.00097Iteration: 16, Log-Lik: -204431.919, Max-Change: 0.00056Iteration: 17, Log-Lik: -204431.902, Max-Change: 0.00057Iteration: 18, Log-Lik: -204431.889, Max-Change: 0.00054Iteration: 19, Log-Lik: -204431.838, Max-Change: 0.00017Iteration: 20, Log-Lik: -204431.837, Max-Change: 0.00017Iteration: 21, Log-Lik: -204431.835, Max-Change: 0.00016Iteration: 22, Log-Lik: -204431.829, Max-Change: 0.00011Iteration: 23, Log-Lik: -204431.828, Max-Change: 0.00010Iteration: 24, Log-Lik: -204431.828, Max-Change: 0.00009[] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (6442.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -234309.847, Max-Change: 0.61142Iteration: 2, Log-Lik: -232156.052, Max-Change: 0.20782Iteration: 3, Log-Lik: -232026.525, Max-Change: 0.07799Iteration: 4, Log-Lik: -231990.922, Max-Change: 0.04750Iteration: 5, Log-Lik: -231974.699, Max-Change: 0.03042Iteration: 6, Log-Lik: -231966.726, Max-Change: 0.01805Iteration: 7, Log-Lik: -231962.294, Max-Change: 0.01248Iteration: 8, Log-Lik: -231959.742, Max-Change: 0.00946Iteration: 9, Log-Lik: -231958.240, Max-Change: 0.00709Iteration: 10, Log-Lik: -231955.977, Max-Change: 0.00232Iteration: 11, Log-Lik: -231955.835, Max-Change: 0.00152Iteration: 12, Log-Lik: -231955.732, Max-Change: 0.00142Iteration: 13, Log-Lik: -231955.401, Max-Change: 0.00094Iteration: 14, Log-Lik: -231955.390, Max-Change: 0.00065Iteration: 15, Log-Lik: -231955.381, Max-Change: 0.00055Iteration: 16, Log-Lik: -231955.351, Max-Change: 0.00016Iteration: 17, Log-Lik: -231955.349, Max-Change: 0.00013Iteration: 18, Log-Lik: -231955.348, Max-Change: 0.00013Iteration: 19, Log-Lik: -231955.344, Max-Change: 0.00010Iteration: 20, Log-Lik: -231955.343, Max-Change: 0.00008[] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[6]
-Overfull \hbox (16186.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -216334.798, Max-Change: 0.72867Iteration: 2, Log-Lik: -212161.069, Max-Change: 0.35941Iteration: 3, Log-Lik: -211424.766, Max-Change: 0.18254Iteration: 4, Log-Lik: -211034.884, Max-Change: 0.13759Iteration: 5, Log-Lik: -210825.117, Max-Change: 0.10659Iteration: 6, Log-Lik: -210705.125, Max-Change: 0.07765Iteration: 7, Log-Lik: -210630.027, Max-Change: 0.06228Iteration: 8, Log-Lik: -210583.543, Max-Change: 0.04985Iteration: 9, Log-Lik: -210553.343, Max-Change: 0.04124Iteration: 10, Log-Lik: -210532.636, Max-Change: 0.03418Iteration: 11, Log-Lik: -210518.499, Max-Change: 0.02896Iteration: 12, Log-Lik: -210508.512, Max-Change: 0.02395Iteration: 13, Log-Lik: -210501.359, Max-Change: 0.02055Iteration: 14, Log-Lik: -210496.082, Max-Change: 0.01965Iteration: 15, Log-Lik: -210491.801, Max-Change: 0.01366Iteration: 16, Log-Lik: -210482.761, Max-Change: 0.00655Iteration: 17, Log-Lik: -210481.262, Max-Change: 0.00542Iteration: 18, Log-Lik: -210479.942, Max-Change: 0.00466Iteration: 19, Log-Lik: -210474.192, Max-Change: 0.00368Iteration: 20, Log-Lik: -210473.711, Max-Change: 0.00356Iteration: 21, Log-Lik: -210473.277, Max-Change: 0.00394Iteration: 22, Log-Lik: -210471.341, Max-Change: 0.00320Iteration: 23, Log-Lik: -210471.136, Max-Change: 0.00230Iteration: 24, Log-Lik: -210470.962, Max-Change: 0.00263Iteration: 25, Log-Lik: -210470.322, Max-Change: 0.00180Iteration: 26, Log-Lik: -210470.219, Max-Change: 0.00188Iteration: 27, Log-Lik: -210470.122, Max-Change: 0.00150Iteration: 28, Log-Lik: -210469.901, Max-Change: 0.00164Iteration: 29, Log-Lik: -210469.836, Max-Change: 0.00154Iteration: 30, Log-Lik: -210469.777, Max-Change: 0.00138Iteration: 31, Log-Lik: -210469.501, Max-Change: 0.00099Iteration: 32, Log-Lik: -210469.481, Max-Change: 0.00080Iteration: 33, Log-Lik: -210469.460, Max-Change: 0.00077Iteration: 34, Log-Lik: -210469.361, Max-Change: 0.00059Iteration: 35, Log-Lik: -210469.350, Max-Change: 0.00056Iteration: 36, Log-Lik: -210469.340, Max-Change: 0.00052Iteration: 37, Log-Lik: -210469.296, Max-Change: 0.00019Iteration: 38, Log-Lik: -210469.294, Max-Change: 0.00017Iteration: 39, Log-Lik: -210469.291, Max-Change: 0.00018Iteration: 40, Log-Lik: -210469.278, Max-Change: 0.00020Iteration: 41, Log-Lik: -210469.277, Max-Change: 0.00018Iteration: 42, Log-Lik: -210469.275, Max-Change: 0.00016Iteration: 43, Log-Lik: -210469.267, Max-Change: 0.00012Iteration: 44, Log-Lik: -210469.267, Max-Change: 0.00012Iteration: 45, Log-Lik: -210469.266, Max-Change: 0.00012Iteration: 46, Log-Lik: -210469.261, Max-Change: 0.00011Iteration: 47, Log-Lik: -210469.260, Max-Change: 0.00011Iteration: 48, Log-Lik: -210469.260, Max-Change: 0.00010Iteration: 49, Log-Lik: -210469.257, Max-Change: 0.00008[] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (11482.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -196312.294, Max-Change: 0.63593Iteration: 2, Log-Lik: -193358.833, Max-Change: 0.22161Iteration: 3, Log-Lik: -193046.826, Max-Change: 0.11391Iteration: 4, Log-Lik: -192893.830, Max-Change: 0.08660Iteration: 5, Log-Lik: -192814.916, Max-Change: 0.08665Iteration: 6, Log-Lik: -192770.115, Max-Change: 0.04292Iteration: 7, Log-Lik: -192743.636, Max-Change: 0.03677Iteration: 8, Log-Lik: -192728.736, Max-Change: 0.03224Iteration: 9, Log-Lik: -192720.169, Max-Change: 0.02163Iteration: 10, Log-Lik: -192715.082, Max-Change: 0.01751Iteration: 11, Log-Lik: -192711.897, Max-Change: 0.01208Iteration: 12, Log-Lik: -192709.777, Max-Change: 0.00942Iteration: 13, Log-Lik: -192705.820, Max-Change: 0.00331Iteration: 14, Log-Lik: -192705.382, Max-Change: 0.00273Iteration: 15, Log-Lik: -192705.026, Max-Change: 0.00238Iteration: 16, Log-Lik: -192703.883, Max-Change: 0.00263Iteration: 17, Log-Lik: -192703.765, Max-Change: 0.00157Iteration: 18, Log-Lik: -192703.681, Max-Change: 0.00195Iteration: 19, Log-Lik: -192703.332, Max-Change: 0.00128Iteration: 20, Log-Lik: -192703.307, Max-Change: 0.00061Iteration: 21, Log-Lik: -192703.289, Max-Change: 0.00096Iteration: 22, Log-Lik: -192703.260, Max-Change: 0.00051Iteration: 23, Log-Lik: -192703.247, Max-Change: 0.00069Iteration: 24, Log-Lik: -192703.238, Max-Change: 0.00038Iteration: 25, Log-Lik: -192703.223, Max-Change: 0.00068Iteration: 26, Log-Lik: -192703.217, Max-Change: 0.00045Iteration: 27, Log-Lik: -192703.211, Max-Change: 0.00021Iteration: 28, Log-Lik: -192703.208, Max-Change: 0.00021Iteration: 29, Log-Lik: -192703.205, Max-Change: 0.00021Iteration: 30, Log-Lik: -192703.202, Max-Change: 0.00021Iteration: 31, Log-Lik: -192703.190, Max-Change: 0.00017Iteration: 32, Log-Lik: -192703.189, Max-Change: 0.00015Iteration: 33, Log-Lik: -192703.188, Max-Change: 0.00014Iteration: 34, Log-Lik: -192703.183, Max-Change: 0.00010Iteration: 35, Log-Lik: -192703.183, Max-Change: 0.00010[] 
- []
-
-
+<ICC_project_files/figure-latex/plotting-1.pdf, id=148, 469.755pt x 325.215pt>
+File: ICC_project_files/figure-latex/plotting-1.pdf Graphic file (type pdf)
+<use ICC_project_files/figure-latex/plotting-1.pdf>
+Package pdftex.def Info: ICC_project_files/figure-latex/plotting-1.pdf  used on input line 342.
+(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
+<ICC_project_files/figure-latex/stackedplotIntercept-1.pdf, id=149, 469.755pt x 325.215pt>
+File: ICC_project_files/figure-latex/stackedplotIntercept-1.pdf Graphic file (type pdf)
+<use ICC_project_files/figure-latex/stackedplotIntercept-1.pdf>
+Package pdftex.def Info: ICC_project_files/figure-latex/stackedplotIntercept-1.pdf  used on input line 348.
+(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
+<ICC_project_files/figure-latex/stackeplotSlope-1.pdf, id=150, 469.755pt x 325.215pt>
+File: ICC_project_files/figure-latex/stackeplotSlope-1.pdf Graphic file (type pdf)
+<use ICC_project_files/figure-latex/stackeplotSlope-1.pdf>
+Package pdftex.def Info: ICC_project_files/figure-latex/stackeplotSlope-1.pdf  used on input line 354.
+(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
+<ICC_project_files/figure-latex/histrogram-1.pdf, id=151, 469.755pt x 325.215pt>
+File: ICC_project_files/figure-latex/histrogram-1.pdf Graphic file (type pdf)
+<use ICC_project_files/figure-latex/histrogram-1.pdf>
+Package pdftex.def Info: ICC_project_files/figure-latex/histrogram-1.pdf  used on input line 360.
+(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
+<ICC_project_files/figure-latex/cttcurves-1.pdf, id=152, 469.755pt x 325.215pt>
+File: ICC_project_files/figure-latex/cttcurves-1.pdf Graphic file (type pdf)
+<use ICC_project_files/figure-latex/cttcurves-1.pdf>
+Package pdftex.def Info: ICC_project_files/figure-latex/cttcurves-1.pdf  used on input line 366.
+(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
+<ICC_project_files/figure-latex/irtcurves-1.pdf, id=153, 469.755pt x 325.215pt>
+File: ICC_project_files/figure-latex/irtcurves-1.pdf Graphic file (type pdf)
+<use ICC_project_files/figure-latex/irtcurves-1.pdf>
+Package pdftex.def Info: ICC_project_files/figure-latex/irtcurves-1.pdf  used on input line 372.
+(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
+[5 <./ICC_project_files/figure-latex/plotting-1.pdf> <./ICC_project_files/figure-latex/stackedplotIntercept-1.pdf> <./ICC_project_files/figure-latex/stackeplotSlope-1.pdf>] [6 <./ICC_project_files/figure-latex/histrogram-1.pdf> <./ICC_project_files/figure-latex/cttcurves-1.pdf> <./ICC_project_files/figure-latex/irtcurves-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [7]
-Overfull \hbox (9466.25676pt too wide) in paragraph at lines 723--723
-[]\T1/pcr/m/n/10 ## Iteration: 1, Log-Lik: -227538.254, Max-Change: 0.55498Iteration: 2, Log-Lik: -225587.388, Max-Change: 0.20922Iteration: 3, Log-Lik: -225367.717, Max-Change: 0.09237Iteration: 4, Log-Lik: -225275.357, Max-Change: 0.06432Iteration: 5, Log-Lik: -225223.926, Max-Change: 0.05332Iteration: 6, Log-Lik: -225195.363, Max-Change: 0.03729Iteration: 7, Log-Lik: -225179.864, Max-Change: 0.03180Iteration: 8, Log-Lik: -225170.798, Max-Change: 0.02119Iteration: 9, Log-Lik: -225165.435, Max-Change: 0.01545Iteration: 10, Log-Lik: -225162.082, Max-Change: 0.01182Iteration: 11, Log-Lik: -225159.917, Max-Change: 0.00930Iteration: 12, Log-Lik: -225158.499, Max-Change: 0.00706Iteration: 13, Log-Lik: -225155.717, Max-Change: 0.00224Iteration: 14, Log-Lik: -225155.491, Max-Change: 0.00213Iteration: 15, Log-Lik: -225155.304, Max-Change: 0.00198Iteration: 16, Log-Lik: -225154.586, Max-Change: 0.00143Iteration: 17, Log-Lik: -225154.549, Max-Change: 0.00106Iteration: 18, Log-Lik: -225154.517, Max-Change: 0.00103Iteration: 19, Log-Lik: -225154.383, Max-Change: 0.00049Iteration: 20, Log-Lik: -225154.374, Max-Change: 0.00040Iteration: 21, Log-Lik: -225154.368, Max-Change: 0.00024Iteration: 22, Log-Lik: -225154.359, Max-Change: 0.00025Iteration: 23, Log-Lik: -225154.356, Max-Change: 0.00023Iteration: 24, Log-Lik: -225154.353, Max-Change: 0.00022Iteration: 25, Log-Lik: -225154.340, Max-Change: 0.00015Iteration: 26, Log-Lik: -225154.339, Max-Change: 0.00014Iteration: 27, Log-Lik: -225154.338, Max-Change: 0.00014Iteration: 28, Log-Lik: -225154.333, Max-Change: 0.00010Iteration: 29, Log-Lik: -225154.333, Max-Change: 0.00010[] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-<ICC_project_files/figure-latex/generalrecodes-1.pdf, id=160, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/generalrecodes-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/generalrecodes-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/generalrecodes-1.pdf  used on input line 725.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-
-Overfull \hbox (0.0005pt too wide) in paragraph at lines 725--726
-[][] 
- []
-
-[8 <./ICC_project_files/figure-latex/generalrecodes-1.pdf>]
-<ICC_project_files/figure-latex/plotting-1.pdf, id=172, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/plotting-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/plotting-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/plotting-1.pdf  used on input line 745.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-<ICC_project_files/figure-latex/stackedplotIntercept-1.pdf, id=173, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/stackedplotIntercept-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/stackedplotIntercept-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/stackedplotIntercept-1.pdf  used on input line 751.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-<ICC_project_files/figure-latex/stackeplotSlope-1.pdf, id=174, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/stackeplotSlope-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/stackeplotSlope-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/stackeplotSlope-1.pdf  used on input line 757.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-<ICC_project_files/figure-latex/histrogram-1.pdf, id=175, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/histrogram-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/histrogram-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/histrogram-1.pdf  used on input line 763.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-<ICC_project_files/figure-latex/cttcurves-1.pdf, id=176, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/cttcurves-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/cttcurves-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/cttcurves-1.pdf  used on input line 769.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-<ICC_project_files/figure-latex/irtcurves-1.pdf, id=177, 469.755pt x 325.215pt>
-File: ICC_project_files/figure-latex/irtcurves-1.pdf Graphic file (type pdf)
-<use ICC_project_files/figure-latex/irtcurves-1.pdf>
-Package pdftex.def Info: ICC_project_files/figure-latex/irtcurves-1.pdf  used on input line 775.
-(pdftex.def)             Requested size: 241.74374pt x 167.36105pt.
-[9 <./ICC_project_files/figure-latex/plotting-1.pdf> <./ICC_project_files/figure-latex/stackedplotIntercept-1.pdf> <./ICC_project_files/figure-latex/stackeplotSlope-1.pdf> <./ICC_project_files/figure-latex/histrogram-1.pdf> <./ICC_project_files/figure-latex/cttcurves-1.pdf>] [10 <./ICC_project_files/figure-latex/irtcurves-1.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[11]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 937.
+(hyperref)                removing `\\' on input line 534.
 
-[12] (./ICC_project.aux)
+[8] (./ICC_project.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2020/03/25>
@@ -832,18 +766,18 @@ Package rerunfilecheck Info: File `ICC_project.out' has not changed.
 (rerunfilecheck)             Checksum: ED6D08CB9C30E4693AF74AB72C5455E8;2289.
  ) 
 Here is how much of TeX's memory you used:
- 15634 strings out of 477196
- 256588 string characters out of 5811767
- 1945238 words of memory out of 5000000
- 36213 multiletter control sequences out of 15000+600000
+ 15621 strings out of 477196
+ 256072 string characters out of 5811767
+ 1940238 words of memory out of 5000000
+ 36204 multiletter control sequences out of 15000+600000
  628268 words of font info for 156 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,9n,79p,4884b,648s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,1653b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/diego/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ICC_project.pdf (12 pages, 305469 bytes).
+Output written on ICC_project.pdf (8 pages, 281565 bytes).
 PDF statistics:
- 408 PDF objects out of 1000 (max. 8388607)
- 352 compressed objects within 4 object streams
- 114 named destinations out of 1000 (max. 500000)
- 166 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 386 PDF objects out of 1000 (max. 8388607)
+ 336 compressed objects within 4 object streams
+ 110 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

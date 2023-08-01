@@ -386,7 +386,7 @@ The purpose of study 2 is to simulate test data and generate ICC's based on the 
 
 ### Procedure and materials  
 
-We used a simulated dataset and two real-world datasets. The real-world dataset represented responses from 10,000 TOEFL iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking  (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
+We used a simulated dataset and two real-world datasets. The real-world dataset represented responses from 10,000 Test of English as a Foreign Language (TOEFL) iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking  (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
 
 
 The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using @R-geiger_a's package. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas). 
@@ -398,7 +398,7 @@ We need a figure with three different ICCs: 1) small DIF, 2) moderate DIF, and 3
 
 ## Results
 
-```{r generalrecodes}
+```{r etsanalysis, message=FALSE, warning=FALSE, include=FALSE}
 
 source("ETS/ETS_data2.R", local = knitr::knit_global())
 
@@ -449,55 +449,68 @@ lm.reg<-lm(b ~PseudoB, data=df)
 b<-0.01479-(-1.33142*pseudoB) 
 dat<-data.frame(b, alphas$item.stats$r.drop)
 colnames(dat)<-c("b", "corrected item totals")
+theta <- matrix(seq(-6,6, by=.1))
+auc<-rep(NA, ncol(set0))
+
+for (i in 1:nrow(df)){
+  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$PseudoA[i]*(x-df0$PseudoB[i]))))))}
+  cttB<-eq_CTT(seq(-6,6, by=.1))
+  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df$a[i]*(x-df$b[i]))))))}
+  irtB<-eq_IRT(seq(-6,6, by=.1))
+  f1 <- approxfun(theta, cttB-irtB)
+  f2 <- function(x) abs(f1(x))          
+  auc[i]<-integrate(f2, -6,6)
+}
+auc0<-data.frame(unlist(auc))
 par(cex.axis=1, cex.lab=1, cex.main=2, cex.sub=0.1)
 ###############################################################
-pseudob<-dat$b[47]
+pseudob<-dat$b[8]
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
   ((0.51+(0.02*pseudob)+(0.301*pseudob^2))*r)+((0.57-(0.009*pseudob)+(0.19*pseudob^2))*r)
   
 }
-pseudoa<-ahat(dat$`corrected item totals`[47])
+pseudoa<-ahat(dat$`corrected item totals`[8])
 c <- 0
 eq <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa*(x-pseudob))))))}
-p1<-plot(mod, which.items=c(47), main=FALSE, sub="Moderate DIF \n(area between curves = 0.36 )", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq, col="red"))
+p1<-plot(mod, which.items=c(8), main=FALSE, sub="Moderate DIF \n(area between curves = 0.3 )", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq, col="red"))
 ################################################################
-pseudob2<-dat$b[1]
+pseudob2<-dat$b[36]
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
   ((0.51+(0.02*pseudob2)+(0.301*pseudob2^2))*r)+((0.57-(0.009*pseudob2)+(0.19*pseudob2^2))*r)
   
 }
-pseudoa2<-ahat(dat$`corrected item totals`[1])
+pseudoa2<-ahat(dat$`corrected item totals`[36])
 c <- 0
 eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa2*(x-pseudob2))))))}
-p2<-plot(mod, which.items=c(1),main=FALSE, sub="Small DIF \n(area between curves = 0.03)", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq2, col="red"))
+p2<-plot(mod, which.items=c(36),main=FALSE, sub="Small DIF \n(area between curves = 0.03)", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq2, col="red"))
 #####################################################################
-pseudob3<-dat$b[54]
+pseudob3<-dat$b[12]
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
   ((0.51+(0.02*pseudob3)+(0.301*pseudob3^2))*r)+((0.57-(0.009*pseudob3)+(0.19*pseudob3^2))*r)
   
 }
-pseudoa3<-ahat(dat$`corrected item totals`[54])
+pseudoa3<-ahat(dat$`corrected item totals`[12])
 c <- 0
 eq3 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa3*(x-pseudob3))))))}
-p3<-plot(mod, which.items=c(54), main=FALSE, sub="Small DIF \n(area between curves  = 0.09)", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq3, col="red"))
+p3<-plot(mod, which.items=c(12), main=FALSE, sub="Average empirical DIF \n(area between curves  = 0.12)", cex.sub=0.2, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq3, col="red"))
 ###############################################################################
-pseudob4<- dat$b[25]
+pseudob4<- dat$b[49]
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   
   ((0.51+(0.02*pseudob4)+(0.301*pseudob4^2))*r)+((0.57-(0.009*pseudob4)+(0.19*pseudob4^2))*r)
   
 }
-pseudoa4<-ahat(dat$`corrected item totals`[25])
+pseudoa4<-ahat(dat$`corrected item totals`[49])
 c <- 0
 eq4 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(pseudoa4*(x-pseudob4))))))}
-p4<-plot(mod, which.items=c(25), main=FALSE, sub="Large DIF \n(area between curves = 0.81)", cex.main=5, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq4, col="red", cex.sub=1))
+p4<-plot(mod, which.items=c(49), main=FALSE, sub="Large DIF \n(area between curves = 0.67)", cex.main=5, theta_lim = c(-4,4))+latticeExtra::layer(panel.curve(eq4, col="red", cex.sub=1))
 ###############################################################################
 require(gridExtra)
 grid.arrange(p2,p3,p1,p4, nrow=2, ncol=2)
