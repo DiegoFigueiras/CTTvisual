@@ -38,8 +38,8 @@ set5<-df_ETS%>%select(starts_with(c("SW")))
 set5<-set5%>%select(-SW7, -SW15, -SW21, -SW28, -SW35)
 set5<-set5[1:10000, 1:35]
 set6<-df_ETS%>%select(starts_with(c("RD")))
-set6<-set6%>%select(RD1:RD9, RD22:RD50)
-set6<-set6[1:10000, 1:38]
+set6<-set6%>%select(RD1:RD10, RD22:RD50)
+set6<-set6[1:10000, 1:39]
 
 
 ###################################################################################################################################################
@@ -50,7 +50,7 @@ IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT
 irt <- IRT_parms$items
 summary(irt_model)
 
-pseudob<-qnorm(colMeans(set0, na.rm=TRUE)*-1)#calculating our Zg
+pseudob<-qnorm(colMeans(set0, na.rm=TRUE))*-1#calculating our Zg
 c<-0
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
@@ -63,12 +63,15 @@ alphas<-psych::alpha(set0)#using the psych package to run alpha
 
 citcs<-data.frame(alphas$item.stats$r.drop)#getting the corrected-item total correlations
 
+
 pseudoA<-data.frame(ahat(citcs))#Applying Kula's 2017 formula to our corrected-item totals
 df0<-as.data.frame(cbind(citcs, pseudoA, pseudob, irt))
 
 colnames(df0)<-c("CITC", "PseudoA", "PseudoB", "a", "b", "c1", "c2")
 
 df0$PseudoB<--0.000002895614 +(1.535589*df0$PseudoB)#Using the regression coefficients computed on the simulations that converged on December 8 to modify our PseudoB
+
+
 
 ## Lines 352-363 create curves using our parameters and calculate the area between curves plotted with CTT and IRT parameters
 theta <- matrix(seq(-6,6, by=.1))
@@ -84,8 +87,8 @@ for (i in 1:nrow(df0)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc0<-unlist(auc)
-hist0<-hist(auc0)
-
+# hist0<-hist(auc0)
+# mean(auc0)
 
 
 
@@ -141,8 +144,8 @@ for (i in 1:nrow(df1)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc1<-unlist(auc)
-hist1<-hist(auc1)
-
+# hist1<-hist(auc1)
+# mean(auc1)
 
 ########################################################################
 
@@ -189,7 +192,8 @@ for (i in 1:nrow(df2)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc2<-unlist(auc)
-hist2<-hist(auc2)
+# hist2<-hist(auc2)
+# mean(auc2)
 
 
 
@@ -240,7 +244,8 @@ for (i in 1:nrow(df3)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc3<-unlist(auc)
-hist3<-hist(auc3)
+# hist3<-hist(auc3)
+# mean(auc3)
 
 #######################################################################################################################################################
 
@@ -288,8 +293,8 @@ for (i in 1:nrow(df4)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc4<-unlist(auc)
-hist4<-hist(auc4)
-
+# hist4<-hist(auc4)
+# mean(auc4)
 
 ####################################################################################################################################################################
 
@@ -337,8 +342,8 @@ for (i in 1:nrow(df5)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc5<-unlist(auc)
-hist5<-hist(auc5)
-
+# hist5<-hist(auc5)
+# mean(auc5)
 
 ############################################################################################################################################################################
 
@@ -389,7 +394,8 @@ for (i in 1:nrow(df6)){
   auc[i]<-integrate(f2, -6,6)
 }
 auc6<-unlist(auc)
-hist6<-hist(auc6)
+#hist6<-hist(auc6)
+#mean(auc6)
 
 data0<-data.frame(
   diff=auc0,
@@ -423,68 +429,70 @@ data5<-data.frame(
 
 data6<-data.frame(
   diff=auc6,
-  set="TOEFL2-RD(k=38)"
+  set="TOEFL2-RD(k=39)"
 )
 
 
-
-df_plot<-rbind(data0,data1, data2, data3, data4, data5, data6)
 df_plot2<-rbind(df0,df1, df2, df3, df4, df5, df6)
-df_plot2$r<-(((2.71828)^df_plot2$CITC)-(1/(2.71828)^df_plot2$CITC))/(2.71828-(2.71828)^df_plot2$CITC)
+df_plot<-cbind(
+  rbind(data0,data1, data2, data3, data4, data5, data6),
+  ITEM_ID=rownames(df_plot2))
 
-df_plot2$eq<-((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r)
-
-
-
-ggplot(df_plot2, aes(x=a, y=eq))+
-  ylim(0,4)+
-  xlim(0,4)+
-  geom_point()
-
-
-ggplot(df5, aes(x=a, y=PseudoA))+
-  ylim(0,4)+
-  geom_point()
-
-ggplot(df_plot2, aes(x=PseudoA, y=eq))+
-  ylim(0,4)+
-  geom_point()
-
-reg<-lm(PseudoA~a, data=df_plot2)
-summary(reg)
-
-df_plot2$temp[df_plot2$a>0.9 & df_plot2$a<=1.1]<-"1"
-df_plot2$temp[df_plot2$a>1.9 & df_plot2$a<=2.1]<-"2"
-df_plot2$temp[df_plot2$a>2.9 & df_plot2$a<=3.1]<-"3"
-df_plot2$temp[df_plot2$a>3.9 & df_plot2$a<=4.1]<-"4"
-avg_pseudoa<- df_plot2%>% group_by(temp)%>%summarise(PseudoA=mean(PseudoA))
-
-df_plot2$r<-(((2.71828)^(df_plot2$CITC))-(1/(2.71828)^(df_plot2$CITC)))/(2.71828-(2.71828)^(df_plot2$CITC))
-
-df_plot2$eq<-((((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r))*1.71633)
+# df_plot2$r<-(((2.71828)^df_plot2$CITC)-(1/(2.71828)^df_plot2$CITC))/(2.71828-(2.71828)^df_plot2$CITC)
+# 
+# df_plot2$eq<-((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r)
 
 
 
+# ggplot(df_plot2, aes(x=a, y=eq))+
+#   ylim(0,4)+
+#   xlim(0,4)+
+#   geom_point()
+# 
+# 
+# ggplot(df5, aes(x=a, y=PseudoA))+
+#   ylim(0,4)+
+#   geom_point()
+# 
+# ggplot(df_plot2, aes(x=PseudoA, y=eq))+
+#   ylim(0,4)+
+#   geom_point()
 
-ggplot(df_plot2, aes(x=b, y=PseudoB))+
-  ylim(0,2)+
-  xlim(0,2)+
-  geom_point()+
-  geom_abline()
-reg<-lm(a~eq, data=df_plot2)
-summary(reg)
+# reg<-lm(PseudoA~a, data=df_plot2)
+# summary(reg)
+
+# df_plot2$temp[df_plot2$a>0.9 & df_plot2$a<=1.1]<-"1"
+# df_plot2$temp[df_plot2$a>1.9 & df_plot2$a<=2.1]<-"2"
+# df_plot2$temp[df_plot2$a>2.9 & df_plot2$a<=3.1]<-"3"
+# df_plot2$temp[df_plot2$a>3.9 & df_plot2$a<=4.1]<-"4"
+# avg_pseudoa<- df_plot2%>% group_by(temp)%>%summarise(PseudoA=mean(PseudoA))
+
+# df_plot2$r<-(((2.71828)^(df_plot2$CITC))-(1/(2.71828)^(df_plot2$CITC)))/(2.71828-(2.71828)^(df_plot2$CITC))
+# 
+# df_plot2$eq<-((((0.51+(0.02*abs(df_plot2$PseudoB))+(0.301*df_plot2$PseudoB^2))*df_plot2$CITC)+((0.57-(0.009*abs(df_plot2$PseudoB))+(0.19*df_plot2$PseudoB^2))*df_plot2$r))*1.71633)
+# 
+# 
+# 
+# 
+# ggplot(df_plot2, aes(x=b, y=PseudoB))+
+#   ylim(0,2)+
+#   xlim(0,2)+
+#   geom_point()+
+#   geom_abline()
+# reg<-lm(a~eq, data=df_plot2)
+# summary(reg)
 
 
 ###################### ############################################################################
 
-par(mfrow=c(2,4))
-plot(hist0)
-plot(hist1)
-plot(hist2)
-plot(hist3)
-plot(hist4)
-plot(hist5)
-plot(hist6)
+# par(mfrow=c(2,4))
+# plot(hist0)
+# plot(hist1)
+# plot(hist2)
+# plot(hist3)
+# plot(hist4)
+# plot(hist5)
+# plot(hist6)
 
 tbl<-data.frame(
   auc=c("dif0","dif1","dif2","dif3","dif4","dif5","dif6"),
@@ -492,28 +500,13 @@ tbl<-data.frame(
   sd=c(sd(auc0),sd(auc1),sd(auc2),sd(auc3),sd(auc4),sd(auc5),sd(auc6))
 )
 
-library(ctticc)
-pack_est<-ctticc(set0)
+#df_plot[df_plot$diff>0.1104068 & df_plot$diff<=0.1166488,]
 
-irt_model<-mirt(set0, 1, itemtype="2PL")
-IRT_parms <- coef(irt_model, IRTpars = TRUE, simplify = TRUE)#retrieving the IRT parameters from the mod object
-irt <- IRT_parms$items
+eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df1$PseudoA[3]*(x-df1$PseudoB[3]))))))}
+cttB<-eq_CTT(seq(-6,6, by=.1))
+eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df1$a[3]*(x-df1$b[3]))))))}
+irtB<-eq_IRT(seq(-6,6, by=.1))
 
-df0<-data.frame(cbind(pack_est, irt))
-colnames(df0)<-c("PseudoB","PseudoA", "a","b","g","u")
-
-theta <- matrix(seq(-6,6, by=.1))
-auc<-rep(NA, ncol(set0))
-
-for (i in 1:nrow(df0)){
-  eq_CTT<- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df0$PseudoA[i]*(x-df0$PseudoB[i]))))))}
-  cttB<-eq_CTT(seq(-6,6, by=.1))
-  eq_IRT<-function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(df0$a[i]*(x-df0$b[i]))))))}
-  irtB<-eq_IRT(seq(-6,6, by=.1))
-  f1 <- approxfun(theta, cttB-irtB)
-  f2 <- function(x) abs(f1(x))          
-  auc[i]<-integrate(f2, -6,6)
-}
-auc0<-unlist(auc)
-hist0<-hist(auc0)
+curve(eq_IRT, xlim=c(-4,4), xlab="Level of Trait", ylab="p(1.0)", type="p")
+curve(eq_CTT, xlim=c(-4,4), xlab="Level of Trait", ylab="p(1.0)", add=TRUE)
 
