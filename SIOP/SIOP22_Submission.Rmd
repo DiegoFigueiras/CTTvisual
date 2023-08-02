@@ -250,7 +250,14 @@ grid.arrange(g1,g2,g3,g4,g5, nrow=2, ncol=3)
 ALL_simulations <- read.csv("ALL_simulations.csv")
 df<-ALL_simulations
 df<-df%>%filter(b<3)%>%filter(b>-3)
-
+reg2<-lm(b~pseudob, data=df)
+summary(reg2)
+library(ggplot2)
+ggplot(df, aes(x=a, y=PseudoA))+
+  geom_point()+
+  geom_abline()+
+  xlim(0,5)+
+  ylim(0,5)
 
 ```
 
@@ -285,7 +292,7 @@ data<-read.csv("simulated_data.csv", header=FALSE)
 #data$v30<-abs(data$v30-1)
 library(mirt)
 library(latticeExtra)
-library(irtplay)
+#library(irtplay)
 ahat<-function(x){
   r<-(((2.71828)^x)-(1/(2.71828)^x))/(2.71828-(2.71828)^x)
   

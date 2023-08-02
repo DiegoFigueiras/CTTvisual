@@ -7,13 +7,6 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
-\includegraphics{ICC_project_files/figure-latex/acorrected-1.pdf}
-\caption{\label{fig:acorrected}Kulas et al. (2017)'s proposed functional relationship between the IRT \emph{a} parameter and the CTT corrected-item total correlation as a function of item difficulty (\emph{p}-value; solid = .5, dashed = .3/.7, dotted = .1/.9).}
-\end{figure*}
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
 \includegraphics{ICC_project_files/figure-latex/simulatedgraphs-1.pdf}
 \caption{\label{fig:simulatedgraphs}Shape of prescribed distributions of \emph{p}-values across Study 1 conditions.}
 \end{figure*}

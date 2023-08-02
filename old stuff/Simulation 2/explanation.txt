@@ -1,0 +1,3 @@
+The simulation files (all_sims2.csv through all_sims6.csv) were too large to upload to GitHub, so they were: 1) split into smaller files, 2) uploaded, and 3) recombined via script.
+
+This was still too large, so we kept the 5 p-value-to-b-parameter simulation files OFFLINE. These are on local computers but not on GitHub (12/17/22).
