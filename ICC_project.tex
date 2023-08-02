@@ -1,0 +1,560 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  jou]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Item Characteristic Curve specification from Classical Test Theory descriptive indices},
+  pdfauthor={Diego Figueiras1 \& John T. Kulas2},
+  pdflang={en-EN},
+  pdfkeywords={Classical Test Theory, Item Response Theory, item difficulty, item discrimination},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\keywords{Classical Test Theory, Item Response Theory, item difficulty, item discrimination\newline\indent Word count: X}
+\usepackage{dblfloatfix}
+
+
+\usepackage{csquotes}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Item Characteristic Curve specification from Classical Test Theory descriptive indices}
+\author{Diego Figueiras\textsuperscript{1} \& John T. Kulas\textsuperscript{2}}
+\date{}
+
+
+\shorttitle{CTT ICCs}
+
+\authornote{
+
+Correspondence concerning this article should be addressed to Diego Figueiras, Dickson Hall 226. E-mail: \href{mailto:figueirasd1@montclair.edu}{\nolinkurl{figueirasd1@montclair.edu}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Montclair State University\\\textsuperscript{2} eRg}
+
+\abstract{%
+Item characteristic curves (ICC's) are graphical representations of important attributes of assessment items - most commonly \emph{difficulty} and \emph{discrimination}. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true \emph{test}) data with varying item difficulty characteristics to generate empirically-derived linking coefficients between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low within this simulated dataset (\(\overline{DIF}\) = .08 on our 9x1 dimensional plotting space). Applying the CTT-derived ICCs to two different applied samples of 10,000 real life test takers resulted in a similar mean DIF estimate of .12. An \texttt{R} package, \texttt{ctticc}, performs the ICC calculations presented in the current paper and provides test specialists with visual representations of CTT-derived item characteristics.
+}
+
+
+
+\begin{document}
+\maketitle
+
+\begin{figure}
+\includegraphics[width=1\linewidth,height=0.8\textheight]{ICC_project_files/figure-latex/example-1} \caption{Item characteristic curves demonstrating differences in item difficulty and discrimination.}\label{fig:example}
+\end{figure}
+
+Item characteristic curves are frequently consulted by psychometricians as visual indicators of important attributes of assessment items - most commonly \emph{difficulty} and \emph{discrimination}. Within these visual presentations the x-axis ranges along ``trait'' levels (by convention typically denoted with the greek \(\theta\)), whereas the y-axis displays probabilities of responding to the item within a given response category. In the context of true tests, the response categories are binary\footnote{With exception (see, for example, Masters, 1982; Muraki, 1997).}, and the y-axis probability reflects the likelihood of a ``correct'' response\footnote{Because the historical convention in test response is to code a correct response as ``1'' and an incorrect response as ``0'', the y-axis is commonly denoted as ``p(1)'' or ``p(1.0)''.}. Assessment specialists who consult ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. These approaches estimate the parameters necessary to plot the visual functions. Rasch models only estimate difficulty, and assume that differences in discrimination represent flaws in measurement (e.g., Wright, 1977). The IRT 2 parameter logistic model (2PL), however, estimates item discrimination in addition to item difficulty.
+
+When interpreting an ICC, the observer extracts the relationship between a respondent's trait level and the expectation of answering the item correctly. If the curve transitions from low to high likelihood at a location toward the lower end of the trait (e.g., ``left'' on the plotting surface), this indicates that it is relatively easy to answer the item correctly. Stated in the parlance of IRT or Rasch traditions, it does not take much \(\theta\) to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. Through the lens of IRT, if discrimination is modeled and the curve is sharp (e.g., strongly vertical), this indicates high discrimination; if it is flatter, that is an indication of poorer discrimination (see Figure \ref{fig:example} for some exemplar ICCs).
+
+Item difficulty (the IRT \emph{b}-parameter) is quantified as the trait level associated with a 50\% likelihood of correct response (e.g., it is scaled to \(\theta\)). Item discrimination (the \emph{a}-parameter) reflects the degree to which an item differentiates across individuals who are located relatively lower or higher on the trait and is scaled to the slope of the ICC function at the same 50\% likelihood of correct response location\footnote{Within the 2PL. If more item characteristics are modeled, the \emph{a}-parameter may be estimated at a different function location. \(\leftarrow\) Diego check this (look into \emph{a}-paramter scaling for the 3PL; should be halfway between lower and upper asymptotes but I'm not 100\% sure).}. From a Classical Test Theory (CTT) orientation, item difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a \emph{p}-value). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted contemporary index is the corrected item-total correlation.
+
+Assessment specialists who calculate these CTT item indices don't, by tradition, attempt to represent them visually, as is common in IRT and Rasch applications. However, ICC's based on CTT indices could possibly provide snapshot psychometric information as valuable as those conveyed by IRT- or Rasch-derived item parameters. The largest obstacle to psychometricians deeming CTT-derived visuals to be of value is likely tied to the concept of invariance, which refers to IRT parameter independence across item and person estimates. However, this property is often overstated, as invariance is only attained with perfect model-data fit (which never occurs), and is also only true after being subjected to linear transformation - commonly across samples (Rupp \& Zumbo, 2006). Additionally, several comparative investigations have noted commonality between IRT and CTT difficulty and discrimination estimates as well as relative stability of CTT estimates when samples are large and/or judisciously constructed.
+
+\hypertarget{ctt-and-irt-comparability-investigations}{%
+\subsection{CTT and IRT Comparability Investigations}\label{ctt-and-irt-comparability-investigations}}
+
+Fan (1998) examined associations between CTT item statistics and the parameters derived from the three most popular IRT models (the 1-, 2-, and 3-parameter logistic). Correlations were very high for difficulty estimates - generally between .80 and .90. As for item discrimination, correlations were \emph{moderate} to high, with only a few being very low\footnote{And in fact, as is presented below, the relationship between the IRT and CTT discrimination indices is non-linear. The Pearson's product moment correlation is therefore \emph{not} the most appropriate index to capture the extent of the magnitude of this relationship.}. Fan (1998) also investigated index invariance for all models. In theory, the major advantage of IRT models over CTT is that the latter has an interdependency between the item and person statistics, whereas under ideal circumstances IRT parameters have no such dependency. For example, within CTT examinations, the average item difficulty is equivalent to the average person score - these indices are merely reflective of averages computed across rows or columns. What Fan (1998) reported in his study, however, did not support the purported invariant advantage of IRT parameters over CTT indices. Both CTT-derived item difficulty and discrimination indices exhibited similar levels of invariance to the IRT-derived parameters, suggesting a high level of comparability.
+
+There have also been suggestions that the invariance property be conceptualized as a graded continuum instead of a categorical (invariant or non-invariant) population property (Hambleton et al., 1991; Rupp \& Zumbo, 2004). Estimates of IRT parameters across different calibration runs can be looked at for evidence of a possible lack of invariance. This doesn't happen with CTT item parameters, since they will always be sample-dependent. This dependency, however, is greatly influenced by the sampling strategy. Large scale data, truly random sampling, and large range items could give comparable CTT item and person statistics across testing populations and occasions (Kulas et al., 2017). Additionally, there are several empirical investigations that note high levels of ``invariance'' of CTT estimates, in some cases surpassing IRT item estimates in their capacity to have cross-sample stability (Fan, 1998; Macdonald \& Paunonen, 2002).
+
+(Fan, 1998) in fact summarizes that the IRT and CTT frameworks ``\ldots produce very similar item and person statistics'' (p.379). Hambleton and Jones (1993) state that ``no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences''.
+
+\hypertarget{relationships-between-irt-and-ctt-indices}{%
+\subsection{Relationship(s) between IRT and CTT Indices}\label{relationships-between-irt-and-ctt-indices}}
+
+Lord (1980) provided a conceptual function to describe the approximate nonlinear relationship between the IRT \emph{a}-parameter and the CTT discrimination index\footnote{Lord (1980)'s CTT discrimination index is actually the item-test biserial correlation as opposed to the contemporarily more popular \emph{corrected} item-total \emph{point-biserial} correlation. The revision (equation 2) utilizes the corrected item-total point-biserial correlation.}:
+
+\begin{equation}
+a_i\cong \frac{r_i}{\sqrt{1-r_i^2}}
+\end{equation}
+
+This formula wasn't intended for practical purposes but rather was presented as an attempt to help assessment specialists who were more familiar with CTT procedures to better understand the IRT discrimination parameter. In an effort to move from the conceptual to a more practical application, Kulas et al. (2017) proposed a modification focused on minimizing predicted residuals (either \(a_i\) or \(r_i\), with \(r_i\) being the \emph{corrected} item-total \emph{point-biserial} correlation).
+
+The Kulas et al. (2017) investigations identified systematically predictive differences in the relationship between \(a_i\) and \(r_i\) across items with differing item difficulty values, so their alteration to Lord (1980)'s formula included a moderating effect for item difficulty (this formulaic specification is also retained in the current presentation):
+
+\begin{equation}
+\hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r-e^{-r}}{e-e^r}]
+\end{equation}
+
+Where \(g\) is the absolute deviation from 50\% responding an item correctly and 50\% responding incorrectly (e.g., a ``\emph{p}-value'' of .5). \(z_g\) is the standard normal deviate associated with \(g\). This transformation of the common \emph{p}-value was recommended by Kulas et al. (2017) in order to scale the CTT index along a (closer to) interval-level metric more directly analogous to the IRT \emph{b}-parameter.
+
+\hypertarget{study-1}{%
+\section{Study 1}\label{study-1}}
+
+The ultimate goal of the current project is to generate CTT-derived ICCs. As a comparative standard, however, we would also like to compare these newer CTT-derived ICCs against the IRT-derived ICC standards. These comparisons are only feasible if the CTT statistic can be reasonably expressed on the IRT parameter metric (or vice versa). Although ogives could be specified directly from the CTT-derived statistics, we made a procedural decision to retain the IRT 2PL as our functional definition for both IRT and CTT ogive specification:
+
+\begin{equation}
+P(\Theta)=\frac{1}{1+e^{-1.7a(\Theta-b)}}
+\end{equation}
+
+Kulas et al. (2017) provided a scaling of the CTT corrected item-total correlation to the metric of the IRT \emph{a}-parameter, facilitating a ``pseudo''=a approximate.\footnote{We noted throughout our investigations that the ``pseudo'' a was systematically underpredicting the actual IRT a-parameter, so we ran regressions to further modify the ``pseudo''-a scaling from the original Kulas et al. (2017) formula. Our regression modification added a further slope coefficient of 1.71633 which resulted in a more accurate rescaling of the CTT corrected item-total correlation.} Fan (1998) demonstrated strong associations between the CTT \emph{p}-value and IRT \emph{b}-parameter, but did not attempt a scaling linkage. Study 1 is therefore focused on the development of a linking equation such that the CTT \emph{p}-value may be approximated along the IRT \emph{b}-parameter metric.
+
+\hypertarget{method}{%
+\section{Method}\label{method}}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/simulatedgraphs-1.pdf}
+\caption{\label{fig:simulatedgraphs}Shape of prescribed distributions of \emph{p}-values across Study 1 conditions.}
+\end{figure}
+
+\hypertarget{procedure-and-methods}{%
+\subsection{Procedure and methods}\label{procedure-and-methods}}
+
+We simulated datasets consisting of binary item responses. The simulated data presriptively differed in distributions of item difficulty while keeping the numbers of items (\emph{k}=100) and ``respondents'' (\emph{n}=10,000) equivalent. The first distributional form was uniform, with \emph{p}-values ranging from low (approaching 0) to high (approaching 1) {[}NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN{]} at roughly equal levels of frequency. The second distribution was effectively normal with \emph{p}-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of \emph{p}-values, and the fifth was positively skewed. Figure \ref{fig:simulatedgraphs} provides a visual representation of the distributional forms that were prescribed across our simulations.
+
+\hypertarget{all-simulated-distributions-had-an-average-a-estimate-of-1.42-and-average-b-estimate-of-0.5.-leftarrow-diego-where-did-these-numbers-come-from-was-this-our-first-siop-data}{%
+\section{\texorpdfstring{All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. \(\leftarrow\) Diego where did these numbers come from? Was this our first SIOP data?}{All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. \textbackslash leftarrow Diego where did these numbers come from? Was this our first SIOP data?}}\label{all-simulated-distributions-had-an-average-a-estimate-of-1.42-and-average-b-estimate-of-0.5.-leftarrow-diego-where-did-these-numbers-come-from-was-this-our-first-siop-data}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Purpose: Getting a p-value \(\rightarrow\) b-parameter linking equation {[}\(\checkmark\){]}
+\item
+  Five different distributions of p-values (simulated data) {[}\(\checkmark\){]}
+\item
+  10,000 runs each simulation (100 items, 10,000 ``people'' each) {[}\(\checkmark\){]}\\
+\item
+  Scrub extreme values (p-values essentially 0 and 1 need to be deleted) {[}\(\checkmark\){]}
+\item
+  Moderated regression to look for differences across p-value distribution {[} {]}
+\item
+  Tada! {[} {]}
+\end{enumerate}
+
+We simulated datasets comprised of binary item responses. The 10,000 individual simulated datasets primarily differed in \emph{distributions of item difficulty} while keeping the numbers of items (\emph{k}=100) and ``respondents'' (\emph{n}=10,000) equivalent. The first controlled distributional form was uniform, with \emph{p}-values ranging from low (approaching 0) to high (approaching 1) {[}NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN{]} at roughly equal levels of frequency. The second distribution was effectively normal with \emph{p}-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of \emph{p}-values, and the fifth was positively skewed. Figure \ref{fig:simulatedgraphs} provides a visual representation of the \emph{p}-value distributional forms that were prescribed across our simulations.
+For each simulation, we estimated CTT \emph{p}-values and corrected item-total correlations via the \texttt{psych} package (Revelle, 2021). The 2PL was also applied via the \texttt{mirt} package (Chalmers, 2012), and \emph{a} and \emph{b} parameters were estimated. Separate and overall regressions were applied to predict the IRT \emph{b} parameter from the \emph{p}-value derived \(z_g\) statistic.
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+\begin{quote}
+Should probably do paired-samples t-tests between CTT and IRT estimates (2/16/23)
+\end{quote}
+
+Overall, the average slope was \emph{r slope} and the average intercept \emph{r intercept}.
+
+put in moderated regression results as well as \(\Delta\)\(R^2\). Make sure this formula is in study 2
+
+Across all five conditions, simulated distributions exhibited an average empirical \emph{a}-estimate of ?? (sd = ??) and average empirical \emph{b}-estimate of ?? (sd = ??).
+
+Overall, the average slope was \emph{r slope} and the average intercept \emph{r intercept}. \(\leftarrow\) Make sure this formula is in study 2
+
+put in moderated regression results as well as \(\Delta R^2\) across hierarchical regressions (interaction terms added step 2).
+
+\hypertarget{study-2---evaluating-the-comparability-of-irt-and-ctt-iccs}{%
+\section{Study 2 - Evaluating the Comparability of IRT and CTT ICC's}\label{study-2---evaluating-the-comparability-of-irt-and-ctt-iccs}}
+
+The purpose of study 2 is to simulate test data and generate ICC's based on the IRT model. Then we compare that to our CTT estimates and look at the differences. We hypothesize that on average there won't be a big difference between the curves plotted with either methodology.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use regression equation from Study 1
+\item
+  Winsteps and ETS data
+\item
+  Compute DIF and report results
+\end{enumerate}
+
+\hypertarget{procedure-and-materials}{%
+\subsubsection{Procedure and materials}\label{procedure-and-materials}}
+
+We used a simulated dataset and two real-world datasets. The real-world dataset represented responses from 10,000 Test of English as a Foreign Language (TOEFL) iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
+
+The mirt package (Chalmers, 2012) was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using Alfaro et al. (2009)'s package. Figure \ref{fig:plotting} presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with Kulas et al. (2017) formulas).
+
+\hypertarget{plotting-space}{%
+\subsubsection{Plotting space}\label{plotting-space}}
+
+We need a figure with three different ICCs: 1) small DIF, 2) moderate DIF, and 3) large DIF. For each simulated scenario, compute and report our DIF index so the reader understand what the number refers to (e.g., area as defined by plotting space).
+
+\hypertarget{results-1}{%
+\subsection{Results}\label{results-1}}
+
+We used R (Version 4.1.1; R Core Team, 2021) and the R-packages \emph{ape} (Version 5.5; Paradis \& Schliep, 2019), \emph{descr} (Version 1.1.5; Dirk Enzmann et al., 2021), \emph{dplyr} (Version 1.0.9; Wickham, François, et al., 2022), \emph{forcats} (Version 0.5.1; Wickham, 2021), \emph{geiger} (Version 2.0.7; Alfaro et al., 2009; Eastman et al., 2011; Harmon et al., 2008; Pennell et al., 2014; Slater et al., 2012), \emph{ggplot2} (Version 3.3.6; Wickham, 2016), \emph{gridExtra} (Version 2.3; Auguie, 2017), \emph{lattice} (Version 0.20.44; Sarkar, 2008; Sarkar \& Andrews, 2019), \emph{latticeExtra} (Version 0.6.29; Sarkar \& Andrews, 2019), \emph{mirt} (Version 1.34; Chalmers, 2012), \emph{papaja} (Version 0.1.0.9999; Aust \& Barth, 2022), \emph{psych} (Version 2.1.9; Revelle, 2021), \emph{purrr} (Version 0.3.4; Henry \& Wickham, 2020), \emph{readr} (Version 2.1.2; Wickham, Hester, et al., 2022), \emph{readxl} (Version 1.3.1; Wickham \& Bryan, 2019), \emph{reticulate} (Version 1.22; Ushey et al., 2021), \emph{scales} (Version 1.2.0; Wickham \& Seidel, 2022), \emph{stringr} (Version 1.5.0; Wickham, 2022), \emph{tibble} (Version 3.1.7; Müller \& Wickham, 2022), \emph{tidyr} (Version 1.2.0; Wickham \& Girlich, 2022), \emph{tidyverse} (Version 1.3.1; Wickham et al., 2019), and \emph{tinylabels} (Version 0.2.3; Barth, 2022) for all our analyses.
+
+The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was 0.08\footnote{\emph{Note}. Did the integral of the difference between the CTT and IRT functions using the ``integrate'' function in the ``stats'' package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.}. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than 0.12.
+
+For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure.
+
+\hypertarget{real-world-data}{%
+\subsection{Real-world data}\label{real-world-data}}
+
+\hypertarget{materials}{%
+\subsubsection{Materials}\label{materials}}
+
+Item responses to the Graduate Record Examination (GRE)'s XX scale were provided to the researchers from the test publisher.
+
+Applying the CTT-derived ICC functions to real-world data and computing the DIF with the IRT-derived ICC function, the average difference for the 228 curves was0.12.
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/plotting-1.pdf}
+\caption{\label{fig:plotting}Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/stackedplotIntercept-1.pdf}
+\caption{\label{fig:stackedplotIntercept}Individual intercept grouped by study 2 simulation.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/stackeplotSlope-1.pdf}
+\caption{\label{fig:stackeplotSlope}Individual slopes grouped by study 2 simulation.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/histrogram-1.pdf}
+\caption{\label{fig:histrogram}Histogram of all areas between ICCs plotted using IRT parameters vs ICCs plotted using CTT parameters.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/cttcurves-1.pdf}
+\caption{\label{fig:cttcurves}ICCs derived from only CTT parameters (with two noteworthy ICCs annotated).}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{ICC_project_files/figure-latex/irtcurves-1.pdf}
+\caption{\label{fig:irtcurves}Typical ICCs derived from IRT parameters (same noteworthy items annotated).}
+\end{figure}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+Important psychometric information can be gathered from ICC's, which are visual indicators typically of difficulty and discrimination. Psychometricians and other assessment specialists usually examine ICC's under the lenses of IRT and Rasch models. From a CTT orientation, item difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a p-value). Item discrimination can be conveyed via a few CTT indices, but the most commonly calculated and consulted index is the corrected item-total correlation. Assessment specialists who consult these CTT parameters don't typically attempt to represent them visually, as is common in IRT and Rasch applications. However, there is perhaps little reason for them not to do so, as ICC's based on CTT parameters could provide snapshot psychometric information as valuable as those gained from IRT- or Rasch-derived ICC's. Here we first propose an application of ICC's with CTT indices, then we simulated data and quantified similarities and discrepancies between the IRT- and CTT-generated ICC's. Our hypothesis was that the Area Between Curves of these different ICC's would be small. Area between curves for 100 items was 0.35 on average. This result indicates that curves plotted with either IRT or CTT parameters show little difference. The nature of both models is mostly overlapping when it comes to plotting visual representations such as ICC's. Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics.
+
+Of course there is always an intractability between the CTT item-difficulty index and respondent sample ability. The findings of previous comparison studies, however, point to the CTT estimates exhibiting some degree of invariance across respondent samples.
+
+If this general idea is well-received (SIOP members would seem to represent a great barometer!) we would like to stress the CTT ICC's via further and more extensive conditions. That is, are there patterns that help explain CTT ICCs that diverge from their IRT counterparts? Although our simulations did generate a range of item difficulties and discriminations, we have not yet fully explored systematic patterns of extremely difficult/easy items as well as very poorly discriminating items. If patterns emerge, we would like to model predicted discrepancies via incorporating error bars within our visualizations. Although scaled inventory responses are more common in Psychological assessment applications, We do not believe a visual representation of the polytomous item response function (IRF) would be as practically informative, and do not foresee extensions to inventory response.
+
+represent some promise regarding plotted ICC's using IRT and CTT parameters. Our hypothesis was that the Area Between Curves of these different ICCs would be small. Area between curves for 100 items was 0.35 on average. This result indicates that curves plotted with either IRT or CTT parameters show little difference. The nature of both models is overlapping when it comes to plotting visual representations such as ICC's. Practitioners and researchers that don't use IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics.
+
+IRT analyses are also data hungry. These CTT-derived ICC estimates may be useful to individuals who wish to ultimately apply IRT, but are limited in\ldots{} {[}maybe not{]}
+
+Additionally, if there is interest in this general idea we would likely publish our function as a small \texttt{R} package, perhaps to supplement the \texttt{psych} package's ``alpha'' function, which produces corrected item-total correlations as well as p-values within the same output table (e.g., the ``input'' data is already available in tabular format).
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_a}{}}%
+Alfaro, M., Santini, F., Brock, C., Alamillo, H., Dornburg, A., Rabosky, D., Carnevale, G., \& Harmon, L. (2009). Nine exceptional radiations plus high turnover explain species diversity in jawed vertebrates. \emph{Proceedings of the National Academy of Sciences of the United States of America}, \emph{106}, 13410--13414.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-gridExtra}{}}%
+Auguie, B. (2017). \emph{gridExtra: Miscellaneous functions for "grid" graphics}. \url{https://CRAN.R-project.org/package=gridExtra}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
+Aust, F., \& Barth, M. (2022). \emph{{papaja}: {Prepare} reproducible {APA} journal articles with {R Markdown}}. \url{https://github.com/crsh/papaja}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tinylabels}{}}%
+Barth, M. (2022). \emph{{tinylabels}: Lightweight variable labels}. \url{https://cran.r-project.org/package=tinylabels}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-mirt}{}}%
+Chalmers, R. P. (2012). {mirt}: A multidimensional item response theory package for the {R} environment. \emph{Journal of Statistical Software}, \emph{48}(6), 1--29. \url{https://doi.org/10.18637/jss.v048.i06}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-descr}{}}%
+Dirk Enzmann, J. Aquino. I. R. source code and/or documentation written by, Schwartz, M., Jain, N., \& Kraft, S. (2021). \emph{Descr: Descriptive statistics}. \url{https://CRAN.R-project.org/package=descr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_b}{}}%
+Eastman, J., Alfaro, M., Joyce, P., Hipp, A., \& Harmon, L. (2011). A novel comparative method for identifying shifts in the rate of character evolution on trees. \emph{Evolution}, \emph{65}, 3578--3589.
+
+\leavevmode\vadjust pre{\hypertarget{ref-fan1998item}{}}%
+Fan, X. (1998). Item response theory and classical test theory: An empirical comparison of their item/person statistics. \emph{Educational and Psychological Measurement}, \emph{58}(3), 357--381.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hambleton1993comparison}{}}%
+Hambleton, R. K., \& Jones, R. W. (1993). Comparison of classical test theory and item response theory and their applications to test development. \emph{Educational Measurement: Issues and Practice}, \emph{12}(3), 38--47.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hambleton1991fundamentals}{}}%
+Hambleton, R. K., Swaminathan, H., \& Rogers, H. J. (1991). \emph{Fundamentals of item response theory} (Vol. 2). Sage.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_d}{}}%
+Harmon, L., Weir, J., Brock, C., Glor, R., \& Challenger, W. (2008). GEIGER: Investigating evolutionary radiations. \emph{Bioinformatics}, \emph{24}, 129--131.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-purrr}{}}%
+Henry, L., \& Wickham, H. (2020). \emph{Purrr: Functional programming tools}. \url{https://CRAN.R-project.org/package=purrr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-kulas2017approximate}{}}%
+Kulas, J. T., Smith, J. A., \& Xu, H. (2017). Approximate functional relationship between IRT and CTT item discrimination indices: A simulation, validation, and practical extension of {Lord's} (1980) formula. \emph{Journal of Applied Measurement}, \emph{18}(4), 393--407.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lord1980applications}{}}%
+Lord, F. M. (1980). \emph{Applications of IRT to practical problems}. Hillsdale: Lawrence Erlbaum Associates.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lord2012applications}{}}%
+Lord, F. M. (2012). \emph{Applications of item response theory to practical testing problems}. Routledge.
+
+\leavevmode\vadjust pre{\hypertarget{ref-macdonald2002monte}{}}%
+Macdonald, P., \& Paunonen, S. V. (2002). A monte carlo comparison of item and person statistics based on item response theory versus classical test theory. \emph{Educational and Psychological Measurement}, \emph{62}(6), 921--943.
+
+\leavevmode\vadjust pre{\hypertarget{ref-masters1982rasch}{}}%
+Masters, G. N. (1982). A rasch model for partial credit scoring. \emph{Psychometrika}, \emph{47}(2), 149--174.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tibble}{}}%
+Müller, K., \& Wickham, H. (2022). \emph{Tibble: Simple data frames}. \url{https://CRAN.R-project.org/package=tibble}
+
+\leavevmode\vadjust pre{\hypertarget{ref-muraki1997generalized}{}}%
+Muraki, E. (1997). A generalized partial credit model. In \emph{Handbook of modern item response theory} (pp. 153--164). Springer.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-ape}{}}%
+Paradis, E., \& Schliep, K. (2019). Ape 5.0: An environment for modern phylogenetics and evolutionary analyses in {R}. \emph{Bioinformatics}, \emph{35}, 526--528.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_e}{}}%
+Pennell, M., Eastman, J., Slater, G., Brown, J., Uyeda, J., Fitzjohn, R., Alfaro, M., \& Harmon, L. (2014). Geiger v2.0: An expanded suite of methods for fitting macroevolutionary models to phylogenetic trees. \emph{Bioinformatics}, \emph{30}, 2216--2218.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
+R Core Team. (2021). \emph{R: A language and environment for statistical computing}. R Foundation for Statistical Computing. \url{https://www.R-project.org/}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-psych}{}}%
+Revelle, W. (2021). \emph{Psych: Procedures for psychological, psychometric, and personality research}. Northwestern University. \url{https://CRAN.R-project.org/package=psych}
+
+\leavevmode\vadjust pre{\hypertarget{ref-rupp2004note}{}}%
+Rupp, A. A., \& Zumbo, B. D. (2004). A note on how to quantify and report whether IRT parameter invariance holds: When pearson correlations are not enough. \emph{Educational and Psychological Measurement}, \emph{64}(4), 588--599.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rupp2006understanding}{}}%
+Rupp, A. A., \& Zumbo, B. D. (2006). Understanding parameter invariance in unidimensional IRT models. \emph{Educational and Psychological Measurement}, \emph{66}(1), 63--84.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-lattice}{}}%
+Sarkar, D. (2008). \emph{Lattice: Multivariate data visualization with r}. Springer. \url{http://lmdvr.r-forge.r-project.org}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-latticeExtra}{}}%
+Sarkar, D., \& Andrews, F. (2019). \emph{latticeExtra: Extra graphical utilities based on lattice}. \url{https://CRAN.R-project.org/package=latticeExtra}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-geiger_c}{}}%
+Slater, G., Harmon, L., Wegmann, D., Joyce, P., Revell, L., \& Alfaro, M. (2012). Fitting models of continuous trait evolution to incompletely sampled comparative data using approximate bayesian computation. \emph{Evolution}, \emph{66}, 752--762.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-reticulate}{}}%
+Ushey, K., Allaire, J., \& Tang, Y. (2021). \emph{Reticulate: Interface to 'python'}. \url{https://CRAN.R-project.org/package=reticulate}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-ggplot2}{}}%
+Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. \url{https://ggplot2.tidyverse.org}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-forcats}{}}%
+Wickham, H. (2021). \emph{Forcats: Tools for working with categorical variables (factors)}. \url{https://CRAN.R-project.org/package=forcats}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-stringr}{}}%
+Wickham, H. (2022). \emph{Stringr: Simple, consistent wrappers for common string operations}. \url{https://CRAN.R-project.org/package=stringr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tidyverse}{}}%
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., \ldots{} Yutani, H. (2019). Welcome to the {tidyverse}. \emph{Journal of Open Source Software}, \emph{4}(43), 1686. \url{https://doi.org/10.21105/joss.01686}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-readxl}{}}%
+Wickham, H., \& Bryan, J. (2019). \emph{Readxl: Read excel files}. \url{https://CRAN.R-project.org/package=readxl}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-dplyr}{}}%
+Wickham, H., François, R., Henry, L., \& Müller, K. (2022). \emph{Dplyr: A grammar of data manipulation}. \url{https://CRAN.R-project.org/package=dplyr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-tidyr}{}}%
+Wickham, H., \& Girlich, M. (2022). \emph{Tidyr: Tidy messy data}. \url{https://CRAN.R-project.org/package=tidyr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-readr}{}}%
+Wickham, H., Hester, J., \& Bryan, J. (2022). \emph{Readr: Read rectangular text data}. \url{https://CRAN.R-project.org/package=readr}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-scales}{}}%
+Wickham, H., \& Seidel, D. (2022). \emph{Scales: Scale functions for visualization}. \url{https://CRAN.R-project.org/package=scales}
+
+\leavevmode\vadjust pre{\hypertarget{ref-wright1977solving}{}}%
+Wright, B. D. (1977). Solving measurement problems with the rasch model. \emph{Journal of Educational Measurement}, 97--116.
+
+\end{CSLReferences}
+
+\endgroup
+
+\hypertarget{appendix-appendices}{%
+\appendix}
+
+
+\hypertarget{cut-stuff}{%
+\section{Cut stuff}\label{cut-stuff}}
+
+An adjustment to Lord (2012)'s formula giving the functional relationship between the ``non-invariant'' CTT and ``invariant'' IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by Kulas et al. (2017), noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT ``invariance''.
+
+\#\#NOTES
+\#\#Bias might suggest that rescaled a parameters are systematically larger than z under certain simulations (or not) Variance estimates might suggest that the standard error of rescaled values is larger than those values estimated directly (or not). If differences do exist, one could then go on to articulate the conditions under which they exist (i.e., high difficulty, low difficulty, non-normal distributions of the underlying trait), etc\ldots.
+
+\begin{quote}
+\emph{Note}. Maybe do a different linking via machine learning. Try to find the linking parameters (including p-value distributional shape and location) that minimize DIF across CTT and IRT ICCs (5/27/22 after unsuccessful Friday brainstorming especially regarding simulation 3 {[}the normally distributed p-values{]})
+\end{quote}
+
+2/9/2023 Notes: Check if the a parameter is estimated at the 0.5 location of the function. Research how the a parameter is scaled.
+Be more specific about the simulations. Write what we did when p-values were 0 and 1 for a column.
+Check the average a and b per simulation in line 255
+For graph 7 update it by stacking the results we got from our simulations with the real data from ETS
+
+As shown by Figure 2, our plot looks very similar to that of Kulas et al. (2017) (p.8). This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in Kulas et al. (2017).
+
+
+\end{document}
