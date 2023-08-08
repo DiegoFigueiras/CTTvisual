@@ -243,7 +243,7 @@ grid.arrange(g5,g2,g1,g3,g4, nrow=2, ncol=3)
 
 ## Procedure and methods
 
-We simulated datasets consisting of binary item responses. The simulated data presriptively differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) [NEED APPROXIMATE OR SPECIFIED VALUES HERE - NEED TO BE MORE SPECIFIC; DIEGO FILL IN] at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of idealized distributional forms that were prescribed across our simulations. 
+We simulated datasets consisting of binary item responses. The simulated data prescriptively differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. For items with p-values of less than 0.02 or greater than 0.98 where, 200 responses were modified. If it was less than 0.02, we randomly replaced 200 responses with 1s, if it was greater than 0.98 we randomly replaced 200 responses with 0s. This was done so the IRT models could converge without giving disproportionately extreme estimates. Figure \@ref(fig:simulatedgraphs) provides a visual representation of idealized distributional forms that were prescribed across our simulations. 
 
 All simulated distributions had an average a-estimate of 1.42 and average b-estimate of 0.5. $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
 
@@ -254,15 +254,15 @@ All simulated distributions had an average a-estimate of 1.42 and average b-esti
 5. Moderated regression to look for differences across p-value distribution         [ ]
 6. Tada!                                                                            [ ]
 
-For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic.
+For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. 
 
-```{r, eval=FALSE}
+```{r, eval=TRUE, cache=TRUE}
 library(tidyverse)
 all_sims2<-read.csv("all_sims2.csv")
 all_sims3<-read.csv("all_sims3.csv")
 all_sims4<-read.csv("all_sims4.csv")
-all_sims5<-read.csv("all_sims5.csv")
-all_sims6<-read.csv("all_sims6.csv")
+all_sims5<-read.csv("all_sims5.csv") #ve are rerunning these
+all_sims6<-read.csv("all_sims6.csv") #we are rerunning these
 
 all_sims2$condition<-'Simulation 2'
 all_sims3$condition<-'Simulation 3'
@@ -270,24 +270,28 @@ all_sims4$condition<-'Simulation 4'
 all_sims5$condition<-'Simulation 5'
 all_sims6$condition<-'Simulation 6'
 all_sims<-rbind(all_sims2, all_sims3, all_sims4, all_sims5, all_sims6)
-all_sims<-ALL_simulations
 all_sims<-all_sims%>%filter(b<3)%>%filter(b>-3)
 
-reg<-lm(b~pseudob*Simulation, data=all_sims)
-summary(reg)
+reg1<-lm(b~pseudob, data=all_sims)
+reg2<-lm(b~pseudob+condition, data=all_sims)
+reg3<-lm(b~pseudob+condition+pseudob*condition, data=all_sims)
+reg1sum<-summary(reg1)
+reg2sum<-summary(reg2)
+reg3sum<-summary(reg3)
+r2change<-anova(reg1, reg3)
 
-ggplot(all_sims, aes(pseudob, b, color = factor(Simulation))) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) 
-
-sds<-coeficients%>%group_by(simulation)%>%summarise(sd_intercept=sd(intercept),
-                                                    means_intercept=mean(intercept),
-                                                    sd_slope=sd(slope),
-                                                    means_slope=mean(slope))
-reg2<-lm(b~pseudob, data=all_sims)
-summary(reg2)
-slope<-reg2$coefficients[[2]]
-intercept<-reg2$coefficients[[1]]
+# ggplot(all_sims, aes(pseudob, b, color = factor(condition))) +
+#   geom_point() +
+#   geom_smooth(method = "lm", se = FALSE) 
+# 
+# sds<-coeficients%>%group_by(condition)%>%summarise(sd_intercept=sd(intercept),
+#                                                     means_intercept=mean(intercept),
+#                                                     sd_slope=sd(slope),
+#                                                     means_slope=mean(slope))
+# # reg2<-lm(b~pseudob, data=all_sims)
+# summary(reg2)
+slope<-reg1$coefficients[[2]]
+intercept<-reg1$coefficients[[1]]
 
 ```
 
@@ -370,11 +374,11 @@ p1
 
 >Should probably do paired-samples t-tests between CTT and IRT estimates (2/16/23)
 
-Overall, the average slope was *r slope* and the average intercept *r intercept*.
+Overall, the average slope was `r slope` and the average intercept of `r intercept`.
 
-put in moderated regression results as well as $\Delta$$R^2$. Make sure this formula is in study 2
+put in moderated regression results as well as $\Delta$$R^2$=`r reg3sum$r.squared-reg1sum$r.squared`, and the $F_{(1, 4943349)},$=`r r2change$F[2]`. Make sure this formula is in study 2
 
-Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of ?? (sd = ??) and average empirical *b*-estimate of ?? (sd = ??).
+Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of `r mean(all_sims$a)` (sd = `r sd(all_sims$a)`) and average empirical *b*-estimate of `r mean(all_sims$b)`  (sd = `r sd(all_sims$b)` ). The average $Z_g$ was `r mean(all_sims$pseudob)` (sd=`r sd(all_sims$pseudob)`), and the average $\hat{a_i}$ was `r mean(all_sims$PseudoA)` (sd=`r sd(all_sims$PseudoA)`). 
 
 # Study 2 - Evaluating the Comparability of IRT and CTT ICC's 
 
@@ -384,7 +388,7 @@ The purpose of study 2 is to simulate test data and generate ICC's based on the 
 2. Winsteps and ETS data
 3. Compute DIF and report results
 
-### Procedure and materials  
+## Procedure and materials  
 
 We used a simulated dataset and two real-world datasets. The real-world dataset represented responses from 10,000 Test of English as a Foreign Language (TOEFL) iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking  (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
 
