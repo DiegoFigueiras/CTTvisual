@@ -131,7 +131,7 @@ for(j in 1:10000){
 # sd(df2$pvalues)
 # all_sims2$Simulations<-rep(1:1000, each=100)
 
-#write.csv(all_sims2, "Simulation 2/all_sims2.csv")
+write.csv(all_sims2, "all_sims2.csv")
 
 ###################### SIMULATION 3: NORMAL DISTRIBUTION ##############################
 
@@ -206,7 +206,7 @@ for(j in 1:10000){
 }
 
 
-#write.csv(all_sims3,"Simulation 3/all_sims3.csv")
+write.csv(all_sims3,"all_sims3.csv")
 
 
 ###################### SIMULATION 4: INVERTED DISTRIBUTION ##############################
@@ -278,13 +278,13 @@ for(j in 1:10000){
 }
 
 
-#write.csv(all_sims4, "Simulation 4/all_sims4.csv")
+write.csv(all_sims4, "all_sims4.csv")
 
 ###################### SIMULATION 5: SKEWED NEGATIVE ##############################
 
 
 library(fGarch)
-random<-sample(10000, 20)
+random<-sample(10000, 200)
 all_sims5<-NULL
 for(j in 1:10000){
         skew<-rsnorm(100,0,1,xi=-3)
@@ -293,10 +293,10 @@ for(j in 1:10000){
         b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
         sim5<-data.frame(b.mod$resp)
         for (i in 1:100){
-          if(sum(sim5[,i])==10000){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+          if(sum(sim5[,i])>=9800){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
             sim5[,i][random]<-0 
           }
-          if(sum(sim5[,i])==0){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+          if(sum(sim5[,i])<=200){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
               sim5[,i][random]<-1 
           }
         }
@@ -349,7 +349,7 @@ ggplot(df5, aes(x=b, y=pseudob))+
   geom_point()+
   xlim(0,5)
 
-#write.csv(all_sims5, "Simulation 5/all_sims5.csv")
+write.csv(all_sims5, "all_sims5.csv")
 
 
 ###################### SIMULATION 6: SKEWED POSITIVE ##############################
@@ -364,10 +364,10 @@ for(j in 1:10000){
         b.mod <- simIrt(theta= theta, params = b.params, mod = "brm")
         sim6<-data.frame(b.mod$resp)
         for (i in 1:100){
-          if(sum(sim6[,i])==10000){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+          if(sum(sim6[,i])>=9800){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
             sim6[,i][random]<-0 
           }
-          if(sum(sim6[,i])==0){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
+          if(sum(sim6[,i])<=200){#same as before, but in this case, if all numbers of a column are 1, it changes a random row into 0. 
             sim6[,i][random]<-1 
           }
         }
@@ -419,8 +419,8 @@ ggplot(df6, aes(x=a, y=PseudoA))+
 
 reg<-lm(a~PseudoA, data=df6)
 summary(reg)
-#write.csv(all_sims6, "Simulation 6/all_sims6.csv")
-write.csv(coeficients, "coefficients.csv")
+write.csv(all_sims6, "all_sims6.csv")
+#write.csv(coeficients, "coefficients.csv")
 
 
 ########################## Simulation 7: ####################################################################################################
@@ -495,14 +495,39 @@ all_sims5$simulation<-"Simulation 5"
 all_sims6$simulation<-"Simulation 6"
 all_sims7$simulation<-"Simulation 7"
 
-all_sims<-rbind(all_sims2, all_sims3, all_sims4, all_sims5, all_sims6, all_sims7)
+#all_sims<-rbind(all_sims2, all_sims3, all_sims4, all_sims5, all_sims6, all_sims7)
 
+write.csv(all_sims, "all_sims.csv")
 
-ggplot(all_sims, aes(x=b, y=-1*pseudob))+
+all_sims<- rbind(all_sims2, all_sims3, all_sims4, all_sims5, all_sims6)
+all_sims_sampled<- all_sims[sample(nrow(all_sims), 300000), ]
+
+ggplot(all_sims_sampled, aes(x=b, y=pseudob))+
   geom_point()+
   xlim(-5,5)+
   ylim(-5,5)+
   geom_abline()
+ggplot(all_sims_sampled, aes(x=a, y=PseudoA))+
+  geom_point()+
+  xlim(-5,5)+
+  ylim(-5,5)+
+  geom_abline()
+
+ggplot(all_sims7, aes(x=b, y=pseudob))+
+  geom_point()+
+  xlim(-5,5)+
+  ylim(-5,5)+
+  geom_abline()
+ggplot(all_sims7, aes(x=a, y=PseudoA))+
+  geom_point()+
+  xlim(-5,5)+
+  ylim(-5,5)+
+  geom_abline()
+
+all_sims<-all_sims%>%filter(b<3)%>%filter(b>-3)
+reg<- lm(b~pseudob, data=all_sims)
+summary(reg)
+
 
 ##############################################################################################################################
 

@@ -261,8 +261,8 @@ library(tidyverse)
 all_sims2<-read.csv("all_sims2.csv")
 all_sims3<-read.csv("all_sims3.csv")
 all_sims4<-read.csv("all_sims4.csv")
-all_sims5<-read.csv("all_sims5.csv") #ve are rerunning these
-all_sims6<-read.csv("all_sims6.csv") #we are rerunning these
+all_sims5<-read.csv("all_sims5.csv") #converged 8/8/2023
+all_sims6<-read.csv("all_sims6.csv") #converged 8/8/2023
 
 all_sims2$condition<-'Simulation 2'
 all_sims3$condition<-'Simulation 3'
@@ -523,7 +523,10 @@ grid.arrange(p2,p3,p1,p4, nrow=2, ncol=2)
 
 
 ```{r stackedplotIntercept, results="hide", fig.cap="Individual intercept grouped by study 2 simulation." }
-coeficients<-read.csv("coefficients.csv")
+coeficients<-read.csv("coefficients.csv")%>%select(-X)
+coef_old<-read.csv("coefficients_old.csv")
+coef_old<-coef_old%>%filter(simulation=="Simulation 2")%>%select(-X)
+coeficients<-rbind(coeficients, coef_old)
 coeficients$simulation[coeficients$simulation=='Simulation 2']<-'Uniform'
 coeficients$simulation[coeficients$simulation=='Simulation 3']<-'Normal'
 coeficients$simulation[coeficients$simulation=='Simulation 4']<-'Inverted'
