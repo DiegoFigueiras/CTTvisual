@@ -523,19 +523,16 @@ grid.arrange(p2,p3,p1,p4, nrow=2, ncol=2)
 
 
 ```{r stackedplotIntercept, results="hide", fig.cap="Individual intercept grouped by study 2 simulation." }
-coeficients<-read.csv("coefficients.csv")%>%select(-X)
-coef_old<-read.csv("coefficients_old.csv")
-coef_old<-coef_old%>%filter(simulation=="Simulation 2")%>%select(-X)
-coeficients<-rbind(coeficients, coef_old)
-coeficients$simulation[coeficients$simulation=='Simulation 2']<-'Uniform'
-coeficients$simulation[coeficients$simulation=='Simulation 3']<-'Normal'
-coeficients$simulation[coeficients$simulation=='Simulation 4']<-'Inverted'
-coeficients$simulation[coeficients$simulation=='Simulation 5']<-'Negative S'
-coeficients$simulation[coeficients$simulation=='Simulation 6']<-'Positive S'
-coeficients$simulation <- factor(coeficients$simulation, levels = c('Uniform', 'Normal', 'Inverted', 'Negative S', 'Positive S'))
+coeficients<-read.csv("coefficients.csv")
+coeficients$condition[coeficients$condition=='Simulation 2']<-'Uniform'
+coeficients$condition[coeficients$condition=='Simulation 3']<-'Normal'
+coeficients$condition[coeficients$condition=='Simulation 4']<-'Inverted'
+coeficients$condition[coeficients$condition=='Simulation 5']<-'Negative S'
+coeficients$condition[coeficients$condition=='Simulation 6']<-'Positive S'
+coeficients$condition <- factor(coeficients$condition, levels = c('Uniform', 'Normal', 'Inverted', 'Negative S', 'Positive S'))
 
 library(ggplot2)
-ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(simulation~.)+xlim(-.25,.25)
+ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + facet_grid(condition~.)+xlim(-.25,.25)
 
 
 
@@ -544,7 +541,7 @@ ggplot(data = coeficients, aes(x = intercept)) + geom_histogram(bins = 500) + fa
 
 ```{r stackeplotSlope, results="hide", fig.cap="Individual slopes grouped by study 2 simulation." }
 
-ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(simulation~.)+xlim(-2,-1)
+ggplot(data = coeficients, aes(x = slope)) + geom_histogram(bins = 500) + facet_grid(condition~.)+xlim(-2,-1)
 
 ```
 
