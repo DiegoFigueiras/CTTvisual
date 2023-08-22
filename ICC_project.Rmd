@@ -620,7 +620,7 @@ for (i in 1:nrow(df1)){
 }
 
 auc1<-data.frame(unlist(auc1))
-auc1$condition<-"ETS 1"
+auc1$condition<-"Listening 1"
 
 ######################################### set 2 #######################################################
 
@@ -655,7 +655,7 @@ for (i in 1:nrow(df2)){
   auc2[i]<-integrate(f2, -6,6)
 }
 auc2<-data.frame(unlist(auc2))
-auc2$condition<-"ETS 2"
+auc2$condition<-"Speaking 1"
 
 ########################################### set 3 ###################################################
 df3<-data.frame(ctticc(set3))
@@ -690,7 +690,7 @@ for (i in 1:nrow(df3)){
 }
 
 auc3<- data.frame(unlist(auc3))
-auc3$condition<-"ETS 3"
+auc3$condition<-"Reading 1"
 names(auc3)[1]<-"auc"
 
 ################################################# set 4 ################################################
@@ -726,7 +726,7 @@ for (i in 1:nrow(df4)){
 }
 
 auc4<- data.frame(unlist(auc4))
-auc4$condition<-"ETS 4"
+auc4$condition<-"Listening 2"
 
 ##################################### set 5 ##############################################################
 
@@ -761,7 +761,7 @@ for (i in 1:nrow(df5)){
   auc5[i]<-integrate(f2, -6,6)
 }
 auc5<- as.data.frame(unlist(auc5))
-auc5$condition<-"ETS 5"
+auc5$condition<-"Speaking 2"
 
 ######################################## set 6 ########################################################
 
@@ -796,7 +796,7 @@ for (i in 1:nrow(df6)){
   auc6[i]<-integrate(f2, -6,6)
 }
 auc6<- data.frame(unlist(auc6))
-auc6$condition<-"ETS 6"
+auc6$condition<-"Reading 2"
 names(auc)[1]<-"auc"
 names(auc1)[1]<-"auc"
 names(auc2)[1]<-"auc"
@@ -806,7 +806,9 @@ names(auc5)[1]<-"auc"
 names(auc6)[1]<-"auc"
 
 auc_together<-rbind(auc, auc1, auc2, auc3, auc4, auc5, auc6)
-ggplot(data = auc_together, aes(x = auc)) + geom_histogram(bins=30, fill="cyan", color="black") + facet_grid(condition~.)+geom_density(color="red")
+ggplot(data = auc_together, aes(x = auc)) + geom_histogram(bins=30, fill="cyan", color="black") +  facet_grid(condition~.)+geom_density(color="red")+theme(axis.title.y.right = element_text(size=rel(10)))
+
+
 
 auc_together$condition<-as.factor(auc_together$condition)
 reg<-lm(auc~condition, auc_together)
