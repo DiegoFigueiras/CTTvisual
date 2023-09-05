@@ -20,7 +20,7 @@ authornote: |
   Materials for this research were provided by Educational Testing Service (ETS) and the TOEFL program. ETS does not discount or endorse the methodology, results, implications, or opinions presented by the researcher(s).
 
 abstract: |
-  Item characteristic curves (ICC's) are graphical representations of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to generate empirically-derived linking coefficients between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low within this simulated dataset ($\overline{DIF}$ = .08 on our 9x1 dimensional plotting space). Applying the CTT-derived ICCs to two different applied samples of 10,000 real life test takers resulted in a comparable mean DIF estimate of .12. An `R` package, `ctticc`, performs the ICC calculations presented in the current paper and provides test specialists with visual representations of CTT-derived item characteristics. ExternalDataRequests@ETS.org Laura Ballard-Todd: lballard@ets.org, Jonathan Steinberg: jsteinberg@ets.org
+  Item characteristic curves (ICC's) are graphical representations of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to generate empirically-derived linking coefficients between the IRT and CTT difficulty indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated datasets of varying item characteristic specification and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low within this simulated dataset ($\overline{DIF}$ = .08 on our 13x1 dimensional plotting space). Applying the CTT-derived ICCs to two different applied samples of 10,000 real life test takers resulted in a comparable mean DIF estimate of .12. An `R` package, `ctticc`, performs the ICC calculations presented in the current paper and provides test specialists with visual representations of CTT-derived item characteristics. ExternalDataRequests@ETS.org Laura Ballard-Todd: lballard@ets.org, Jonathan Steinberg: jsteinberg@ets.org
   
 keywords          : "Classical Test Theory, Item Response Theory, item difficulty, item discrimination"
 wordcount         : "X"
@@ -292,10 +292,7 @@ all_sims$differenceB<-all_sims$b-all_sims$pseudob
 
 ```
 
-
-All simulated distributions had an average a-estimate of `r mean(all_sims$a)` and average b-estimate of `r mean(all_sims$b)`. $\leftarrow$ Diego where did these numbers come from? Was this our first SIOP data?
-
-For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. A modification of the 
+For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were estimated. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. A modification of the $Z_g$ was done such that the inverse of the standard normal deviate was retained instead of the absolute value. There was also a regression derived modifier place on the previous $\hat{a}$ estimated using @kulas2017approximate. This was a value of 1.72. These modifications were both made to more closely approximate the IRT metric. 
 
 
 
@@ -377,20 +374,19 @@ p1
 
 ## Results
 
-> Should probably do paired-samples t-tests between CTT and IRT estimates (2/16/23)
-
 Overall, the average slope was `r slope` and the average intercept of `r intercept`.
 
 Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of `r mean(all_sims$a)` (sd = `r sd(all_sims$a)`) and average empirical *b*-estimate of `r mean(all_sims$b)` (sd = `r sd(all_sims$b)` ). The average $Z_g$ was `r mean(all_sims$pseudob)` (sd=`r sd(all_sims$pseudob)`), and the average $\hat{a_i}$ was `r mean(all_sims$PseudoA)` (sd=`r sd(all_sims$PseudoA)`). A regression predicting b from $Z_g$ showed a $R^2$=`r reg1sum$r.squared`. A moderated regression across all five conditions showed a $\Delta$$R^2$=`r reg3sum$r.squared-reg1sum$r.squared`, with an $F_{(1, 4943349)}$=`r r2change$F[2]`.
 
-The average difference between our a-estimate and pseudo-a statistic was `r mean(all_sims$differenceA)`, with a $t_{(4940181)}$=`r ttest_a$statistic`, *p*<0.05. The average difference between our b-estimate and pseudo-b statistic was `r mean(all_sims$differenceB)`, with a $t_{(4940181)}$=`r ttest_b$statistic`, *p*=0.18. 
+The average difference between our a-estimate and pseudo-a statistic was `r mean(all_sims$differenceA)`, with a $t_{(4940181)}$=`r ttest_a$statistic`, *p*<0.05. Visual inspection of this effect seem to occur such that a-parameters above 1 occasionally had consistently underestimated $\hat{a}$ values.The average difference between our b-estimate and pseudo-b statistic was `r mean(all_sims$differenceB)`, with a $t_{(4940181)}$=`r ttest_b$statistic`, *p*=0.18. 
 
 
 
 # Study 2 - Evaluating the Comparability of IRT and CTT ICC's
 ## Procedure and Methods
 
-The purpose of study 2 is to simulate test data and generate ICC's based on the IRT model. Then we compare that to our CTT estimates and look at the differences. We hypothesize that on average there won't be a big difference between the curves plotted with either methodology. Although ogives could be specified directly from the CTT-derived statistics, we made a procedural decision to retain the IRT 2PL as our functional definition for both IRT and CTT ogive specification:
+The purpose of study 2 is to generate ICC's based on the IRT model and then we compare that to our CTT estimates and look at the differences. We hypothesize that on average there won't be a big difference between the curves plotted with either methodology. We used a simulated dataset on Wingen and two real-world datasets. The real-world dataset represented responses from 10,000 Test of English as a Foreign Language (TOEFL) iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
+Although ogives could be specified directly from the CTT-derived statistics, we made a procedural decision to retain the IRT 2PL as our functional definition for both IRT and CTT ogive specification:
 
 ```{=tex}
 \begin{equation}
@@ -408,13 +404,12 @@ source("ETS/ETS_data2.R", local = knitr::knit_global())
 ```
 
 
-The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The average difference for all 100 curves was `r mean(data0$diff)`[^7]. As we can see in Figure 4, most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than `r mean(df_plot$diff)`.
+The area between ICC's was calculated between CTT-derived and IRT-derived ICC's. The theta range was between -6 and 6, with a maximum possible 2-dimensional area of 13. The average difference for all 100 curves from the simulated Wingen data was `r mean(data0$diff)`[^7]. As we can see in figure \@ref(fig:histogram), most of the data is skewed towards the lower end, indicating that out of the 100 items, most of them have areas between the curves of less than `r mean(df_plot$diff)`. Applying the CTT-derived ICC functions to the real-world TOEFL data and computing the DIF with the IRT-derived ICC function, the average difference for the `r nrow(df_plot)` curves was `r mean(df_plot$diff)`.
 
-[^7]: *Note*. Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this diff. Base R seems to be the more accurate method.
 
-For Figure 5 we plotted all the 100 ICC's that use CTT parameters, and for Figure 6 we did the same but with IRT parameters instead. Curves using both methodologies are very similar in shape and form, as we can see in the two items that we point out in each figure.
+[^7]: *Note*. Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this DIF. Base R seems to be the more accurate method.
 
-Applying the CTT-derived ICC functions to real-world data and computing the DIF with the IRT-derived ICC function, the average difference for the `r nrow(df_plot)` curves was`r mean(df_plot$diff)`.
+[^8]: *Note*. The theta range in figure \@ref(fig:plotting) is between -4 to 4 for compliance with standard convention, but the DIF was calculated on a -6 to 6 range. 
 
 ```{r plotting, results="hide", fig.cap="Four ICCs highlighting the difference between CTT and IRT-derivated ICCs at different levels of DIF." }
 data<-read.csv("simulated_dataWINGEN.csv", header=FALSE)
@@ -812,10 +807,7 @@ auc_anova<-anova(reg)
 
 ```
 
-The average DIF across all 7 datasets was `r mean(auc_together$auc)` (SD=`r sd(auc_together$auc)`). There was no difference in average DIF across the 7 datasets ($F_{(6, 321)}$ =`r auc_anova[1,4]`, *p*\>.05). Out of the 328 items, only 17 (5.2%) had a DIF above 0.3. 
-
-
-We used a simulated dataset and two real-world datasets. The real-world dataset represented responses from 10,000 Test of English as a Foreign Language (TOEFL) iBT test-takers. This test measures all four academic English skills: reading (k=39), listening (k=40), and speaking (k=35). The two TOEFL ITP datasets come from two test forms and include item-level scores. Each form includes data from 10,000 examinees, and the examinee populations for the two forms do not overlap.
+The average DIF across all 7 datasets was `r mean(auc_together$auc)` (SD=`r sd(auc_together$auc)`). There was no difference in average DIF across the 7 datasets ($F_{(6, 321)}$ =`r auc_anova[1,4]`, *p*\>.05). Out of the 328 items, only 17 (5.2%) had a DIF above 0.3.
 
 The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using @R-geiger_a's package. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas).
 
@@ -833,6 +825,8 @@ represent some promise regarding plotted ICC's using IRT and CTT parameters. Our
 IRT analyses are also data hungry. These CTT-derived ICC estimates may be useful to individuals who wish to ultimately apply IRT, but are limited in... [maybe not]
 
 Additionally, if there is interest in this general idea we would likely publish our function as a small `R` package, perhaps to supplement the `psych` package's "alpha" function, which produces corrected item-total correlations as well as p-values within the same output table (e.g., the "input" data is already available in tabular format).
+
+Visual inspection of this effect seem to occur such that a-parameters above 1 occasionally had consistently underestimated $\hat{a}$ values.$Z_g$ is also consistently overpredicting at extreme values (regardless of whether it was an extreme positive or an extreme negative, the pattern is consistent). Further refinement can be made.
 
 \newpage
 
