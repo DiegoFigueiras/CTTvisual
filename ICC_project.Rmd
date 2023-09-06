@@ -373,14 +373,14 @@ p1
 
 ## Results
 
-Overall, the average slope was `r slope` and the average intercept of `r intercept`.
-
-A modification of the $Z_g$ was done such that the inverse of the standard normal deviate was retained instead of the absolute value. There was also a regression derived modifier place on the previous $\hat{a}$ estimated using @kulas2017approximate. This was a value of 1.72. These modifications were both made to more closely approximate the IRT metric. 
-
 Across all five conditions, simulated distributions exhibited an average empirical *a*-estimate of `r mean(all_sims$a)` (sd = `r sd(all_sims$a)`) and average empirical *b*-estimate of `r mean(all_sims$b)` (sd = `r sd(all_sims$b)` ). The average $Z_g$ was `r mean(all_sims$pseudob)` (sd=`r sd(all_sims$pseudob)`), and the average $\hat{a_i}$ was `r mean(all_sims$PseudoA)` (sd=`r sd(all_sims$PseudoA)`). A regression predicting b from $Z_g$ showed a $R^2$=`r reg1sum$r.squared`. A moderated regression across all five conditions showed a $\Delta$$R^2$=`r reg3sum$r.squared-reg1sum$r.squared`, with an $F_{(1, 4943349)}$=`r r2change$F[2]`.
 
 The average difference between our a-estimate and pseudo-a statistic was `r mean(all_sims$differenceA)`, with a $t_{(4940181)}$=`r ttest_a$statistic`, *p*<0.05. Visual inspection of this effect seem to occur such that a-parameters above 1 occasionally had consistently underestimated $\hat{a}$ values.The average difference between our b-estimate and pseudo-b statistic was `r mean(all_sims$differenceB)`, with a $t_{(4940181)}$=`r ttest_b$statistic`, *p*=0.18. 
 
+
+Overall, the average slope was `r slope` and the average intercept of `r intercept`.
+
+A modification of the $Z_g$ was done such that the inverse of the standard normal deviate was retained instead of the absolute value. There was also a regression derived modifier place on the previous $\hat{a}$ estimated using @kulas2017approximate. This was a value of 1.72. These modifications were both made to more closely approximate the IRT metric. 
 
 
 # Study 2 - Evaluating the Comparability of IRT and CTT ICC's
