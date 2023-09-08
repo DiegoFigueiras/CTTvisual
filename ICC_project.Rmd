@@ -301,7 +301,7 @@ all_sims$differenceB<-all_sims$b-all_sims$pseudob
 
 ```
 
-For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were extracted. Separate and overall regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. $\leftarrow$ [NEEDS CLARIFICATION]
+For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were extracted. Regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. $\leftarrow$ [NEEDS CLARIFICATION]
 
 We used `r cite_r("r-references.bib")` for all analyses and manuscript development.
 
@@ -388,7 +388,7 @@ Across all five conditions, simulated distributions resulted in an average empir
 
 [^bbut]: $z_g$ specification was simplified to the inverse of the standard normal deviate in all current paper analyses. The $\hat{a_i}$ specification also included a multiplying constant of 1.7 to approximate the logistic specification of the 2PL. 
 
-A regression predicting b from $z_g$ showed a $R^2$=`r reg1sum$r.squared`. Regarding possible differences across simulation conditions, a moderated regression yeilded a significant interaction effect ($F_{(1, 4,943,349)}$=`r r2change$F[2]`, *p* < .001), but this was due to our exceedingly large sample size ($\Delta{R^2}$=`r reg3sum$r.squared-reg1sum$r.squared`). $\leftarrow$ [WE NEED TO REPORT THE STEP 1 AND STEP 2 RESULTS AS WELL]
+A regression predicting b from $z_g$ showed a $R^2$=`r reg1sum$r.squared`. Regarding possible differences across simulation conditions, a moderated regression yielded a significant interaction effect ($F_{(1, 4,943,349)}$=`r r2change$F[2]`, *p* < .001), but this was due to our exceedingly large sample size ($\Delta{R^2}$=`r reg3sum$r.squared-reg1sum$r.squared`). $\leftarrow$
 
 We retained the slope and intercept of this regression equation to inform our $z_g$ scaling coefficients, which were *b* = `r slope` and *a* = `r intercept`. Application of these values to the $z_g$ specification theoretically places the CTT estimate on a metric more closely approximating the IRT parameter. Study 2 tests this premise empirically. 
 
@@ -396,9 +396,9 @@ We retained the slope and intercept of this regression equation to inform our $z
 
 ## Procedure and Methods
 
-The purpose of Study 2 was to evaluate the comparability of IRT- and CTT-derived ICCs. We generated ICCs from one simulated and six real-world test datasets. The real-world datasets represent responses from the Test of English as a Foreign Language (TOEFL) iBT$\leftarrow$[WHAZZAT?]. The two TOEFL ITP datasets come from two test forms and include item-level scores. $\leftarrow$[REWORD - explain "form"] This test has subscales that assess different skills: reading (k=39), listening (k=40), and speaking (k=35). Each dataset includes responses from 10,000 examinees, and the examinee populations for the two forms do not overlap. [WE NEED TO EXPLAIN THE WINGEN DATA - ALSO TOEFL A BIT MORE]
+The purpose of Study 2 was to evaluate the comparability of IRT- and CTT-derived ICCs. We generated ICCs from one simulated and six real-world test datasets. The real-world datasets represent responses from the Test of English as a Foreign Language Institutional Testing Program (TOEFL ITP). The two TOEFL ITP datasets represent two different test forms and include item-level scores. These tests have subscales that assess different skills: reading (k=39), listening (k=40), and speaking (k=35). Each dataset includes responses from 10,000 examinees, and the examinee populations for the two forms do not overlap. The simulated data had number of items *k*=100 and "respondents" *n*=10,000, and were generated using @han2007wingen3. Because we wanted a range of universally positive item discrimination values to model, we specified a mean a-parameter value of 2 (sd = 0.8). The mean b-parameter value was set at 0 (sd = 0.5). 
 
-Differential item functioning (DIF) is estimated via calculating the area between ICCs. For the current study, DIF was calculated along a two-dimensional plotting space defined by an x-axis ranging from -6 to 6 and a y-axis ranging from 0 to 1, creating a maximum possible 2-dimensional area of 13. $\leftarrow$[should probably also do a standard DIF estimate]
+Differential item functioning (DIF) is estimated via calculating the area between ICCs. For the current study, DIF was calculated along a two-dimensional plotting space defined by an x-axis ranging from -6 to 6 and a y-axis ranging from 0 to 1, creating a maximum possible 2-dimensional area of 13. $\leftarrow$[should probably also do a standard DIF estimate]. 
 
 ## Results
 
@@ -809,7 +809,7 @@ The mean geometric difference for all 100 curves from the simulated dataset was 
 
 [^8]: *Note*. The theta range in figure \@ref(fig:plotting) is between -4 to 4 for compliance with standard convention, but the DIF was calculated on a -6 to 6 range. 
 
-The average DIF across all 7 datasets was `r mean(auc_together$auc)` (SD=`r sd(auc_together$auc)`). There was no difference in average DIF across the 7 datasets ($F_{(6, 321)}$ =`r auc_anova[1,4]`, *p*\>.05). Out of the 328 items, only 17 (5.2%) had a DIF above 0.3.
+The average DIF across all 7 datasets was `r mean(auc_together$auc)` (sd=`r sd(auc_together$auc)`). There was no difference in average DIF across the 7 datasets ($F_{(6, 321)}$ =`r auc_anova[1,4]`, *p*\>.05). Out of the 328 items, only 17 (5.2%) had a DIF above 0.3.
 
 The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using @R-geiger_a's package. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas).
 
