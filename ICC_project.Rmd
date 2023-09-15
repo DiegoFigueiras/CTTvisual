@@ -380,7 +380,7 @@ Across all five conditions, simulated distributions resulted in an average empir
 
 [^bbut]: $z_g$ specification was simplified to the inverse of the standard normal deviate in all current paper analyses.  
 
-A regression predicting *b* from $z_g$ returned a $R^2$ value of `r reg1sum$r.squared`. Regarding possible differences across simulation conditions, a moderated hierarchical regression did yield a significant interaction effect ($F_{(1, 4,943,349)}$ = `r r2change$F[2]`, *p* < .001), but this was due to our large sample size ($\Delta{R^2}$ = `r round(reg3sum$r.squared-reg1sum$r.squared,5)`).
+A regression predicting *b* from $z_g$ returned a $R^2$ value of `r reg1sum$r.squared`. Figure \@ref(fig:stackedplot) shows the distribution of slopes and intercepts across our five million simulations. Regarding possible differences across simulation conditions, a moderated hierarchical regression did yield a significant interaction effect ($F_{(1, 4,943,349)}$ = `r r2change$F[2]`, *p* < .001), but this was due to our large sample size ($\Delta{R^2}$ = `r round(reg3sum$r.squared-reg1sum$r.squared,5)`).
 
 We retained the slope and intercept of this regression equation to inform our $z_g$ scaling coefficients, which were *b* = `r slope` and *a* = `r intercept`. $\leftarrow$ BUT WHY WAS OUR T-TEST NS? DID WE ALSO USE THESE COEFFICIENTS IN THE SIMULATIONS? IF SO, THE T-TESTS SHOULD APPEAR UNDERNEATH THIS SECTION. Application of these values to the $z_g$ specification theoretically places the CTT estimate on a metric more closely approximating the IRT parameter. Study 2 tests this premise empirically. 
 
@@ -532,6 +532,7 @@ gridExtra::grid.arrange(h1,h2, nrow=1, ncol=2)
 #Preparing data
 library(geiger)
 library(ctticc)
+library(mirt)
 ############################### Wingen ############################################################################
 data<-read.csv("simulated_dataWINGEN.csv", header=FALSE)
 df<-data.frame(ctticc(data))
@@ -800,9 +801,9 @@ auc_anova<-anova(reg)
 
 ```
 
-The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed using @R-geiger_a's package. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas).
+The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas).
 
-The average DIF across all 7 datasets was `r mean(auc_together$auc)` (sd=`r sd(auc_together$auc)`). There was no difference in average DIF across the 7 datasets ($F_{(6, 321)}$ =`r auc_anova[1,4]`, *p* \> .05). The range of DIF values had a smallest value of `` and a largest values of ``. Only 17 (5.2%) of the 328 total investigated items exhibited a DIF above 0.3. Figure \@ref(fig:histrogram) presents histograms of the individual DIF magnitudes organized by focal test. The simulated test data returned an average DIF estimate of `r mean(data0$diff)` whereas the TOEFL tests returned an average estimate of `r mean(df_plot$diff)` across `r nrow(df_plot)` investigated items. 
+The average DIF across all 7 datasets was `r mean(auc_together$auc)` (sd=`r sd(auc_together$auc)`). The range of DIF values had a smallest value of `r min(auc_together$auc)`, and a maximum value of `r max(auc_together$auc)`. There was no difference in average DIF across the 7 datasets ($F_{(6, 321)}$ =`r auc_anova[1,4]`, *p* \> .05). Only 17 (5.2%) of the 328 total investigated items exhibited a DIF above 0.3. Figure \@ref(fig:histrogram) presents histograms of the individual DIF magnitudes organized by focal test. The simulated test data returned an average DIF estimate of `r mean(data0$diff)` whereas the TOEFL tests returned an average estimate of `r mean(df_plot$diff)` across `r nrow(df_plot)` investigated items. 
 
 [^8]: Note that the theta range in figure \@ref(fig:plotting) is between -4 to 4 to be consistent with convention -- the DIF was actually calculated along values ranging from -6 to 6. 
 
