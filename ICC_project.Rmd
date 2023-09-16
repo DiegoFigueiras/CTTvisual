@@ -129,9 +129,11 @@ Item characteristic curves are frequently consulted by psychometricians as visua
 
 When interpreting an ICC representing a true test item, the observer extracts the relationship between a respondent's trait level and the corresponding expectation of answering the item correctly. If the function transitions from low to high likelihood at a location toward the lower end of the trait (e.g., "left" on the plotting surface), this indicates that it is *relatively easy* to answer the item correctly. Stated in the parlance of IRT or Rasch traditions, it does not take much $\theta$ to have a high likelihood of answering correctly. On the contrary, if the growth in the curve occurs primarily at higher trait levels, this indicates that the item is relatively more difficult. Through the lens of IRT, if discrimination is modeled and the curve is sharp (e.g., strongly vertical), this indicates greater item discrimination across trait levels; if it is flatter, that is an indication of poorer discrimination (see Figure \@ref(fig:example) for some exemplar ICCs).
 
-Item difficulty (the IRT *b*-parameter) is typically expressed as the trait level associated with a 50% likelihood of correct response (e.g., it is scaled to $\theta$). Item discrimination (the *a*-parameter) reflects the degree to which an item differentiates across individuals who are located relatively lower or higher on the trait and is scaled to the slope of the ICC function at the same 50% likelihood of correct response location[^3]. From a classical test theory (CTT) orientation, item difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p*-value). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted contemporary index is the corrected item-total correlation.
+Item difficulty (the IRT *b*-parameter) is typically expressed as the trait level associated with a 50% likelihood of correct response (e.g., it is scaled to $\theta$). Item discrimination (the *a*-parameter) reflects the degree to which an item differentiates across individuals who are located relatively lower or higher on the trait and is scaled to the slope of the ICC function at the same 50% likelihood of correct response location[^3]. From a classical test theory (CTT) orientation, item difficulty is most commonly represented by the percent of individuals answering the item correctly (also referred to as a *p* value[^history]). Item discrimination can be conveyed via a few different CTT indices, but the most commonly calculated and consulted contemporary index is the corrected item-total correlation.
 
 [^3]: Within the 2PL. If additional item characteristics are modeled, the *a*-parameter may be estimated at a different function location.
+
+[^history]: Without being provided additional context, the psychometric "*p* value" is only distinguishable from the inferential statistic "*p*-value" via conventional notation adherence: omission of the grammatical dash in the case of the difficulty index. 
 
 Assessment specialists who calculate these CTT item indices do not, by tradition, additionally represent them visually, as is common in IRT and Rasch applications. However, ICC's based on CTT indices should provide snapshot psychometric information comparably as valuable as those conveyed by IRT- or Rasch-derived item parameters. The largest obstacle to psychometricians deeming CTT-derived visuals to be of value is likely tied to the concept of invariance, which refers to IRT parameter independence across item and person estimates. However, this property is often overstated, as invariance is only attained with perfect model-data fit (which is never attained), and is also only true after being subjected to linear transformation - commonly across samples [@rupp2006understanding].[^invariance] Additionally, several comparative investigations have noted commonality between IRT and CTT difficulty and discrimination estimates as well as relative stability of CTT estimates when samples are large and/or judisciously constructed [e.g., @kulas2017approximate].
 
@@ -139,11 +141,11 @@ Assessment specialists who calculate these CTT item indices do not, by tradition
 
 ## CTT and IRT Comparability Investigations
 
-@fan1998item examined associations between CTT item statistics and the parameters derived from the three most popular IRT models (the 1-, 2-, and 3-parameter logistic). Correlations were very high for difficulty estimates - generally between .80 and .90. As for item discrimination, correlations were *moderate* to high, with only a few being very low[^4].  
+@fan1998item examined associations between CTT item statistics and the parameters derived from the three most popular IRT models (the 1-, 2-, and 3-parameter logistic). Correlations were very high for difficulty estimates - generally between .80 and .90. These findings converged with  both earlier and later investigations that also found strong correspondence between difficulty estimates [e.g., @lawson1991one; @macdonald2002monte]. As for item discrimination, correlations were *moderate* to high, with only a few being very low - these estimates tended to be even poorer in @macdonald2002monte's Monte Carlo investigation[^4].  
 
-@fan1998item also investigated index invariance for all models. In theory, the major advantage of IRT models over CTT is that the latter has an interdependency between the item and person statistics, whereas under ideal circumstances IRT parameters have no such dependency. Within  CTT examinations, for example, the average item difficulty is equivalent to the average person score - these indices are merely reflective of averages computed across rows or columns. What @fan1998item reported in his study, however, did not support the purported invariant advantage of IRT parameters over CTT indices. Both CTT-derived item difficulty and discrimination indices exhibited similar levels of invariance to the IRT-derived parameters. @fan1998item in fact summarizes that the IRT and CTT frameworks "...produce very similar item and person statistics" (p.379). @hambleton1993comparison state that "no study provides enough empirical evidence on the extent of disparity between the two frameworks and the superiority of IRT over CTT despite the theoretical differences". $\leftarrow$ ADD @macdonald2002monte HERE - DIEGO READ AND ADD A SENTENCE OR TWO
+@fan1998item also investigated index invariance for all models. In theory, the primary advantage of IRT- over CTT-models is that the latter has an intractable dependency between the item and person statistics, whereas under ideal circumstances IRT parameters have no such dependency. Within  CTT examinations, for example, the average item difficulty is necessarily equivalent to the average person score - these CTT indices are merely reflective of averages computed across rows or columns. What @fan1998item reported in his study, however, did not support the purported invariant advantage of IRT parameters over CTT indices. Both CTT-derived item difficulty and discrimination indices exhibited similar levels of invariance to the IRT-derived parameters. @fan1998item in fact summarizes that the IRT and CTT frameworks "...produce very similar item and person statistics" (p.379). @macdonald2002monte's Monte Carlo simulations agreed with the @fan1998item conclusion regarding *difficulty* and person estimates, but did note superior performance of IRT relative to CTT discrimination estimates. 
 
-[^4]: And in fact, as is presented below, the relationship between the IRT and CTT discrimination indices is non-linear. The Pearson's product moment correlation is not the most appropriate index to capture the extent of the magnitude of this relationship.
+[^4]: As is presented below, the relationship between the IRT and CTT discrimination indices is non-linear. The Pearson's product moment correlation was consulted in both @fan1998item and @macdonald2002monte although it is not the most appropriate index to capture the magnitude of the relationship.
 
 ## Relationship(s) between IRT and CTT Indices
 
@@ -165,11 +167,12 @@ The @kulas2017approximate investigations identified systematically predictive di
 \hat{a_i}\cong[(.51 + .02z_g + .3z_g^2)r]+[(.57 - .009z_g + .19z_g^2)\frac{e^r-e^{-r}}{e-e^r}]
 \end{equation}
 ```
-$g$ here represents the absolute deviation from 50% responding to an item correctly and 50% responding incorrectly (e.g., a "*p*-value" of .5). $z_g$ is the standard normal deviate associated with $g$. This transformation of the common *p*-value was recommended by @kulas2017approximate in order to scale the CTT index along a (closer to) interval-level metric more directly analogous to the IRT *b*-parameter. 
+
+Figure \@ref{fig:acorrected} presents a visual representation of the non-linear relationship between the two models' discrimination indices. Within the revised formula, $g$ represents the absolute deviation from 50% responding to an item correctly and 50% responding incorrectly (e.g., a "*p* value" of .5). $z_g$ is the standard normal deviate associated with $g$. This transformation of the common *p* value was recommended by @kulas2017approximate in order to scale the CTT index along a (closer to) interval-level metric more directly analogous to the IRT *b*-parameter. 
 
 We retained the @kulas2017approximate $\hat{a_i}$ and $z_g$ indices as "starting points" in the current investigation. Because our intent was to generate ICCs that could be directly contrasted with IRT-derived ICCs, the current Study 1 also focused on amending the @kulas2017approximate formulas to place $z_g$ and $\hat{a_i}$ on scales more closely aligned with the IRT *b* and *a* parameters.  
 
-```{r acorrected, fig.cap="@kulas2017approximate's proposed functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (*p*-value; solid = .5, dashed = .3/.7, dotted = .1/.9).", eval=FALSE}
+```{r acorrected, fig.cap="@kulas2017approximate's proposed functional relationship between the IRT *a* parameter and the CTT corrected-item total correlation as a function of item difficulty (*p* value; solid = .5, dashed = .3/.7, dotted = .1/.9).", eval=TRUE}
 g<-abs(qnorm(.5))
 g<-0
 r2<-.5          ## changed from .3 - 10/13/22
@@ -191,9 +194,9 @@ curve(ahat, lty="dotted", add=TRUE)
 
 ## Summary and Overall Purpose
 
-The primary goal of the current project was to generate CTT-derived ICCs. As a standard of comparison, however, we also endeavored to evaluate the CTT-derived ICCs against their IRT-derived counterparts. These comparisons are only feasible if the CTT indices can be reasonably expressed on the IRT parameter metric (or vice versa). @fan1998item demonstrated strong associations between the CTT *p*-value and IRT *b*-parameter, but did not attempt a scaling linkage. Similarly, @kulas2017approximate focused on nonlinear functional specification rather than metric of expression.  Study 1 is therefore focused on the development of linking equations such that the CTT *p*-value and corrected item-total correlation may be approximated along the IRT *b*- and *a*-parameter metrics. 
+The primary goal of the current project was to generate CTT-derived ICCs. As a standard of comparison, however, we also endeavored to evaluate the CTT-derived ICCs against their IRT-derived counterparts. These comparisons are only feasible if the CTT indices can be reasonably expressed on the IRT parameter metric (or vice versa). @fan1998item demonstrated strong associations between the CTT *p* value and IRT *b*-parameter, but did not attempt a scaling linkage. Similarly, @kulas2017approximate focused on nonlinear functional specification rather than metric of expression.  Study 1 is therefore focused on the development of linking equations such that the CTT *p* value and corrected item-total correlation may be approximated along the IRT *b*- and *a*-parameter metrics. 
 
-```{r simulatedgraphs, results="hide", fig.cap="Shape of prescribed distributions of *p*-values across Study 1 conditions."}
+```{r simulatedgraphs, results="hide", fig.cap="Shape of prescribed distributions of *p* values across Study 1 conditions."}
 
 dparabola <- function(x){ifelse(x < 1 | x > 5, 0, (3/16)*(x-3)^2)}
 library(ggplot2)
@@ -246,7 +249,7 @@ grid.arrange(g5,g2,g1,g3,g4, nrow=2, ncol=3)
 # Study 1
 ## Procedure and methods
 
-Study 1 focused on simulated datasets of binary item responses. The simulated data prescriptively differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p*-values ranging from low (approaching 0) to high (approaching 1) at roughly equal levels of frequency. The second distribution was effectively normal with *p*-values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p*-values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of idealized distributional forms that were prescribed across our simulations
+Study 1 focused on simulated datasets of binary item responses. The simulated data prescriptively differed in distributions of item difficulty while keeping the numbers of items (*k*=100) and "respondents" (*n*=10,000) equivalent. The first distributional form was uniform, with *p* values ranging from low (approaching 0) to high (approaching 1) at roughly equal levels of frequency. The second distribution was effectively normal with *p* values centered around 0.5. The third distribution was an inverted normal distribution also centered around 0.5. The fourth distribution was a negatively skewed distribution of *p* values, and the fifth was positively skewed. Figure \@ref(fig:simulatedgraphs) provides a visual representation of idealized distributional forms that were prescribed across our simulations
 
 ```{r voldy, eval=TRUE, cache=TRUE}
 library(tidyverse)
@@ -291,9 +294,9 @@ all_sims$differenceB<-all_sims$b-all_sims$pseudob
 
 ```
 
-For each simulation, we estimated CTT *p*-values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were extracted. Regressions were applied to predict the IRT *b* parameter from the *p*-value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. $\leftarrow$ [NEEDS CLARIFICATION]
+For each simulation, we estimated CTT *p* values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were extracted. Regressions were applied to predict the IRT *b* parameter from the *p* value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. $\leftarrow$ [NEEDS CLARIFICATION]
 
-Across all simulations, for items with extreme *p*-values (less than 0.02 or greater than 0.98), 200 responses were modified. For items with *p*-values less than 0.02, 200 random responses of "1.0" were substituted. For items with *p*-values greater than 0.98, 200 random responses were given values of "0.0". This was done so the IRT models would less likely converge with  disproportionately extreme estimates. 
+Across all simulations, for items with extreme *p* values (less than 0.02 or greater than 0.98), 200 responses were modified. For items with *p* values less than 0.02, 200 random responses of "1.0" were substituted. For items with *p* values greater than 0.98, 200 random responses were given values of "0.0". This was done so the IRT models would less likely converge with  disproportionately extreme estimates. 
 
 Across both Study 1 and 2, analyses and manuscript development was accomplished via `r cite_r("r-references.bib")`.
 
@@ -388,9 +391,7 @@ We retained the slope and intercept of this regression equation to inform our $z
 
 ## Procedure and Methods
 
->NOTE. Let's check the current results against results with a 1.7 modifier instead of 1.72 (need to do within `ctticc`)
-
-The purpose of Study 2 was to evaluate the comparability of IRT- and CTT-derived ICCs. We generated ICCs from one simulated and six real-world test datasets. The real-world datasets represent responses from the Test of English as a Foreign Language institutional testing program (TOEFL ITP). The TOEFL ITP has subscales of: reading (k=39), listening (k=40), and speaking (k=35). There were two different test forms. Two datasets representing responses to items defining the three subscales both include responses from 10,000 examinees, and the examinee samples for the two forms do not overlap. 
+The purpose of Study 2 was to evaluate the comparability of IRT- and CTT-derived ICCs. We generated ICCs from one simulated and six real-world test datasets. The real-world datasets represent responses from the Test of English as a Foreign Language institutional testing program (TOEFL ITP). The TOEFL ITP has subscales of: reading (*k*=39), listening (*k*=40), and speaking (*k*=35). There were two different test forms. Datasets representing responses to items from the two different forms defining the three subscales both included responses from 10,000 examinees, and the examinee samples for the two forms did not overlap. 
 
 The simulated data were generated using Wingen [@han2007wingen3]. One dataset with 100 binary response items and 10,000 "respondents" was requested. Because we wanted a range of universally positive item discrimination values to model, we generated responses derived from a normal and centrally located distribution of "ability" and items with a mean *a*-parameter value of 2 (sd = 0.8) and a mean *b*-parameter value of 0 (sd = 0.5). 
 
@@ -809,7 +810,7 @@ The average DIF across all 7 datasets was `r mean(auc_together$auc)` (sd=`r sd(a
 
 # Discussion
 
-Important psychometric information can be extracted from ICC's, which are typically visual representations of item difficulty and discrimination. Psychometricians and other assessment specialists by tradition seek to generate ICC's within the broader frameworks of IRT and/or Rasch models. Of course there is always an intractability between the CTT item-difficulty index and respondent sample ability. The findings of previous comparison studies, however, point to the CTT estimates exhibiting some degree of invariance across respondent samples. The proposal of the current presentation is that ICC's derived from CTT statistics may provide snapshot psychometric information similar in value to those derived from IRT parameters.  Practitioners and researchers who do not retain IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics. 
+Important psychometric information can be extracted from ICC's. Assessment specialists by tradition seek to generate ICC's only within the broader frameworks of IRT and/or Rasch models. Of course there is always an intractability between the CTT item-difficulty index and respondent sample ability. The findings of previous comparison studies, however, point to the CTT estimates exhibiting some degree of invariance across respondent samples. The proposal of the current presentation is that ICC's derived from CTT statistics may provide snapshot psychometric information similar in value to those derived from IRT parameters.  Practitioners and researchers who do not retain IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics. 
 
 The noted geometric areas between curves for all investigated items was, on average, low. 
 
@@ -825,9 +826,15 @@ IRT analyses are also data hungry. These CTT-derived ICC estimates may be useful
 
 Because the ICCs are derived from the same individuals, the current application does not require the same parameter scaling that is typically required in DIF investigations where the ICCs reflect responses from different groups that likely have different underlying distributions of ability. 
 
+IRT models can converge with wildly large *b*-parameter estimates with extremely difficult or easy items [PROBABLY NEED CITE OR PERSONAL EXPERIENCE STATEMENT]. This is possibly the reason previous investigations have noted an advantage to the CTT-derived difficulty estimates with regard to index invariance [e.g., @fan1998item; @lawson1991one]. The CTT estimate does not suffer this possibility.
 
+## Tada (the end)
 
-IRT models can converge with wildly large *b*-parameter estimates with extremely difficult or easy items [PROBABLY NEED CITE OR PERSONAL EXPERIENCE STATEMENT]. The CTT estimate does not suffer this possibility.
+There is a popular @thorndike1982educational quote by regarding the rising popularity of IRT models that has been noted in previous IRT-CTT investigations [e.g., @fan1998item; @macdonald2002monte] that bears inclusion here:
+
+>For the large bulk of testing, both with locally developed and with standardized tests, I doubt that there will be a great deal of change. The items that we will select for a test will not be much different from those we would have selected with earlier procedures, and the resulting tests will continue to have much the same properties. (p. 12)
+
+We agree, and offer a gift to CTT practitioners from the IRT tradition - not 
 
 \newpage
 
