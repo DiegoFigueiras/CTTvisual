@@ -10,7 +10,10 @@ install.packages("difR")
 library(difR)
 
 chi_squares<-LordChi2(df_IRT, df_CTT)%>%as.data.frame()
-write.csv(chi_squares, "chi_squares.csv")
+#write.csv(chi_squares, "chi_squares.csv")
+raju <- RajuZ(df_IRT, df_CTT)%>%as.data.frame()  ## where's the AUC frame?
+together <- cbind(df_CTT,raju)
+cor(together)
 
 df_diff<-df_plot%>%dplyr::select(diff)
 df_diff<-df_diff[1:40,]%>%as.data.frame()
@@ -41,3 +44,4 @@ curve(eq1, col="red", xlim=c(-4,4))
 
 eq2 <- function(x){c + ((1-c)*(1/(1+2.71828^(-1.7*(a*(x-b))))))}
 curve(eq2, col="blue", add=T)
+

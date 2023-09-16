@@ -810,7 +810,7 @@ The average DIF across all 7 datasets was `r mean(auc_together$auc)` (sd=`r sd(a
 
 # Discussion
 
-Important psychometric information can be extracted from ICC's. Assessment specialists by tradition seek to generate ICC's only within the broader frameworks of IRT and/or Rasch models. Of course there is always an intractability between the CTT item-difficulty index and respondent sample ability. The findings of previous comparison studies, however, point to the CTT estimates exhibiting some degree of invariance across respondent samples. The proposal of the current presentation is that ICC's derived from CTT statistics may provide snapshot psychometric information similar in value to those derived from IRT parameters.  Practitioners and researchers who do not retain IRT or Rasch models and instead opt to follow a CTT philosophy would benefit from having ICC's that use CTT statistics. 
+Valuable psychometric information can be quickly extracted from ICC's. Assessment specialists, by tradition, exclusively seek to generate ICC's within the frameworks of IRT and/or Rasch models. Of course there will always be an intractability between the CTT item indices and respondent sample abilities. The findings of previous comparison studies, however, point to the CTT estimates exhibiting a moderate-to-high degree of: 1) comparability to IRT parameters, and 2) invariance across respondent samples. The proposal of the current presentation is that ICC's derived from CTT statistics may provide snapshot psychometric information similar in value to those derived from IRT parameters. There's little *practical* (as well as perhaps empirical) reason for assessment specialists who rely on a CTT framework to be denied the privilege of ICCs. 
 
 The noted geometric areas between curves for all investigated items was, on average, low. 
 
@@ -830,7 +830,7 @@ IRT models can converge with wildly large *b*-parameter estimates with extremely
 
 ## Tada (the end)
 
-There is a popular @thorndike1982educational quote by regarding the rising popularity of IRT models that has been noted in previous IRT-CTT investigations [e.g., @fan1998item; @macdonald2002monte] that bears inclusion here:
+There is a popular @thorndike1982educational quote regarding the (at the time) rising popularity of IRT models that has been noted in previous IRT-CTT investigations [e.g., @fan1998item; @macdonald2002monte]. The quote also bears inclusion here:
 
 >For the large bulk of testing, both with locally developed and with standardized tests, I doubt that there will be a great deal of change. The items that we will select for a test will not be much different from those we would have selected with earlier procedures, and the resulting tests will continue to have much the same properties. (p. 12)
 
