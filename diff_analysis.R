@@ -1,19 +1,33 @@
-#source("ETS/ETS_data2.R", local = knitr::knit_global()) RUN THIS SOURCE SCRIPT FIRST
+source("ETS/ETS_data2.R", local = knitr::knit_global()) 
 
 df_plot2$item<-row.names(df_plot2)
 
 df_item<-df_plot2%>%dplyr::select(a, b, PseudoA, PseudoB, item)
 df_IRT<-df_item[1:40,]%>%dplyr::select(a,b)
+df_IRT$group<-"IRT"
 df_CTT<-df_item[1:40,]%>%dplyr::select(PseudoA,PseudoB)
+df_CTT$group<-"CTT"
+colnames(df_CTT)<-c("a","b", "group")
+together<-rbind(df_IRT, df_CTT)
 
 install.packages("difR")
 library(difR)
 
 chi_squares<-LordChi2(df_IRT, df_CTT)%>%as.data.frame()
 #write.csv(chi_squares, "chi_squares.csv")
-raju <- RajuZ(df_IRT, df_CTT)%>%as.data.frame()  ## where's the AUC frame?
-together <- cbind(df_CTT,raju)
+raju_sign <- RajuZ(df_IRT, df_CTT, signed=TRUE)%>%as.data.frame()  ## where's the AUC frame?
+raju_unsign <- RajuZ(df_IRT, df_CTT, signed=FALSE)%>%as.data.frame()
+together_signed <- cbind(df_CTT,raju_sign)
+together_unsigned <- cbind(df_CTT,raju_unsign)
 cor(together)
+
+together_params<-together%>%select(a,b)
+# Saving the output into the "RAJUresults.txt" file (and default path)
+r <- difRaju(irtParam=together_params, group = together$group, focal.name = "IRT", model = "2PL",
+             save.output = TRUE, output = c("RAJUresults","default"))
+
+# Graphical devices
+plot(r)
 
 df_diff<-df_plot%>%dplyr::select(diff)
 df_diff<-df_diff[1:40,]%>%as.data.frame()

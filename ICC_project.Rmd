@@ -800,6 +800,18 @@ auc_together$condition<-as.factor(auc_together$condition)
 reg<-lm(auc~condition, auc_together)
 auc_anova<-anova(reg)
 
+
+
+
+
+```
+
+
+
+```{r diff, message=FALSE, warning=FALSE, paged.print=FALSE, cache=TRUE}
+
+source("diff_analysis.R", local = knitr::knit_global())
+
 ```
 
 The mirt package [@R-mirt] was used to compute and plot the IRT statistics. To quantify the degree of difference between the two curves, the Area Between Curves was computed. Figure \@ref(fig:plotting) presents some example ICCs exhibiting small, moderate, and relatively large levels of DIF. Here, the blue curves were plotted using 2PL IRT parameters (a and b), while the red curves were plotted using CTT parameters (p-values and corrected item-total correlations, re-scaling and modifying them with @kulas2017approximate formulas).
