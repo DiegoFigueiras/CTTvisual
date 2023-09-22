@@ -294,9 +294,11 @@ all_sims$differenceB<-all_sims$b-all_sims$pseudob
 
 ```
 
-For each simulation, we estimated CTT *p* values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were extracted. Regressions were applied to predict the IRT *b* parameter from the *p* value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. $\leftarrow$ [NEEDS CLARIFICATION - ALSO INCLUDE *a* ESTIMATION (1.72)] The simulated data was specified via... $\leftarrow$ EXPLAIN SIMULATION SCRIPT HERE
+For each simulation, we estimated CTT *p* values and corrected item-total correlations via the `psych` package [@R-psych]. The 2PL was also applied via the `mirt` package [@R-mirt], and *a* and *b* parameters were extracted. Regressions were applied to predict the IRT *b* parameter from the *p* value derived $z_g$ statistic to ensure that the relationship between *b* and $z_g$ didn't depend on the distribution of item characteristics. $\leftarrow$ [NEEDS CLARIFICATION - ALSO INCLUDE *a* ESTIMATION (1.72)] The simulated data was specified across the five conditions by using a for loop that generated p-values that had different distributions. To accomplish this, the runif() base-R function was used for the uniform and inverted distribution conditions, and rsnorm() for the normal and skewed distribution conditions. These p-values were then used to generate the binary item responses using the simIrt() function in [@R-mirt]. 
 
 Across all simulations, for items that realized extreme empirical *p* values (less than 0.02 or greater than 0.98), 200 responses were modified. For items with *p* values less than 0.02, 200 random responses of "1.0" were substituted. For items with *p* values greater than 0.98, 200 random responses values of "0.0" were imputed. This was done so the IRT models would be less likely converge on disproportionately extreme estimates. $\leftarrow$ NEEDS CITATION - PROBABLY TEXTBOOK CAN'T FIND ARTICLES
+
+We noted throughout our investigations that the "pseudo" *a* was systematically underpredicting the actual IRT a-parameter, so we ran regressions to further modify the "pseudo"-a scaling from the original @kulas2017approximate formula. Our regression modification added a further slope coefficient of 1.72 which resulted in a more precise rescaling of the CTT corrected item-total correlation.
 
 Across both Study 1 and 2, all analyses and manuscript development was accomplished via `r cite_r("r-references.bib")`.
 
@@ -379,15 +381,14 @@ p1
 
 For all reported analyses, items that evidenced *b* values more extreme than |3| were excluded. We made this procedural decision because of our primary interest to place the CTT estimates on scales most likely approximating the IRT metric. Extreme cases would have the potential to skew linking coefficients. 
 
-Across all five conditions, simulated distributions resulted in an average empirical *a*-estimate of `r mean(all_sims$a)` (sd = `r sd(all_sims$a)`) and average empirical *b*-estimate of `r mean(all_sims$b)` (sd = `r sd(all_sims$b)` ). The average $z_g$ was `r mean(all_sims$pseudob)` (sd = `r sd(all_sims$pseudob)`)[^bbut], and the average $\hat{a_i}$ was `r mean(all_sims$PseudoA)` (sd = `r sd(all_sims$PseudoA)`). A paired samples t-test revealed a consistent *under*prediction effect for $\hat{a_i}$ relative to the IRT *a*-parameter ($\bar{D}$ = `r mean(all_sims$differenceA)`; $t_{(4,940,181)}$ = `r ttest_a$statistic`, *p* < 0.001). Visual inspection of this effect confirmed that the underestimation became more likely with strongly discriminating items, and the effect was universal (e.g., systematic - there is likely further refinement that could be applied to the $\hat{a_i}$ formula in future applications). The $\hat{a_i}$ specification also included a multiplying constant of 1.7 to approximate the logistic specification of the 2PL. $\leftarrow$ EXPLAIN HOW GOT THIS AND SEQUENCE
-
+Across all five conditions, simulated distributions resulted in an average empirical *a*-estimate of `r mean(all_sims$a)` (sd = `r sd(all_sims$a)`) and average empirical *b*-estimate of `r mean(all_sims$b)` (sd = `r sd(all_sims$b)` ). The average $z_g$ was `r mean(all_sims$pseudob)` (sd = `r sd(all_sims$pseudob)`)[^bbut], and the average $\hat{a_i}$ was `r mean(all_sims$PseudoA)` (sd = `r sd(all_sims$PseudoA)`). A paired samples t-test revealed a consistent *under*prediction effect for $\hat{a_i}$ relative to the IRT *a*-parameter ($\bar{D}$ = `r mean(all_sims$differenceA)`; $t_{(4,940,181)}$ = `r ttest_a$statistic`, *p* < 0.001). Visual inspection of this effect confirmed that the underestimation became more likely with strongly discriminating items, and the effect was universal (e.g., systematic - there is likely further refinement that could be applied to the $\hat{a_i}$ formula in future applications). The $\hat{a_i}$ specification also included a multiplying constant of 1.7 to approximate the logistic specification of the 2PL.
 The average difference between the IRT *b*-parameter and $z_g$ was non-significant ($\bar{D}$ = `r mean(all_sims$differenceB)`; $t_{(4,940,181)}$ = `r ttest_b$statistic`, *p* = 0.18). 
 
 [^bbut]: $z_g$ specification was simplified to the inverse of the standard normal deviate in all current paper analyses.  
 
 A regression predicting *b* from $z_g$ returned a $R^2$ value of `r reg1sum$r.squared`. Figure \@ref(fig:stackedplot) shows the distribution of slopes and intercepts across our five million simulations. Regarding possible differences across simulation conditions, a moderated hierarchical regression did yield a significant interaction effect ($F_{(1, 4,943,349)}$ = `r r2change$F[2]`, *p* < .001), but this was due to our large sample size ($\Delta{R^2}$ = `r round(reg3sum$r.squared-reg1sum$r.squared,5)`).
 
-We retained the slope and intercept of this regression equation to inform our $z_g$ scaling coefficients, which were *b* = `r slope` and *a* = `r intercept`. $\leftarrow$ BUT WHY WAS OUR T-TEST NS? DID WE ALSO USE THESE COEFFICIENTS IN THE SIMULATIONS? IF SO, THE T-TESTS SHOULD APPEAR UNDERNEATH THIS SECTION. Application of these values to the $z_g$ specification theoretically places the CTT estimate on a metric more closely approximating the IRT parameter. Study 2 tests this premise empirically. 
+We retained the slope and intercept of this regression equation to inform our $z_g$ scaling coefficients, which were *b* = `r slope` and *a* = `r intercept`. Application of these values to the $z_g$ specification theoretically places the CTT estimate on a metric more closely approximating the IRT parameter. Study 2 tests this premise empirically. 
 
 # Study 2 
 
@@ -401,7 +402,6 @@ Differential item functioning (DIF) was estimated via directly calculating the a
 
 ## Results
 
-$\rightarrow$ FIGURE 4 SHOULD BE IN STUDY 1, NOT HERE. ALSO THIS ENTIRE SECTION NEEDS REVISION TO DESCRIBE OUR RESULTS
 
 ```{r etsanalysis, message=FALSE, warning=FALSE, include=FALSE, cache=TRUE}
 
@@ -810,7 +810,7 @@ auc_anova<-anova(reg)
 
 
 
-```{r diff, message=FALSE, warning=FALSE, paged.print=FALSE, cache=TRUE}
+```{r diff, message=FALSE, warning=FALSE, paged.print=FALSE, cache=TRUE, eval=FALSE}
 
 source("diff_analysis.R", local = knitr::knit_global())
 
@@ -894,7 +894,6 @@ As shown by Figure 2, our plot looks very similar to that of @kulas2017approxima
 
 metrics Because of simulation data with consistent under-prediction, modifications were applied to both indices. A slight alteration to this index was made in the current investigation whereby the simpler direct inverse of the standard normal deviate was retained.
 
-[^6]
-[^6]: We noted throughout our investigations that the "pseudo" *a* was systematically underpredicting the actual IRT a-parameter, so we ran regressions to further modify the "pseudo"-a scaling from the original @kulas2017approximate formula. Our regression modification added a further slope coefficient of 1.72 which resulted in a more precise rescaling of the CTT corrected item-total correlation.
-
 *Note*. Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this DIF. Base R seems to be the more accurate method.
+
+*Note* Find citations about extreme b parameters due to poor fit. 

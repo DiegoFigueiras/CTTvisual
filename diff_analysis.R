@@ -1,4 +1,4 @@
-source("ETS/ETS_data2.R", local = knitr::knit_global()) 
+#source("ETS/ETS_data2.R", local = knitr::knit_global()) 
 
 df_plot2$item<-row.names(df_plot2)
 
@@ -10,7 +10,7 @@ df_CTT$group<-"CTT"
 colnames(df_CTT)<-c("a","b", "group")
 together<-rbind(df_IRT, df_CTT)
 
-install.packages("difR")
+#install.packages("difR")
 library(difR)
 
 chi_squares<-LordChi2(df_IRT, df_CTT)%>%as.data.frame()
