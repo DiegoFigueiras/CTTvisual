@@ -874,29 +874,8 @@ r_refs("r-references.bib", append=FALSE)         ## append=FALSE auto-updates pa
 ```
 # (APPENDIX) Appendices {.unnumbered}
 
-# Cut stuff
-
-Although ogives could be specified directly from the CTT-derived statistics, the current project retained the IRT 2PL as our functional definition for both IRT and CTT ogive specification:
-
-```{=tex}
-\begin{equation}
-P(\Theta)=\frac{1}{1+e^{-1.7a(\Theta-b)}}
-\end{equation}
-```
-
-
-An adjustment to @lord2012applications's formula giving the functional relationship between the "non-invariant" CTT and "invariant" IRT statistics becomes useful in comparing the two methodologies, despite the supposed lack of invariance from CTT. So even though here we acknowledge that invariance is a categorical IRT property, we still follow the functional modification proposed by @kulas2017approximate, noting that having a large sample that is truly random and whose items are normally distributed and have a center at the moderate difficulty can help reduce threats to CTT "invariance".
-
-##NOTES ##Bias might suggest that rescaled a parameters are systematically larger than z under certain simulations (or not) Variance estimates might suggest that the standard error of rescaled values is larger than those values estimated directly (or not). If differences do exist, one could then go on to articulate the conditions under which they exist (i.e., high difficulty, low difficulty, non-normal distributions of the underlying trait), etc....
-
-> *Note*. Maybe do a different linking via machine learning. Try to find the linking parameters (including p-value distributional shape and location) that minimize DIF across CTT and IRT ICCs (5/27/22 after unsuccessful Friday brainstorming especially regarding simulation 3 [the normally distributed p-values])
-
-2/9/2023 Notes: Check if the a parameter is estimated at the 0.5 location of the function. Research how the a parameter is scaled. Be more specific about the simulations. Write what we did when p-values were 0 and 1 for a column. Check the average a and b per simulation in line 255 For graph 7 update it by stacking the results we got from our simulations with the real data from ETS
-
-As shown by Figure 2, our plot looks very similar to that of @kulas2017approximate (p.8). This confirms that our formula for computing the estimated a-parameter follows the exponential relationship we can see in [@lord2012applications, @kulas2017approximate].
+##NOTES ##Bias might suggest that rescaled a parameters are systematically larger than z under certain simulations (or not) Variance estimates might suggest that the standard error of rescaled values is larger than those values estimated directly (or not). If differences do exist, one could then go on to articulate the conditions under which they exist (i.e., high difficulty, low difficulty, non-normal distributions of the underlying trait), etc...
 
 metrics Because of simulation data with consistent under-prediction, modifications were applied to both indices. A slight alteration to this index was made in the current investigation whereby the simpler direct inverse of the standard normal deviate was retained.
-
-*Note*. Did the integral of the difference between the CTT and IRT functions using the "integrate" function in the "stats" package (base R). Did a test to confirm this accurately reflects the area between curves by creating two curves, one with high discrimination and another with low discrimination, and seeing what the area between curves was using first the geiger package and then base R. Also roughly estimated by hand this DIF. Base R seems to be the more accurate method.
 
 *Note* Find citations about extreme b parameters due to poor fit. 
