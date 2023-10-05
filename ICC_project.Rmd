@@ -835,7 +835,7 @@ Lastly, there is a popular @thorndike1982educational quote regarding the (at the
 
 >For the large bulk of testing, both with locally developed and with standardized tests, I doubt that there will be a great deal of change. The items that we will select for a test will not be much different from those we would have selected with earlier procedures, and the resulting tests will continue to have much the same properties. (p. 12)
 
-The current investigation twists this sentiment slightly by extracting a useful tool from the IRT tradition and extending it to stakeholders operating from within a CTT framework. 
+The current investigation proposes a congenial inversion of this sentiment; extracting a useful tool from the IRT tradition and extending it to stakeholders operating from within a CTT framework. 
 
 \newpage
 
