@@ -1,0 +1,16 @@
+Dear Editors-in-chief,
+
+Attached please find the manuscript entitled, "Item Characteristic Curve estimation via Classical Test Theory specification", co-authored by John Kulas. We believe this project will be of particular interest to the readers of the Journal of Statistical Software. Thank you very much for your time and consideration.
+
+Sincerely,
+
+Diego Figueiras and John Kulas
+
+
+Dear Joshua Wilson,
+
+I am a PhD student at Montclair State University and, alongside my advisor, John Kulas, we’ve developed a visualization of test item characteristics. We saw on LinkedIn that you have been working as lead of the community product management and we think your end-users (instructors) may appreciate our visual. It’s likely that at Sakai you have some kind of numeric indicator of item difficulty. Our visualization takes these numbers and presents them as item characteristic curves, where the x-axis shows student ability level and the y-axis reflects the probability of answering the item correctly. Instructors would be able to tell which items are performing well and which are performing poorly by looking at the shape and position of the curve. Items whose curves are flatter indicate that the item doesn’t discriminate well between good and bad students; additionally, items that are to the left of the x-axis indicate that most students get the item correct regardless of ability, while curves to the right of the x-axis indicate items that only high ability students get right. Check our github repository for more information here: https://github.com/MontclairML/ctticc
+
+The formulas and processes are open source and fully free to any end user but we would be willing to help integrate these visuals into your LMS product if you would find that valuable. If interested in this general idea please feel free to reach out to us. If you are not the right person to contact for this kind of project, could you please forward us to the correct people? Thanks for your product, we have used it as both instructors and students. Look forward to hearing from you,
+
+Diego Figueiras.
