@@ -1,0 +1,49 @@
+---
+title             : "Item Characteristic Curve estimation via Classical Test Theory specification"
+shorttitle        : "CTT ICCs"
+author: 
+  - name          : "Diego Figueiras"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Dickson Hall 226"
+    email         : "figueirasd1@montclair.edu"
+  - name          : "John T. Kulas"
+    affiliation   : "2"
+
+affiliation:
+  - id            : "1"
+    institution   : "Montclair State University"
+  - id            : "2"
+    institution   : "eRg"
+
+authornote: | 
+  Materials for this research were provided by Educational Testing Service (ETS) and the TOEFL program. ETS does not discount or endorse the methodology, results, implications, or opinions presented by the researcher(s).
+
+abstract: |
+  Item characteristic curves (ICC's) are graphical representations of important attributes of assessment items - most commonly *difficulty* and *discrimination*. Assessment specialists who examine ICC's usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to derive linking coefficients between the IRT and CTT difficulty and discrimination indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated a sample test dataset and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low within this simulated dataset ($\overline{DIF}$ = .08 on our 13x1 dimensional plotting space). Applying the CTT-derived ICCs to six different applied tests of 20,000 real-life examinees resulted in a comparable mean DIF estimate of .12. Collectively, these results should provide some confidence to test specialists interested in creating visual representations of CTT-derived item characteristics.  An `R` package, `ctticc`, performs the ICC calculations presented in the current paper and generates ICC plots directly from CTT indices.
+  
+keywords          : "Classical Test Theory, Item Response Theory, item difficulty, item discrimination"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib", "articles.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+
+csl               : "apa7.csl"
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library(psych)
+library(reticulate)
+
+```
