@@ -1,3 +1,6 @@
 Rejected:
 
 1. Educational and Psychological Measurement (10/22/23)
+2. Journal of Statistical Software (11/06/23)
+3. International Journal of Testing (11/24/23)
+4. Journal of Multivariate Analysis (11/24/23)
