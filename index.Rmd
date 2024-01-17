@@ -149,7 +149,7 @@ ctticc<-function(data, item, plot="together", nrow=2, ncol=3){
 }
 
 
-#library(ctticc)
+library(ctticc)
 data(testdata)
 png("diego.png")
 ctticc(data, plot="separate", item=1)
