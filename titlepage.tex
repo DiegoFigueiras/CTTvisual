@@ -5,16 +5,19 @@
 \documentclass[
   man]{apa6}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -112,13 +115,13 @@
   {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 \makeatother
 
-% \usepackage{etoolbox}
 \makeatletter
-\patchcmd{\HyOrg@maketitle}
+\usepackage{etoolbox}
+\patchcmd{\maketitle}
   {\section{\normalfont\normalsize\abstractname}}
   {\section*{\normalfont\normalsize\abstractname}}
   {}{\typeout{Failed to patch abstract.}}
-\patchcmd{\HyOrg@maketitle}
+\patchcmd{\maketitle}
   {\section{\protect\normalfont{\@title}}}
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
@@ -143,9 +146,9 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Item Characteristic Curve estimation via Classical Test Theory specification},
   pdfauthor={Diego Figueiras1 \& John T. Kulas2},
@@ -163,7 +166,7 @@
 
 \authornote{
 
-Materials for this research were provided by Educational Testing Service (ETS) and the TOEFL program. ETS does not discount or endorse the methodology, results, implications, or opinions presented by the researcher(s).
+Data and script fully replicating this project's procedure and summary are publicly available within a GitHub repository. Materials for this research were provided by Educational Testing Service (ETS) and the TOEFL program. ETS does not discount or endorse the methodology, results, implications, or opinions presented by the researcher(s).
 
 Correspondence concerning this article should be addressed to Diego Figueiras, Dickson Hall 226. E-mail: \href{mailto:figueirasd1@montclair.edu}{\nolinkurl{figueirasd1@montclair.edu}}
 
