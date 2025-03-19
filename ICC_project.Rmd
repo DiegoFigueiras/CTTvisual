@@ -20,7 +20,7 @@ authornote: |
   Materials for this research were provided by Educational Testing Service (ETS) and the TOEFL program. ETS does not discount or endorse the methodology, results, implications, or opinions presented by the researcher(s).
 
 abstract: |
-  Assessment specialists who examine Item Characteristic Curves (ICCs) usually do so from within the psychometric framework of either Item Response Theory (IRT) or Rasch modeling. We propose an extension of this tradition of item characteristic visualization within the more commonly leveraged Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to derive linking coefficients between the IRT and CTT difficulty and discrimination indices. The results of these simulations provided some degree of confidence regarding functional linking coefficient invariance. Next, we simulated a sample test dataset and generated ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low within this simulated dataset ($\overline{DIF}$ = .08 on our 13x1 dimensional plotting space). Applying the CTT-derived ICCs to six different applied tests of 20,000 real-life examinees resulted in a comparable mean DIF estimate of .12. Collectively, these results should provide some confidence to test practitioners interested in soliciting *useful visual representations* of item characteristics even in the absence of computationally intensive IRT estimators. 
+  We propose an extension of item characteristic curve (ICC) visualization to a Classical Test Theory (CTT) framework. We first simulate binary (e.g., true *test*) data with varying item difficulty characteristics to derive linking coefficients between IRT and CTT difficulty and discrimination indices. The results of these simulations provide some degree of confidence regarding functional linking coefficient invariance. Next, we simulate test data and generate ICCs derived from both IRT and CTT frameworks. Differential item functioning (DIF) was estimated by calculating the geometric area between the IRT- and CTT-derived ogives. The average DIF estimate was low within this simulated dataset ($\overline{DIF}$ = .08 on our 13x1 dimensional plotting space). Applying the CTT-derived ICCs to applied tests of real-life examinees resulted in a comparably low average DIF estimate. Our contribution lies primarily with test specialists who are interested in visual representations of item characteristics even when IRT calibration is not practical. An `R` package, `ctticc`, as well as an [online dashboard](https://diegofigueiras.shinyapps.io/TestItemCharacteristics/) both perform the ICC calculations presented in the current paper and generate ICC plots directly from CTT indices.
   
 keywords          : "Classical Test Theory, Item Response Theory, item difficulty, item discrimination"
 wordcount         : "X"
@@ -32,7 +32,7 @@ figurelist        : no
 tablelist         : no
 footnotelist      : no
 linenumbers       : no
-mask              : yes
+mask              : no
 draft             : no
 
 csl               : "apa7.csl"
